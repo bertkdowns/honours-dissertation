@@ -43,11 +43,48 @@ Modern factories are equipped with a variety of sensors that monitor the state o
 
 \section{Background}
 
+`Project Ahuora' is a Ministry of Business, Innovation and Employment (MBIE) funded project that aims to decarbonise the process heat sector. 
+By decarbonising, New Zealands' greenhouse gas emissions will be reduced. Cost savings from reduced energy consumption are anticipated, along with increased energy independence.
+This is a multi-disciplinary project that involves researchers from the University of Waikato, University of Auckland, Massey University,
+and other global universities. Chemical Engineers bring understanding of the chemical processes that are used in industry. Electrical Engineers bring understanding of the grid system
+and how to integrate renewable energy sources. Mechanical engineers bring understanding of how to design and build more efficient systems. Software Engineers bring understanding of how to
+model, simulate, and monitor complex systems. 
+
+A key objective is to develop a digital twin platform for the chemical processing industry. This platform will allow New Zealand factory operators to model their processes, simulate different scenarios, and monitor their processes in real-time.
+This will enable factory operators to make data-driven and scientifically backed decisions on how to improve their processes. A digital twin can recognise where the factory is underperforming, suggest real-time improvements, and help plain future investments.  
+
+
 \section{Motivation}
+
+Currently, Ahuora has developed a Web-based simulation platform that allows users to create a digital twin of their factory. 
+This platform is based on steady-state simulation, which simulates a factory at a single point in time. All factory conditions are manually specified by the user.
+This platform is useful for modelling changes to a factory before construction, or understanding the factory's performance under different conditions.
+However, it cannot be considered a ``Digital Twin'' because it does not take into account the factory's real-time state.
+By integrating real-time sensor data into the simulation, the platform can monitor the factories' performance, and suggest tunings that will optimise resource efficiency.
+The data can also be used to predict and avoid failures and downtime, a key problem where many resources are wasted.
+Additionally, models created in the Ahuora Simulation Platform during the design phase could also be used during operation, minimising overhead costs.
+
+Including real-time data in the simulation is needed to improve the usefulness of the Ahuora Platform in industry. 
+The system needs to meet industry requirements for security, scalability, and reliability. As such, this project 
+has been commissioned to develop a standardised framework to enable the integration of real-time sensor data into the Ahuora Digital Twin Platform.
 
 \section{Objectives}
 
+The objectives of this project are as follows:
+\begin{itemize}
+    \item Conduct a literature review on Digital Twins, Digital Twin Platforms, and Data Processing Tools.
+    \item Conduct an Exploratory Analysis of techniques and tools for digital twin development, based on their applicability to the Ahuora Digital Twin Platform and the requirements of live data processing.
+    \item Develop the Ahuora Digital Twin platform to a stage where support for live data processing can be added.
+    \item Develop a standardised framework for integrating real-time sensor data into the Ahuora Digital Twin Platform.
+    \item Develop a prototype implementation of the framework.
+    \item Evaluate the prototype implementation in a case study.
+    \item Identify areas for future work.
+\end{itemize}
 \section{Scope}
+
+Full integration of real-time sensor data into the Ahuora Digital Twin Platform is out of scope for this project. 
+This project will focus on identifying techniques and tools for simulation and modelling that will be needed in a industry setting,
+and developing a prototype live data processing system for Ahuora that is extensible enough to support those techniques and tools.
 
 \section{Structure of the Report}
 
