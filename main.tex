@@ -108,21 +108,38 @@ The Ahuora Digital Twin Platform is built on top of the IDAES Process Systems En
 
 
 From the Literature Review, a variety of modelling techniques were identified, including Dynamic Modelling, Surrogate Modelling, and Optimisation. The Ahuora Digital Twin platform is currently based on steady-state simulation and does not support these techniques. The IDAES framework was used to test the feasibility of integrating live data processing techniques into the Ahuora Digital Twin Platform.
- 
-
-\subsection*{Dynamic Modelling}
-
-I used the IDAES framework to develop a dynamic model of a Steam PID tank,
 
 
-\subsection**{Key Findings}
+\subsection{Dynamic Modelling}
+
+I used the IDAES framework to develop a dynamic model of a steam tank, with a valve controlling the inlet and outlet pressure and flow rate. A PID controller was used to control the valve opening fraction to regulate the pressure in the tank.
+
+\begin{figure}
+    \includegraphics[width=0.9\textwidth]{dynamicmodelling.png}
+    \caption{Dynamic Modelling of a Steam Tank}
+    \label{fig:dynamicmodelling}
+\end{figure}
+
+This provided a simple example of a dynamic system. The inlet and outlet valve and the PID controller were not dynamic models: From a mathematical perspective, this means their properties were fully determined by the inlet and outlet conditions. The only dynamic model was the Steam Tank. From a mathematical perspective, this means that the state of the steam tank was determined by the inlet and outlet conditions, but also the previous state of the tank, i.e how "full" the tank is.
+
+
+\subsubsection{Key Findings}
 
 \begin{itemize}
     \item The IDAES framework is well-suited to dynamic modelling, as it provides tools for creating and solving differential equations. It can easily model the same system at different time scales.
-    \item The Ahuora Simulation Platform will require substantial changes to support dynamic modelling. Rather than storing a single value for each property, 
+    \item The Ahuora Simulation Platform will require substantial changes to support dynamic modelling. Rather than storing a single value for each property, it will need to store the state of each property at each time step.
+    \item This will also require significant UI changes to view the state of the system at different time steps. This could be achieved through some sort of time slider, and graph visualisations of properties over time.
+    \item Specifying the initial conditions of the system will be more complex, as the user will need to specify the initial state of dynamic properties, such as the initial tank level. Other properties, such as the valve opening fraction, will need to be specified as functions of time.
 \end{itemize}
 
 \subsection*{Surrogate Modelling}
+
+Surrogate Modelling is the process of creating a simplified model of a complex system. This is usually done using machine learning techniques. This provides a good test case of implementing data-driven modelling techniques in the IDAES framework.
+
+\subsubsection{Key Findings}
+\begin{itemize}
+    \item Surrogate Modelling may be achieved using IDAES's built-in PySMO libraries, or other similar libraries such as OMLT. It is reasonably straightforward to train a surrogate model on non-dynamic
+\end{itemize}
 
 \subsection*{Optimisation and Control}
 
