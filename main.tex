@@ -1,5 +1,4 @@
-\documentclass[12pt]{book}
-
+\documentclass[12pt]{report}
 \usepackage[a4paper, portrait, margin=0.75in]{geometry}
 \usepackage{graphicx} % Required for inserting images
 \usepackage[page,toc,titletoc,title]{appendix}
@@ -34,7 +33,15 @@ Modern factories are equipped with a variety of sensors that monitor the state o
 % TODO: Something about results and evaluation stuff.
 % this report argues that
 
+\chapter*{Acknowledgements}
+
+I would like to thank my supervisors, Tim Walmsley and Mark Apperley, for their guidance and support throughout this project. I would also like to thank the Ahuora project team for their assistance and feedback. Finally, I would like to thank my family and friends for their encouragement and support.
+
 \tableofcontents
+
+\listoffigures
+
+\listoftables
 
 \newpage
 
@@ -123,19 +130,21 @@ There are a number of objectives that Ahuora is working towards including in the
 
 For clarity in this report, the term ``Ahuora Digital Twin Platform" will refer to the complete solution, keeping in mind all these future objectives. The term ``Ahuora Simulation Platform" will refer to the current state of the platform, which is based on steady-state simulation, and does not yet support the features required for a Digital Twin.
 
+\section{The Role of This Project}
+
+This project contributes to a number of these objectives, utilising the Ahuora Simulation Platform as a base, updating it to work with real-time data, and developing a standardised framework for integrating real-time sensor data into the platform. This provides the groundwork to support the advanced analysis techniques, process variable optimisation, dynamic simulation, and live data processing that are required for a Digital Twin.
 
 \chapter{Introduction}
 
 
 
+%\section{Motivation}
 
-
-\section{Motivation}
-
-As explained in the preface, Ahuora has developed a Web-based simulation platform that allows users to create a digital twin of their factory. 
+Ahuora is a research group focused on developing smart energy systems to decarbonise factories. They have developed a Web-based simulation platform that allows users to create a digital twin of their factory. 
 This platform is based on steady-state simulation, which simulates a factory at a single point in time. All factory conditions are manually specified by the user.
 This platform is useful for modelling changes to a factory before construction, or understanding the factory's performance under different conditions.
-However, it cannot be considered a ``Digital Twin'' because it does not take into account the factory's real-time state.
+
+However, their platform cannot be considered a ``Digital Twin'' because it does not take into account the factory's real-time state.
 By integrating real-time sensor data into the simulation, the platform can monitor the factories' performance, and suggest tunings that will optimise resource efficiency.
 The data can also be used to predict and avoid failures and downtime, a key problem where many resources are wasted.
 Additionally, models created in the Ahuora Simulation Platform during the design phase could also be used during operation, minimising overhead costs.
@@ -164,17 +173,19 @@ Full integration of real-time sensor data into the Ahuora Digital Twin Platform 
 This project will focus on identifying techniques and tools for simulation and modelling that will be needed in a industry setting,
 and developing a prototype live data processing system for Ahuora that is extensible enough to support those techniques and tools.
 
+
+\section{Literature Review}
+
+
+\subsection{Digital Twins}
+
+\subsection{Digital Twin Platforms}
+
+\subsection{Data Processing Tools}
+
 \section{Structure of the Report}
 
 
-
-\chapter{Literature Review}
-
-\section{Digital Twins}
-
-\section{Digital Twin Platforms}
-
-\section{Data Processing Tools}
 
 \chapter{Methodology}
 
@@ -185,7 +196,7 @@ This project was conducted as part of a real-world, collaborative effort to buil
 The Ahuora Digital Twin Platform is built on top of the IDAES Process Systems Engineering Framework. Because of this, the IDAES framework was used as a testbed for experimentation with live data processing techniques. The IDAES framework is a Python library that provides tools for modelling and simulating chemical processes. It is designed to be extensible, so that new modelling techniques can be added to it. 
 
 
-From the Literature Review, a variety of modelling techniques were identified, including Dynamic Modelling, Surrogate Modelling, and Optimisation. The Ahuora Digital Twin platform is currently based on steady-state simulation and does not support these techniques. The IDAES framework was used to test the feasibility of integrating live data processing techniques into the Ahuora Digital Twin Platform.
+From the Literature Review, a variety of modelling techniques were identified, including Dynamic Modelling, Surrogate Modelling, and Optimisation. The Ahuora Digital Twin platform is currently based on steady-state simulation and does not support these techniques. The IDAES framework was used to test the feasibility of integrating live data processing techniques into the Ahuora Digital Twin Platform. This will enable the live data platform to be designed in a way that supports these techniques being added in the future.
 
 
 \subsection{Dynamic Modelling}
@@ -239,9 +250,28 @@ IDAES's Caprese library can simulate model predictive control, but in order for 
 This project will focus on the data-gathering and processing aspects of this problem, rather than the control aspects. As time permits, suggestions will be made on how the control aspects could be implemented.
 
 
-\section{Prototype Development}
+\section{Pilot Implementation}
 
+The research in the literature review and the experimentation in IDAES provided a good understanding of the requirements for the Ahuora Digital Twin Platform. The next step was to develop a architecture for the platform that would support these requirements. A pilot implementation was then developed to demonstrate the feasibility of the architecture.
 
+\subsection{Architecture}
+
+The current Ahuora Simulation Platform is split into three main parts:
+
+\begin{itemize}
+    \item The Frontend UI, which is written in Typescript/React and runs in the user's web browser. This is responsible for rendering the flowsheet, and allowing the user to interact with the simulation.
+    \item The Backend API, which is written in Python/Django and runs on the server. This is responsible for storing the simulation data, orchestrating calls to run the simulation, and returning the results to the user.
+    \item The IDAES solving engine, which is written in Python and runs on the server. This is responsible for solving the simulation, and returning the results to the API. It has been seperated out from the API to allow it to be scaled independently.
+\end{itemize}
+
+% TODO: Explain industrial data collection tools, how our stuff fits in.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{architecture.png}
+    \caption{Anticipated method of implementing the Ahuora Simulation Platform into an industrial system.}
+    \label{fig:architecture}
+\end{figure}
 
 \section{Minimum Viable Product}
 
