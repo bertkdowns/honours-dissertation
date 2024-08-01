@@ -191,17 +191,17 @@ and developing a prototype live data processing system for Ahuora that is extens
 \chapter{Methodology}
 % helicopter view, structure of the report
 
-Because of the scope of the
+This project was conducted as part of a real-world, collaborative effort to build the Ahuora Digital Twin platform, so the methodology followed engineering principles, rather than being purely academic experimentation. Additionally, the focus of the project moved between improving the Simulation Platform to support more modelling techniques, and developing a live data processing system that could be integrated into the platform.
 
-This project was conducted in three main stages: Research, Development, and Evaluation.
+Some of the objectives of this project are exploratory, focusing on developing long-term plans for live data processing. Other objectives are more concrete, focusing on developing and testing a prototype live-data processing system based on the current iteration of the Ahuora Simulation platform. To account for this, the project was conducted in three main stages: Research, Development, and Evaluation.
 
 \section{Research}
 
-The research stage involved small-scale experiments in the IDAES framework to test the feasibility of integrating live data processing techniques into the Ahuora Digital Twin Platform. This followed directly from the Literature Review, which identified a variety of modelling techniques that could be used in a Digital Twin Platform. The research stage was used to identify the requirements for the Ahuora Digital Twin Platform, and to develop a high-level architecture for the platform that would support these requirements.
+The research stage involved small-scale experiments in the IDAES framework to test the feasibility of integrating live data processing techniques into the Ahuora Digital Twin Platform. This followed directly from the Literature Review, which identified a variety of modelling techniques that could be used in a Digital Twin Platform. The research stage was used to identify the requirements for the Ahuora Digital Twin Platform, and to develop a high-level architecture for the platform that would support these requirements. This focused on the long-term requirements of the platform, rather than the current capabilities of the Ahuora Simulation Platform.
 
 \section{Development}
 
-The development stage involved developing a pilot implementation of the framework. This was done seperate from but in conjunction with the Ahuora Simulation Platform, following the architecture developed in the research stage. While the research stage focused on choosing an architecture that would support future requirements, the development stage focused on implementing a pipeline that worked with the current capabilities of the Ahuora Simulation Platform.
+The development stage involved developing a pilot implementation of the framework. This was done seperate from but in conjunction with the Ahuora Simulation Platform, following the architecture developed in the research stage. However, it did not include all the features discussed in the research section, due to the limitations of the current platform. Instead, it implemented a pipeline that worked with the current capabilities of the Ahuora Simulation Platform.
 
 \section{Evaluation}
 
@@ -209,17 +209,26 @@ The evaluation stage involved testing the pilot implementation in a case study. 
 
 \chapter{Architecture Research}
 
-This project was conducted as part of a real-world, collaborative effort to build the Ahuora Digital Twin platform, so the methodology followed engineering principles, rather than being purely academic experimentation. Research into live data processing techniques could only be conducted as far as the Digital Twin Platform supported them. The focus of the project moved between improving the Simulation Platform to support more modelling techniques, and developing a live data processing system that could be integrated into the platform.
+The literature review identified a variety of modelling techniques, including Steady-state modelling, Dynamic Modelling, Surrogate Modelling, and Optimisation. 
 
-\section{Experimentation in IDAES}
+The Ahuora Digital Twin Platform is currently built to support only steady state modelling. However, to explore the potential for integrating more advanced live data processing techniques, the IDAES Process Systems Engineering Framework was employed as a testbed.
 
-The Ahuora Digital Twin Platform is built on top of the IDAES Process Systems Engineering Framework. Because of this, the IDAES framework was used as a testbed for experimentation with live data processing techniques. The IDAES framework is a Python library that provides tools for modelling and simulating chemical processes. It is designed to be extensible, so that new modelling techniques can be added to it.
+The IDAES framework is a Python library that provides tools for modelling and simulating chemical processes. It is designed to be extensible, allowing for the addition of new modelling techniques.
 
+Using the IDAES framework, experimentation with live data processing techniques was conducted. This testing aimed to evaluate the feasibility of integrating these advanced techniques into the Ahuora Digital Twin Platform. By leveraging IDAES, the platform can be designed to support the incorporation of more sophisticated modelling techniques in the future.
 
-From the Literature Review, a variety of modelling techniques were identified, including Dynamic Modelling, Surrogate Modelling, and Optimisation. The Ahuora Digital Twin platform is currently based on steady-state simulation and does not support these techniques. The IDAES framework was used to test the feasibility of integrating live data processing techniques into the Ahuora Digital Twin Platform. This will enable the live data platform to be designed in a way that supports these techniques being added in the future.
+\section{Research Questions}
 
+The research investigation aimed to answer the following questions:
 
-\subsection{Dynamic Modelling}
+\begin{itemize}
+    \item \textit{RQ1} How does the Ahuora Simulation Platform need to be modified to support dynamic modelling, surrogate modelling, and optimisation?
+    \item \textit{RQ2} What architecture would best support the integration of live data processing techniques into the Ahuora Digital Twin Platform?
+\end{itemize}
+
+\textit{RQ1} focuses on future needs and long-term vision. This is important to help minimise the amount of rework required when implementing new features. \textit{RQ2} focuses on the immediate needs of the project, and is important for developing a pilot implementation.
+
+\section{Dynamic Modelling}
 
 I used the IDAES framework to develop a dynamic model of a steam tank, with a valve controlling the inlet and outlet pressure and flow rate. A PID controller was used to control the valve opening fraction to regulate the pressure in the tank.
 
@@ -232,7 +241,7 @@ I used the IDAES framework to develop a dynamic model of a steam tank, with a va
 This provided a simple example of a dynamic system. The inlet and outlet valve and the PID controller were not dynamic models: From a mathematical perspective, this means their properties were fully determined by the inlet and outlet conditions. The only dynamic model was the Steam Tank. From a mathematical perspective, this means that the state of the steam tank was determined by the inlet and outlet conditions, but also the previous state of the tank, i.e how ``full" the tank is.
 
 
-\subsubsection{Key Findings}
+\section{Key Findings}
 
 \begin{itemize}
     \item The IDAES framework is well-suited to dynamic modelling, as it provides tools for creating and solving differential equations. It can easily model the same system at different time scales.
@@ -241,13 +250,13 @@ This provided a simple example of a dynamic system. The inlet and outlet valve a
     \item Specifying the initial conditions of the system will be more complex, as the user will need to specify the initial state of dynamic properties, such as the initial tank level. Other properties, such as the valve opening fraction, will need to be specified as functions of time.
 \end{itemize}
 
-\subsection{Surrogate Modelling}
+\section{Surrogate Modelling}
 
 Surrogate Modelling is the process of creating a simplified model of a complex system. This is usually done using machine learning techniques. This provides a good test case of implementing data-driven modelling techniques in the IDAES framework.
 
 IDAES includes a framework for data-driven modelling called PySMO. This provides utilities for training polynomial, Radial Basis Function, and Kriging models to approximate the behaviour.
 
-\subsubsection{Key Findings}
+\subsection{Key Findings}
 
 Surrogate Modelling may be achieved using IDAES's built-in PySMO libraries, or other similar libraries such as OMLT. It is reasonably straightforward to train a surrogate model to represent a non-dynamic unit operation, but dynamic unit operations get significantly more complex - instead of modelling a single value, the surrogate model must be able to model the entire time system. There are some methods of doing this, such as using neural ODEs, Residual Networks, Operator Networks, or some other sort of convolutional network. There is little research into applying these methods in the field of chemical and process simulation, especially in the context of mathematical modelling such as the IDAES framework.
 
@@ -258,10 +267,10 @@ Because of the limited functionality of the Ahuora Digital Twin Platform, it is 
 Additionally, the Ahuora Digital Twin Platform will need a user interface to support creating these different types of models. As surrogate modelling is a complex process, the user interface will need to be able to guide the user through the process of creating a surrogate model from a dataset, and provide feedback on the quality of the model. This will require a significant amount of work, and will likely be a key focus of future development.
 
 
-\subsection{Optimisation and Control}
+\section{Optimisation and Control}
 
 
-\subsubsection{Key Findings}
+\subsection{Key Findings}
 
 Implementing Model Predictive Control in IDAES is relatively straightforward, as long as there is a dynamic model of the system, a cost function, and the optimisation problem is well-posed. The Ahuora Digital Twin Platform does not support optimisation yet, but this will be supported in the future.
 
@@ -273,7 +282,7 @@ This project will focus on the data-gathering and processing aspects of this pro
 
 The research in the literature review and the experimentation in IDAES provided a good understanding of the requirements for the Ahuora Digital Twin Platform. The next step was to develop a architecture for the platform that would support these requirements. A pilot implementation was then developed to demonstrate the feasibility of the architecture.
 
-\subsection{Architecture}
+\section{Architecture}
 
 The current Ahuora Simulation Platform is split into three main parts:
 
@@ -339,7 +348,7 @@ Additionally, there are also a number of other tools that are used in industry f
 
 \section{Future Work}
 
-\chapter{References}
+\chapter*{References}
 
 %https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles
 \bibliographystyle{unsrt}
