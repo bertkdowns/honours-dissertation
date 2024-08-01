@@ -136,9 +136,11 @@ This project contributes to a number of these objectives, utilising the Ahuora S
 
 \chapter{Introduction}
 
+% Some sort of hook, surely someone somewhere said "data is the new gold" or something
 
+% State the argument you will make in the report
 
-%\section{Motivation}
+\section{Motivation}
 
 Ahuora is a research group focused on developing smart energy systems to decarbonise factories. They have developed a Web-based simulation platform that allows users to create a digital twin of their factory. 
 This platform is based on steady-state simulation, which simulates a factory at a single point in time. All factory conditions are manually specified by the user.
@@ -183,11 +185,27 @@ and developing a prototype live data processing system for Ahuora that is extens
 
 \subsection{Data Processing Tools}
 
-\section{Structure of the Report}
-
-
 
 \chapter{Methodology}
+% helicopter view, structure of the report
+
+Because of the scope of the 
+
+This project was conducted in three main stages: Research, Development, and Evaluation. 
+
+\section{Research}
+
+The research stage involved small-scale experiments in the IDAES framework to test the feasibility of integrating live data processing techniques into the Ahuora Digital Twin Platform. This followed directly from the Literature Review, which identified a variety of modelling techniques that could be used in a Digital Twin Platform. The research stage was used to identify the requirements for the Ahuora Digital Twin Platform, and to develop a high-level architecture for the platform that would support these requirements.
+
+\section{Development}
+
+The development stage involved developing a pilot implementation of the framework. This was done seperate from but in conjunction with the Ahuora Simulation Platform, following the architecture developed in the research stage. While the research stage focused on choosing an architecture that would support future requirements, the development stage focused on implementing a pipeline that worked with the current capabilities of the Ahuora Simulation Platform. 
+
+\section{Evaluation}
+
+The evaluation stage involved testing the pilot implementation in a case study. This was done by developing a model of a heat pump dryer in the Ahuora Simulation Platform, and integrating real-time sensor data into the model. The case study was used to evaluate the feasibility of the framework, and to identify areas for future work.
+
+\chapter{Architecture Research}
 
 This project was conducted as part of a real-world, collaborative effort to build the Ahuora Digital Twin platform, so the methodology followed engineering principles, rather than being purely academic experimentation. Research into live data processing techniques could only be conducted as far as the Digital Twin Platform supported them. The focus of the project moved between improving the Simulation Platform to support more modelling techniques, and developing a live data processing system that could be integrated into the platform.
 
@@ -221,7 +239,7 @@ This provided a simple example of a dynamic system. The inlet and outlet valve a
     \item Specifying the initial conditions of the system will be more complex, as the user will need to specify the initial state of dynamic properties, such as the initial tank level. Other properties, such as the valve opening fraction, will need to be specified as functions of time.
 \end{itemize}
 
-\subsection*{Surrogate Modelling}
+\subsection{Surrogate Modelling}
 
 Surrogate Modelling is the process of creating a simplified model of a complex system. This is usually done using machine learning techniques. This provides a good test case of implementing data-driven modelling techniques in the IDAES framework.
 
@@ -238,7 +256,7 @@ Because of the limited functionality of the Ahuora Digital Twin Platform, it is 
 Additionally, the Ahuora Digital Twin Platform will need a user interface to support creating these different types of models. As surrogate modelling is a complex process, the user interface will need to be able to guide the user through the process of creating a surrogate model from a dataset, and provide feedback on the quality of the model. This will require a significant amount of work, and will likely be a key focus of future development. 
 
 
-\subsection*{Optimisation and Control}
+\subsection{Optimisation and Control}
 
 
 \subsubsection{Key Findings}
@@ -250,7 +268,6 @@ IDAES's Caprese library can simulate model predictive control, but in order for 
 This project will focus on the data-gathering and processing aspects of this problem, rather than the control aspects. As time permits, suggestions will be made on how the control aspects could be implemented.
 
 
-\section{Pilot Implementation}
 
 The research in the literature review and the experimentation in IDAES provided a good understanding of the requirements for the Ahuora Digital Twin Platform. The next step was to develop a architecture for the platform that would support these requirements. A pilot implementation was then developed to demonstrate the feasibility of the architecture.
 
@@ -264,7 +281,6 @@ The current Ahuora Simulation Platform is split into three main parts:
     \item The IDAES solving engine, which is written in Python and runs on the server. This is responsible for solving the simulation, and returning the results to the API. It has been seperated out from the API to allow it to be scaled independently.
 \end{itemize}
 
-% TODO: Explain industrial data collection tools, how our stuff fits in.
 
 \begin{figure}
     \centering
@@ -273,13 +289,33 @@ The current Ahuora Simulation Platform is split into three main parts:
     \label{fig:architecture}
 \end{figure}
 
+% TODO: Explain industrial data collection tools, how our stuff fits in.
+Additionally, there are also a number of other tools that are used in industry for collecting and processing sensor data. There may be an integrated solution or a number of different tools that are used together, but they can be grouped by their functionality:
+\begin{itemize}
+    \item Data Collection: These tools are responsible for collecting data from sensors and storing it in a database. They may also provide tools for cleaning and preprocessing the data. This includes IoT networks and SCADA systems.
+    \item Data Processing: These tools are responsible for processing the data to extract useful information. This may include machine learning models, statistical analysis, or other data processing techniques. Generally, these tools will sit within some sort of framework or pipeline, such as Apache Kafka, Flink, or a custom solution.
+    \item Data Storage: These tools are responsible for storing the data in a way that is accessible to the other tools. This may include databases, data lakes, or other storage solutions. In Model-Based Systems Engineering, this is often referred to as a Knowledge Base.
+\end{itemize}
+
+
+
+
+
+% Impact, or conclusions, or something
+\section{Impact} 
+
+
+
+\chapter{Development}
+
+
 \section{Minimum Viable Product}
 
 \section{Extensions}
 
-\section{Future Work}
 
-\chapter{Case Study: Heat Pump Dryer}
+
+\chapter{Functional Example: Heat Pump Dryer}
 
 \section{Motivation}
 
@@ -289,7 +325,17 @@ The current Ahuora Simulation Platform is split into three main parts:
 
 \section{Discussion}
 
-\chapter{Conclusion}
+% Strengths, limitations, impacts, what could have been better, etc
+
+
+% evaluates the broader impact of the project outcome, either quantitatively or qualitatively (e.g., social, economic, environmental, health, safety, legal, ethical, and/or cultural issues)
+\section{Impact}
+
+\chapter{Conclusions}
+
+% Present the outcome, and the arguments
+
+\section{Future Work}
 
 \chapter{References}
 
