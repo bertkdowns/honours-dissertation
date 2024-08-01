@@ -53,19 +53,19 @@ I would like to thank my supervisors, Tim Walmsley and Mark Apperley, for their 
 
 \section{Background}
 
-`Project Ahuora' is a Ministry of Business, Innovation and Employment (MBIE) funded project that aims to decarbonise the process heat sector. 
+`Project Ahuora' is a Ministry of Business, Innovation and Employment (MBIE) funded project that aims to decarbonise the process heat sector.
 By decarbonising, New Zealands' greenhouse gas emissions will be reduced. Cost savings from reduced energy consumption are anticipated, along with increased energy independence.
 This is a multi-disciplinary project that involves researchers from the University of Waikato, University of Auckland, Massey University,
 and other global universities. Chemical Engineers bring understanding of the chemical processes that are used in industry. Electrical Engineers bring understanding of the grid system
 and how to integrate renewable energy sources. Mechanical engineers bring understanding of how to design and build more efficient systems. Software Engineers bring understanding of how to
-model, simulate, and monitor complex systems. 
+model, simulate, and monitor complex systems.
 
 A key objective is to develop a digital twin platform for the chemical processing industry. This platform will allow New Zealand factory operators to model their processes, simulate different scenarios, and monitor their processes in real-time.
-This will enable factory operators to make data-driven and scientifically backed decisions on how to improve their processes. A digital twin can recognise where the factory is underperforming, suggest real-time improvements, and help plain future investments.  
+This will enable factory operators to make data-driven and scientifically backed decisions on how to improve their processes. A digital twin can recognise where the factory is underperforming, suggest real-time improvements, and help plain future investments.
 
 \section{The Ahuora Simulation Platform}
 
-A key deliverable of the Ahuora project to date is the Ahuora Simulation Platform. This is a web-based platform that allows users to model a factory or other energy system, and simulate its performance. The platform is based on the IDAES Process Systems Engineering Framework, which is a Python library that provides tools for modelling and simulating chemical processes. 
+A key deliverable of the Ahuora project to date is the Ahuora Simulation Platform. This is a web-based platform that allows users to model a factory or other energy system, and simulate its performance. The platform is based on the IDAES Process Systems Engineering Framework, which is a Python library that provides tools for modelling and simulating chemical processes.
 
 Currently, the platform can model a factory at a single point in time. The user specifies the properties of the factory, such as the flow rates of different materials, the temperature and pressure of different streams, and the efficiency of different unit operations. The platform then simulates the factory and provides the user with a report on the factory's performance.
 
@@ -102,28 +102,28 @@ There are a number of objectives that Ahuora is working towards including in the
 
 \begin{itemize}
     \item Steady-state Process Simulation: This is the current state of the platform. However, it can be improved by adding support for:
-    \begin{itemize}
-        \item More unit operations, defined from first principles equations
-        \item Custom unit operations
-        \item Unit operations defined from data (Machine Learning \& Hybrid Modelling)
-        \item More property packages (enabling accurate simulation of a wider range of chemical processes)
-        \item Support for more advanced mathematical constraints
-    \end{itemize}
+          \begin{itemize}
+              \item More unit operations, defined from first principles equations
+              \item Custom unit operations
+              \item Unit operations defined from data (Machine Learning \& Hybrid Modelling)
+              \item More property packages (enabling accurate simulation of a wider range of chemical processes)
+              \item Support for more advanced mathematical constraints
+          \end{itemize}
     \item Advanced analysis techniques: This includes:
-    \begin{itemize}
-        \item P-Graph Analysis, generating and comparing alternative process structures
-        \item Pinch Analysis, to identify the theorical minimum energy consumption of a process
-        \item Heat Exchanger Network analysis, to identify opportunities for heat recovery in individual processes
-        \item Utility System Analysis, to identify opportunities for energy savings on a plant-wide scale
-    \end{itemize}
+          \begin{itemize}
+              \item P-Graph Analysis, generating and comparing alternative process structures
+              \item Pinch Analysis, to identify the theorical minimum energy consumption of a process
+              \item Heat Exchanger Network analysis, to identify opportunities for heat recovery in individual processes
+              \item Utility System Analysis, to identify opportunities for energy savings on a plant-wide scale
+          \end{itemize}
     \item Process Variable Optimisation: Calculating the optimal operating conditions (temperatures, pressures, flow rates, power utilisation) for a given process
     \item Dynamic simulation, to model the factory over time, so that the effect of changes on can be predicted
     \item Process Scheduling, to optimise the factory's resources across tasks
     \item Live Data Processing, to:
-    \begin{itemize}
-        \item simulate plant conditions in real-time, for performance monitoring and diagnostics
-        \item update the simulation based on real-world changes, e.g fouling or equipment degradation
-    \end{itemize}
+          \begin{itemize}
+              \item simulate plant conditions in real-time, for performance monitoring and diagnostics
+              \item update the simulation based on real-world changes, e.g fouling or equipment degradation
+          \end{itemize}
     \item Process Control - adjusting the physical process plant based on the simulation to maintain desired operating conditions
     \item Reporting functionality, such as Process \& Instrumentation diagrams.
 \end{itemize}
@@ -142,17 +142,19 @@ This project contributes to a number of these objectives, utilising the Ahuora S
 
 \section{Motivation}
 
-Ahuora is a research group focused on developing smart energy systems to decarbonise factories. They have developed a Web-based simulation platform that allows users to create a digital twin of their factory. 
+The World Economic Forum ranked ``Failure to mitigate climate change" as the number one threat to the world in the next ten years~\cite{GlobalRisksReport}, due to the effects climate change has on extreme weather events, biodiversity, and climate-vulnerable economies. Decarbonisation is a crucial step in mitigating climate change. In New Zealand, process heat accounts for 8\% of total greenhouse emissions~\cite{DecarbonisingProcessHeat}.
+
+Ahuora is a research group focused on developing smart energy systems to decarbonise factories. They have developed a Web-based simulation platform that allows users to create a digital twin of their factory.
 This platform is based on steady-state simulation, which simulates a factory at a single point in time. All factory conditions are manually specified by the user.
 This platform is useful for modelling changes to a factory before construction, or understanding the factory's performance under different conditions.
 
-However, their platform cannot be considered a ``Digital Twin'' because it does not take into account the factory's real-time state.
+At the current stage of development, the Ahuora platform cannot be considered a ``Digital Twin'' because it does not take into account the factory's real-time state.
 By integrating real-time sensor data into the simulation, the platform can monitor the factories' performance, and suggest tunings that will optimise resource efficiency.
 The data can also be used to predict and avoid failures and downtime, a key problem where many resources are wasted.
 Additionally, models created in the Ahuora Simulation Platform during the design phase could also be used during operation, minimising overhead costs.
 
-Including real-time data in the simulation is needed to improve the usefulness of the Ahuora Platform in industry. 
-The system needs to meet industry requirements for security, scalability, and reliability. As such, this project 
+Including real-time data in the simulation is needed to improve the usefulness of the Ahuora Platform in industry.
+The system needs to meet industry requirements for security, scalability, and reliability. As such, this project
 has been commissioned to develop a standardised framework to enable the integration of real-time sensor data into the Ahuora Digital Twin Platform.
 
 % Todo: Include a substantial section explaining the Ahuora Digital Twin Platform, and what it does. THis is a necessary background for the project. The marker won't understand otherwise.
@@ -171,7 +173,7 @@ The objectives of this project are as follows:
 \end{itemize}
 \section{Scope}
 
-Full integration of real-time sensor data into the Ahuora Digital Twin Platform is out of scope for this project. 
+Full integration of real-time sensor data into the Ahuora Digital Twin Platform is out of scope for this project.
 This project will focus on identifying techniques and tools for simulation and modelling that will be needed in a industry setting,
 and developing a prototype live data processing system for Ahuora that is extensible enough to support those techniques and tools.
 
@@ -189,9 +191,9 @@ and developing a prototype live data processing system for Ahuora that is extens
 \chapter{Methodology}
 % helicopter view, structure of the report
 
-Because of the scope of the 
+Because of the scope of the
 
-This project was conducted in three main stages: Research, Development, and Evaluation. 
+This project was conducted in three main stages: Research, Development, and Evaluation.
 
 \section{Research}
 
@@ -199,7 +201,7 @@ The research stage involved small-scale experiments in the IDAES framework to te
 
 \section{Development}
 
-The development stage involved developing a pilot implementation of the framework. This was done seperate from but in conjunction with the Ahuora Simulation Platform, following the architecture developed in the research stage. While the research stage focused on choosing an architecture that would support future requirements, the development stage focused on implementing a pipeline that worked with the current capabilities of the Ahuora Simulation Platform. 
+The development stage involved developing a pilot implementation of the framework. This was done seperate from but in conjunction with the Ahuora Simulation Platform, following the architecture developed in the research stage. While the research stage focused on choosing an architecture that would support future requirements, the development stage focused on implementing a pipeline that worked with the current capabilities of the Ahuora Simulation Platform.
 
 \section{Evaluation}
 
@@ -211,7 +213,7 @@ This project was conducted as part of a real-world, collaborative effort to buil
 
 \section{Experimentation in IDAES}
 
-The Ahuora Digital Twin Platform is built on top of the IDAES Process Systems Engineering Framework. Because of this, the IDAES framework was used as a testbed for experimentation with live data processing techniques. The IDAES framework is a Python library that provides tools for modelling and simulating chemical processes. It is designed to be extensible, so that new modelling techniques can be added to it. 
+The Ahuora Digital Twin Platform is built on top of the IDAES Process Systems Engineering Framework. Because of this, the IDAES framework was used as a testbed for experimentation with live data processing techniques. The IDAES framework is a Python library that provides tools for modelling and simulating chemical processes. It is designed to be extensible, so that new modelling techniques can be added to it.
 
 
 From the Literature Review, a variety of modelling techniques were identified, including Dynamic Modelling, Surrogate Modelling, and Optimisation. The Ahuora Digital Twin platform is currently based on steady-state simulation and does not support these techniques. The IDAES framework was used to test the feasibility of integrating live data processing techniques into the Ahuora Digital Twin Platform. This will enable the live data platform to be designed in a way that supports these techniques being added in the future.
@@ -243,7 +245,7 @@ This provided a simple example of a dynamic system. The inlet and outlet valve a
 
 Surrogate Modelling is the process of creating a simplified model of a complex system. This is usually done using machine learning techniques. This provides a good test case of implementing data-driven modelling techniques in the IDAES framework.
 
-IDAES includes a framework for data-driven modelling called PySMO. This provides utilities for training polynomial, Radial Basis Function, and Kriging models to approximate the behaviour. 
+IDAES includes a framework for data-driven modelling called PySMO. This provides utilities for training polynomial, Radial Basis Function, and Kriging models to approximate the behaviour.
 
 \subsubsection{Key Findings}
 
@@ -253,7 +255,7 @@ The exact same process for surrogate modelling can also be used to model unit op
 
 Because of the limited functionality of the Ahuora Digital Twin Platform, it is currently beyond the scope of this project to implement a surrogate model. However, the IDAES framework is well-suited to this task, and it is likely that a surrogate model could be implemented in the future.
 
-Additionally, the Ahuora Digital Twin Platform will need a user interface to support creating these different types of models. As surrogate modelling is a complex process, the user interface will need to be able to guide the user through the process of creating a surrogate model from a dataset, and provide feedback on the quality of the model. This will require a significant amount of work, and will likely be a key focus of future development. 
+Additionally, the Ahuora Digital Twin Platform will need a user interface to support creating these different types of models. As surrogate modelling is a complex process, the user interface will need to be able to guide the user through the process of creating a surrogate model from a dataset, and provide feedback on the quality of the model. This will require a significant amount of work, and will likely be a key focus of future development.
 
 
 \subsection{Optimisation and Control}
@@ -261,7 +263,7 @@ Additionally, the Ahuora Digital Twin Platform will need a user interface to sup
 
 \subsubsection{Key Findings}
 
-Implementing Model Predictive Control in IDAES is relatively straightforward, as long as there is a dynamic model of the system, a cost function, and the optimisation problem is well-posed. The Ahuora Digital Twin Platform does not support optimisation yet, but this will be supported in the future. 
+Implementing Model Predictive Control in IDAES is relatively straightforward, as long as there is a dynamic model of the system, a cost function, and the optimisation problem is well-posed. The Ahuora Digital Twin Platform does not support optimisation yet, but this will be supported in the future.
 
 IDAES's Caprese library can simulate model predictive control, but in order for it to truly be useful IDAES needs to be paired with a real-time data processing system. The real-time data processing system will need to be able to make the controlling actions suggested by the MPC in real-time, and then inform the MPC of the system's response. This requires integration with the industry-specific SCADA systems that are used to control factories.
 
@@ -302,7 +304,7 @@ Additionally, there are also a number of other tools that are used in industry f
 
 
 % Impact, or conclusions, or something
-\section{Impact} 
+\section{Impact}
 
 
 
@@ -339,27 +341,28 @@ Additionally, there are also a number of other tools that are used in industry f
 
 \chapter{References}
 
-\bibliographystyle{unsrt} % We choose the ``plain" reference style
+%https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles
+\bibliographystyle{unsrt}
 \bibliography{refs} % Entries are in the refs.bib file
 
 \begin{appendices}
 
 
 
-% \chapter{Project Proposal} \label{sec:proposal}
-% The project proposal is included as an appendix on the following page.
+    % \chapter{Project Proposal} \label{sec:proposal}
+    % The project proposal is included as an appendix on the following page.
 
 
-% \includepdf[pages=1-4]{proposal.pdf}
+    % \includepdf[pages=1-4]{proposal.pdf}
 
-% \begin{landscape}
-%     \includepdf[pages=5,angle=90]{proposal.pdf}
-% \end{landscape}
+    % \begin{landscape}
+    %     \includepdf[pages=5,angle=90]{proposal.pdf}
+    % \end{landscape}
 
-% \chapter{Literature Review} \label{sec:litreview}
-% The literature review is included as an appendix on the following page.
+    % \chapter{Literature Review} \label{sec:litreview}
+    % The literature review is included as an appendix on the following page.
 
-% \includepdf[pages=-]{literature_review.pdf}
+    % \includepdf[pages=-]{literature_review.pdf}
 
 \end{appendices}
 \end{document}
