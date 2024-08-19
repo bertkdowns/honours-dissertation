@@ -25,6 +25,15 @@ Supervised by Tim Walmsley, Mark Apperley }
 
 \pagenumbering{roman}
 
+% A Dissertation/Thesis is supposed to be an extended argument. 
+% "Problem, solution, benifit" structure. or "what, so what, now what"
+% Some potential structures:
+% Ahuora doesn't support live data integration, so we need to research/develop effective methods for this. This report outlines the methods of live data integration, and evaluates their effectiveness in a case study.
+% Industrial scada systems don't include modelling capabilities. This report shows how live data can be put into a model, and how this can be used to improve factory performance.
+% There are already good frameworks for processing live data. So ahuora should be designed in a way that it can interoperate with these frameworks. This report outlines the requirements for ahuora to interoperate with these frameworks, and develops a prototype implementation.
+% Ahuora needs to be integrated with existing systems for control and monitoring. However, we don't know what features ahuora needs to do this effectively. This report outlines the development work required to integrate ahuora with existing systems, using a case study to evaluate the effectiveness of the current progress.
+% Factories currently process live data in traditional feedback loops: a Digital Twin Approach can improve this. We have developed a modular way of creating a digital twin that can process live data through Ahuora to make predictions, and evaluated it in a case study - this should be used in industry.
+% Factories currently process live data in feedback loops: a digital twin approach can make this smarter. We have extended the Ahuora Simulation platform so it can be used as a Digital Twin platform for tracking a factory's state and mapking predictions, and evaluated it in a case study - this should be used in industry.
 \maketitle
 
 
@@ -167,7 +176,8 @@ has been commissioned to develop a standardised framework to enable the integrat
 
 The objectives of this project are as follows:
 \begin{itemize}
-    \item Conduct a literature review on Digital Twins, Digital Twin Platforms, and Data Processing Tools.
+    % Literature review has already been conducted, so this is not necessary
+    %\item Conduct a literature review on Digital Twins, Digital Twin Platforms, and Data Processing Tools.
     \item Conduct an Exploratory Analysis of techniques and tools for digital twin development, based on their applicability to the Ahuora Digital Twin Platform and the requirements of live data processing.
     \item Develop the Ahuora Digital Twin platform to a stage where support for live data processing can be added.
     \item Develop a standardised framework for integrating real-time sensor data into the Ahuora Digital Twin Platform.
@@ -197,7 +207,10 @@ and developing a prototype live data processing system for Ahuora that is extens
 
 This project was conducted as part of a real-world, collaborative effort to build the Ahuora Digital Twin platform, so the methodology followed engineering principles, rather than being purely academic experimentation. Additionally, the focus of the project moved between improving the Simulation Platform to support more modelling techniques, and developing a live data processing system that could be integrated into the platform.
 
-Some of the objectives of this project are exploratory, focusing on developing long-term plans for live data processing. Other objectives are more concrete, focusing on developing and testing a prototype live-data processing system based on the current iteration of the Ahuora Simulation platform. To account for this, the project was conducted in three main stages: Research, Development, and Evaluation.
+The Agile Methodology was followed, with a focus on iterative development and continuous feedback. Each chapter of the report represents a full cycle of identifying a problem to solve, developing a solution, and evaluating the solution. Each chapter has a distinct objective. The objective of each chapter varies based on the state of the project. Some are exploratory, focusing on research, understanding needs, and long-term plans. Other objectives are more concrete, focusing on developing and using the system. 
+
+
+% IDK if any of this is relevant or not
 
 \section{Research}
 
@@ -210,6 +223,34 @@ The development stage involved developing a pilot implementation of the framewor
 \section{Evaluation}
 
 The evaluation stage involved testing the pilot implementation in a case study. This was done by developing a model of a heat pump dryer in the Ahuora Simulation Platform, and integrating real-time sensor data into the model. The case study was used to evaluate the feasibility of the framework, and to identify areas for future work.
+
+\chapter{Data Collection: The Heat Pump Dryer} \label{sec:heatpumpcollection}
+
+\section{Purpose}
+
+The literature review identified that the inputs to the Digital Twin Platform would be sensor data from the lower-level data collection software, and the outputs would be results from  the simulations performed by the platform. To be able to test our processes, input data was required, so a Heat Pump Dryer was chosen.
+
+A Heat Pump Dryer provides a good test case for live data processing. Heat Pumps are a common unit operation in chemical plants. A heat pump models most thermodynamic operations, including heat exchangers, compressors, and expansion valves, including the effects of phase changes. The inclusion of a refrigerant loop makes it a good test case as recycle processes are common in industry. Gathering data from the heat pump dryer will provide some insights into the challenges involved in real-time data collection.
+
+Since the Heat Pump Dryer includes its own control system, it does not provide a test case for closed-loop control. This is out of scope and will be a future area of research.
+
+\section{Method}
+
+To gather data from the heat pump dryer, Bluetooth sensors were used to measure temperature and humidity at various points in the dryer. A power meter was used to measure the total power consumption of the heat pump dryer. A raspberry pi was used to collect the data from the sensors, and store it in a InfluxDB time-series database. InfluxDB was chosen because it is one of the platforms identified in the Literature Review as being used for aggregating sensor data; it is also open-source and easy to use. This can represent the data collection system that would be used in industry.
+
+\section{Results}
+
+
+\section{Insights}
+
+The process of gathering and aggregating data was relatively straightforward. This reinforces the finding from the literature review that there are a number of tools already available for collecting and processing sensor data. 
+
+Depending on the process, there is often only a limited amount of information that can be gleaned from the system. For example, we were not able to collect pressure information, as pressure sensors are more costly and require modification of the refrigerant loop. Likewise, we were only able to measure the total power consumption of the heat pump dryer, rather than the power consumption of individual components. Data processing techniques will need to be able to infer the state of the system from the limited data available.
+
+Additionally, in operation, the heat pump dryer has a number of different operating cycles: it does not just continuously run all of the time: sometimes it switches direction, etc. This changes the state of the system, so the simulation will need to be able to account for this. We did not have access to the control system of the heat pump dryer, so we were unable to collect data on the operating cycles. Depending on the setup in industry, this data may or may not be avaliable.
+
+
+
 
 \chapter{Architecture Research}
 
@@ -286,7 +327,7 @@ This project will focus on the data-gathering and processing aspects of this pro
 
 The research in the literature review and the experimentation in IDAES provided a good understanding of the requirements for the Ahuora Digital Twin Platform. The next step was to develop a architecture for the platform that would support these requirements. A pilot implementation was then developed to demonstrate the feasibility of the architecture.
 
-\section{Architecture}
+\section{Research Conclusions} \label{sec:researchconclusions}
 
 The current Ahuora Simulation Platform is split into three main parts:
 
@@ -296,13 +337,7 @@ The current Ahuora Simulation Platform is split into three main parts:
     \item The IDAES solving engine, which is written in Python and runs on the server. This is responsible for solving the simulation, and returning the results to the API. It has been seperated out from the API to allow it to be scaled independently.
 \end{itemize}
 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{architecture.png}
-    \caption{Anticipated method of implementing the Ahuora Simulation Platform into an industrial system.}
-    \label{fig:architecture}
-\end{figure}
+Over time, the Ahuora Simulation platform will be expanded to support dynamic modelling, surrogate modelling, and optimisation.
 
 % TODO: Explain industrial data collection tools, how our stuff fits in.
 Additionally, there are also a number of other tools that are used in industry for collecting and processing sensor data. There may be an integrated solution or a number of different tools that are used together, but they can be grouped by their functionality:
@@ -312,21 +347,108 @@ Additionally, there are also a number of other tools that are used in industry f
     \item Data Storage: These tools are responsible for storing the data in a way that is accessible to the other tools. This may include databases, data lakes, or other storage solutions. In Model-Based Systems Engineering, this is often referred to as a Knowledge Base.
 \end{itemize}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{architecture.png}
+    \caption{Anticipated method of implementing the Ahuora Simulation Platform into an industrial system.}
+    \label{fig:architecture}
+\end{figure}
+
+ Thus, the Ahuora Simulation platform will need to be connected to these tools to access the sensor data. However, there is a discrepancy in the use cases of the Ahuora Simulation Platform and the standard industrial stack. The Ahuora Simulation Platform is designed with experimentation and analysis in mind, which are usually offline\footnote{Many use cases of the Ahuora Simulation platform include designing new factories or modifications to a factory. These tasks mostly use historical data, and are a distinctly seperate problem from live prediction and control.} tasks performed by expert engineers. The standard industrial stack is designed for real-time prediction and control, which are online tasks performed by operators. Both the engineer's workflow and the operator's workflow will require all the modelling and simulation techniques identified, but the operator's workflow will use a fixed set of models.
+
+\begin{table}[ht]
+    \centering
+    \caption{Comparison of Engineer's and Operator's Requirements}
+    \begin{tabular}{|c|p{0.35\textwidth}|p{0.4\textwidth}|}
+        \hline
+        \textbf{Requirement} & \textbf{Engineer} & \textbf{Operator} \\
+        \hline
+        Use Case & Design, Retrofit, & Maintenance, Monitoring, Control \\
+        \hline
+        Modelling & Creates and modifies multiple models & Fixed set of models, only certain parameters may change\\
+        \hline
+        Data Usage & Historical data & Real-time data \\
+        \hline
+        Reliability & Ill-configured models may not solve & Requires 100\% reliability \\
+        \hline
+    \end{tabular}
+    \label{tab:requirements}
+\end{table}
+
+Because of the different use cases, while the Ahuora Simulation platform needs to be designed so that it is easy to design and build a model, this functionality will not be required in operation. The model could be considered ``frozen'' at this point, where only certain parameters can be changed based on the real-time data. It does not make sense to expose functionality to edit the model to an operator. 
 
 
 
+Deploying the a model in production would likely only be done by a trained engineer who manages the plants' SCADA systems.The deployment would have to be custom for each plant, depending on the SCADA system in use, the sensors available, and the model being used. Making a User Interface for this process would be very challenging, and would limit support to only a certain number of protocols. Thus, it can be considered that the interface, pipeline, or service between the Ahuora Simulation Platform and the SCADA system is a custom software component. It may be appropriate to create some sort of framework, API, or service to serve as a bridge between the two systems: a starting point for a custom solution. To understand how this interaction could look, a prototype was created. 
 
 % Impact, or conclusions, or something
-\section{Impact}
+%\section{Impact}
+
+\chapter{Prototype: Live Data Simulation}
+
+\section{Purpose}
+
+The purpose of the prototype was to demonstrate how the Ahuora Simulation Platform could be integrated with a real-time data processing system. It was designed to be a minimum-viable product, demonstrating the feasibility of the architecture developed in the research stage. As appropriate, it could form the basis of a more comprehensive framework, or provide insights into the requirements of a future system.
+
+\section{Method}
 
 
+The Ahuora Simulation Platform has a REST API that is used internally to communicate between the frontend and the backend. This API already includes endpoints for updating properties, and retrieving properties after a simulation. This api could also be used for real-time data processing systems to communicate programmatically with the platform.
 
-\chapter{Development}
+% TODO: Add image: Swagger endpoints for setting propertyinfo, and getting propertyinfo.
+
+Each property field has a unique ID, generated by the database. The flowsheet needs to be set up ahead of time with the relevant unit operations, and properties. To solve the flowsheet repeatedly based on real-time data, the properties in the flowsheet can be updated to reflect the real-time state programmatically, and then a call can be made to the API endpoint to solve the flowsheet. Then, relevant properties can be queried to get the results of the simulation.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{property_ui.png}
+    \caption{Prototype UI designs for setting a property as a ``real-time'' property.}
+    \label{fig:property-ui}
+\end{figure}
+
+As the property IDs are generated by the database, it does not make sense to hard-code them into the real-time data processing system. There should be a more generic way of referring to properties that need to be updated. Some prototyping of a UI method to set properties as ``real-time'' in the existing interface was done, as shown in \cref{fig:property-ui}. This would allow the user to select which properties should be updated in real-time, and provide a way to refer to them in the real-time data processing system. However, ultimately we decided not to implement this yet, partially because it did not provide a clear separation between the engineers workflow and the operators workflow, and partially because it was not necessary for the prototype.
+
+Instead, we used a simple definitions file to map the properties in the Ahuora Simulation Platform to the properties in the real-time data processing system. As shown in \cref{fig:live-constants}, the file included the unit operation name, the property key (used by the Ahuora Simulation Platform to determine property types), and the sensor ID from the real-time data processing system. The data processing platform could use this information to find the property IDs in the Ahuora Simulation Platform, and update them with the real-time data.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{live_constants.png}
+    \caption{Definitions file for mapping properties in the Ahuora Simulation Platform to the real-time data processing system.}
+    \label{fig:live-constants}
+\end{figure}
+
+Rather than truly connecting it to real-time data, for now the prototype used a CSV file with dummy data in the same format as the real-time data collected in \cref{sec:heatpumpcollection}. This was simply to make debugging and testing easier; the process would have been the same if the data was being read from the sensors live.
+
+This prototype also used a very simple model: a pump with an inlet stream and an outlet stream. The power used by the pump was calculated based on the  ``live'' data, and the inlet streams were already specified. The simulation would be used to calculate the outlet pressure and temperature of the pump. This was a simple model, but it was sufficient to demonstrate the feasibility of the architecture.
+
+% TODO: Add image: Running the simulation on the CSV file.
+
+When the script was run, for each new data point, the script would update the properties in the Ahuora Simulation Platform, and then call the API to solve the simulation. The results of the simulation were then printed to the console. 
+
+This worked suprisingly well, and was able to be done in only around 300 lines of code. It was implemented in Rust\footnote{The language is mostly irrelevant, it could be written in any programming language quite simply. Rust was chosen because it particuarly suits reliable realtime processing, and I wanted practice.}, using an API client SDK generated from the OpenAPI specification of the Ahuora Simulation Platform. This made it fully type-safe and reliable. Because of the configuration file format, it would be trivial to add a longer list of sensors and calculated properties, as would be required in more complex properties.
+
+\section{Insights}
+
+This prototype significantly affected the focus of future work. The prototype demonstrated that the Ahuora Simulation Platform could be integrated with a real-time data processing system with relatively little effort, as long as there was a standardised API. Sure, depending on the type and quality of the sensor data, there may need to be some data cleaning and preprocessing, but that is use-case specific business logic. Hence, there may be little need to develop a standardised data preprocessing pipeline or service for the Ahuora Digital Twin Platform.
+To confirm this, the heat pump dryer will be used as a case study in linking a more complex system (with custom business logic required) to the Ahuora Simulation Platform.
+
+This approach, which closely follows the architecture described in \cref{fig:architecture} in \cref{sec:researchconclusions}, also outsources the processing, visualisation, and control actions to third-party systems, as all data would be stored in the factory's existing knowledge base after processing, completely external to all Ahuora Systems. In some ways, this is a good approach: it could be easy to make a "headless" version of the Ahuora Simulation platform that can be deployed with a single frozen model, into a factory's existing systems. This would be good for stability and reliability reasons, limiting the complexity of the system. This is the unix ``do one thing and do it well" philosophy applied to software architecture.
+
+However, there are disadvantages to this approach. One of the key value propositions of the Ahuora Digital Twin Platform is that it provides one place to define a factory's architecture, and then multiple types of analysis can be used on it. The same structures could be helpful for automatically creating visualisations of the real-time state of the factory, fault diagnostics, control, and surrogate modelling. As the platform currently stands, it cannot be considered a ``Digital Twin'', true digital twins include multiple fidelities of simulation, and dynamic ``state'' that adapts to real-world conditions via a feedback loop. The next steps in development will need to balance these two approaches, to find an architecture that includes the advantages of each.
 
 
-\section{Minimum Viable Product}
+\chapter{Recording History}
 
-\section{Extensions}
+\section{Purpose}
+
+To better understand the tradeoffs of a more integrated platform, it was decided to implement a solve history system. This would allow the user to view the results of previous simulations, and compare them. It is a useful feature for the Ahuora Simulation platform as a standalone tool, but it can also be used to record the results of the real-time data processing system. A simple dashboard can be created to view past solving results, which can show how the system has changed over time. If significant advantages are found in this approach, it may be worth considering a more integrated system. If not, it can provide some insight into how to break the system apart while retaining similar functionality.
+
+
+\section{Development}
+
+
+\section{Insights}
+
 
 
 
@@ -351,6 +473,16 @@ Additionally, there are also a number of other tools that are used in industry f
 % Present the outcome, and the arguments
 
 \section{Future Work}
+
+\begin{landscape}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=1.5\textwidth]{roadmap.pdf}
+        \caption{Roadmap of future development, broken down into tasks.}
+        \label{fig:development_flowchart}
+    \end{figure}
+    \end{landscape}
 
 \chapter*{References}
 
