@@ -228,6 +228,17 @@ The development stage involved developing a pilot implementation of the framewor
 
 The evaluation stage involved testing the pilot implementation in a case study. This was done by developing a model of a heat pump dryer in the Ahuora Simulation Platform, and integrating real-time sensor data into the model. The case study was used to evaluate the feasibility of the framework, and to identify areas for future work.
 
+
+\chapter{Proposed System Architecture}
+% Digital Twin Software needs to suit the use cases of Network Administrators, Chemical Engineers, Process Engineers, and Operators to be useful in industry.
+% Steady-State, Dynamic, and Surrogate modelling are all required to support the different use cases.
+% A Digital Twin platform needs to integrate with existing SCADA systems and data processing tools to be useful in industry.
+
+% Simulation results need to be avalible within the platform, but this should not replace the company's existing knowledge base/data lake/logging.
+% There is no need for Ahuora to develop a new data processing platform, as SCADA systems or things such as kafka/mqtt do this fine.
+% It should be easy to switch between design and operation modes, assuming the network administrator has set up the external data processing platform/sources.
+% The Ahuora Digital Twin Platform needs to be designed to support these requirements.
+
 \chapter{Data Collection: The Heat Pump Dryer} \label{sec:heatpumpcollection}
 
 \section{Purpose}
@@ -629,6 +640,8 @@ As the solving for the heat pump dryer was not always successful, the next step 
 
 % Talk about why initialisation could be a failing point, how to fix that (e.g remove the recycle, or save initialisation states)
 
+
+
 % The heat exchangers are the most complex unit operation, and they often failed to initialise, we can swap them for heaters and coolers to see if that helps. we weren't using them properly anyway.
 
 % Maybe mention scaling?
@@ -688,3 +701,9 @@ As the solving for the heat pump dryer was not always successful, the next step 
 
 \end{appendices}
 \end{document}
+
+
+% TODO Next:
+% - Add a section at the start, explaining the proposed system architecture. (I.e, what I think is the best way to implement the Ahuora Digital Twin Platform)
+% - Rework the other sections to be inline with this arch
+

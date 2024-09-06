@@ -11,7 +11,7 @@
 \usepackage{wrapfig}
 \usepackage{gensymb}
 
-\title{Surrogate Modelling in a Live Simulation Environment}
+\title{Adaptive Surrogate Modelling in a Live Simulation Environment}
 
 \author{Bert Downs }
 
@@ -37,22 +37,40 @@ From a Software Engineering perspective, these techniques exist as research conc
 
 \section{Research Questions and their significance}
 
+% These questions need to be more specific, more focused on the software engineering aspects of the project, and more like a hypothesis.
+% What do you want to do
+% What do you want to prove
+% What problem is there, why do you propose your solution
+
 This project aims to answer the following research questions:
 
-\textbf{RQ1: What adjustments need to be made to existing machine learning techniques to make them suitable for a live ``Digital Twin'' environment?}
+\textbf{RQ1: How effective are Operator Networks at surrogate modelling dynamic chemical processes for model predictive control?}
+%% Hypothesis: Operator Networks are a suitable technique for surrogate modelling dynamic systems in a live environment, because they can be updated in real-time, and can handle concept drift.
 
 Online learning has unique challenges not present in offline learning, because the model must be updated in real-time, meaning that there are strict processing time constraints. Additionally, concept drift can occur, where the underlying system changes over time and the model must adapt to this. This is common in industrial processes, where equipment can degrade over time, or process conditions can change. There is little research into how new machine learning techniques, such as Operator Networks, can be adapted to these constraints.
 
-\textbf{RQ2: How can different fidelity models (including physics-based models, machine learning models, and hybrid models) be combined to create a Digital Twin?} 
+\textbf{RQ2: How does a unified system for different fidelity models (including physics-based models, machine learning models, and hybrid models) affect their usability?} 
 
-Each different modelling technique has different strengths and weaknesses. Physics-based models are accurate, and generalise well, but can be computationally expensive. Machine learning models are often faster, and can easily respond to change, but do not generalise well. In an industrial setting it may be benificial to use different types of models in different circumstances, or to combine them in some way. This research question aims to explore the different ways that models can be combined, from an operational standpoint.
+Each different modelling technique has different strengths and weaknesses. Physics-based models are accurate, and generalise well, but can be computationally expensive. Machine learning models are often faster, and can easily respond to change, but do not generalise well. In an industrial setting, multi-fidelity modelling increases model performance and can make them suitable for real-time systems \cite{cao2021simulation}. However, creating multi-fidelity models is a complex process, spanning multiple different disciplines. This research question aims to explore the different ways that models can be developed in parallel, from the perspective of an industrial partner.
 
 
-\textbf{RQ3: What software architecture would support this?}
+\textbf{RQ3: Does a Centeralised, Distributed, Component-based, Layered, or Microservices architecture provide the best support for implementing these techniques in a live industrial environment?}
 
 Recent research into advanced modelling and optimisation techniques is more likely to be used if there is a clear path to implementation. This research question will apply software engineering principles to the the findings of RQ1 and RQ2, to develop a platform that supports the implementation of these techniques in an industrial setting. Project Ahuora, a research group in the University of Waikato, is developing an energy-technology platform using process simulation and adaptive digital twin technology. It is being built to support many different types of chemical analysis, reducing redundancy by using the same data structures for each. This project will contribute to the development of the Ahuora platform, by extending it to support dynamic modelling, surrogate modelling, data-driven modelling, optimisation, and control tooling. These workflows will make it simpler for the industry to adopt recent research. The Ahuora platform will be used as a case study to investigate a suitable software architecture, taking into account the needs of relevant stakeholders.
 
+\textbf{RQ4: When Digital Twin techniques are implemented concretely, what real-world performance benifit do they provide to New Zealand Industries?}
+
+Recent work has outlined a conceptual framework for implementing Digital Twin Technologies \cite{ors2020conceptual}, but there is little research into how they perform in a real-world setting. This research question aims to deploy the Ahuora platform in a live industrial environment, and to measure the performance benefits that these techniques provide. This will provide evidence to industrial partners that these techniques are effective. 
+
+
 \section{Proposed Methodology}
+
+% Add dynamic modelling to the Ahuora platform
+% Add surrogate modelling to the Ahuora platform
+% add optimisation to the Ahuora Platform
+% Use operator networks to solve the partial differential equations for optimisation
+% Add the required features for control
+% 
 
 This project includes a mix of software engineering, data science, and chemical engineering. Much of the novelty in this project comes from combining research from these different fields, to create something that works better in the real world. Thus, a significant amount of time will be spent reviewing relevant literature in these fields, to understand the most recent and most robust techniques available. This research will then be considered in the context of other disciplines, to understand where it can be applied.
 
@@ -62,7 +80,9 @@ Through the initial research, and over time, a better understanding of what is r
 
 \section{Expected Outcome}
 
-Through this research, it is expected that a framework for implementing advanced machine learning techniques in a live industrial environment will be developed. The Ahuora platform will be extended to support these techniques, and will be used as a case study to demonstrate their effectiveness. This will provide a proof of concept for the use of these techniques in a real-world setting, and will provide a tool for industrial partners to use in their own processes.
+
+This research will enable Digital Twin technologies, Operator Networks, and multi-fidelity surrogate modelling to be used by a broader audience, in conjunction with one another, outside of their core research communities.
+By the end of this project, the Ahuora Digital Twin Platform will support dynamic modelling, surrogate modelling, data-driven modelling, optimisation, and control tooling. It will be deployed in New Zealand industries, providing real-world performance benifits. This will provide evidence to industrial partners that these techniques are viable, feasible, and desirable, enhancing their uptake by the Industrial Process sector.
 
 
 % \section{Resources}
