@@ -44,17 +44,21 @@ From a Software Engineering perspective, these techniques exist as research conc
 
 This project aims to answer the following research questions:
 
-\textbf{RQ1: How effective are Operator Networks at surrogate modelling dynamic chemical processes for model predictive control?}
+\textbf{RQ1: How effective are Operator Networks at surrogate modelling dynamic chemical processes for model predictive control?} % for model predictive control?
 %% Hypothesis: Operator Networks are a suitable technique for surrogate modelling dynamic systems in a live environment, because they can be updated in real-time, and can handle concept drift.
 
 Online learning has unique challenges not present in offline learning, because the model must be updated in real-time, meaning that there are strict processing time constraints. Additionally, concept drift can occur, where the underlying system changes over time and the model must adapt to this. This is common in industrial processes, where equipment can degrade over time, or process conditions can change. There is little research into how new machine learning techniques, such as Operator Networks, can be adapted to these constraints.
 
-\textbf{RQ2: How does a unified system for different fidelity models (including physics-based models, machine learning models, and hybrid models) affect their usability?} 
+\textbf{RQ2: How does a unified system for different fidelity models (including physics-based models, machine learning models, and hybrid models) affect their application?} 
+%  How can we network multiple machine learning/physics based models together? Can we make these independent but still as accurate as a single model of the entire system? - Model Observability/Interpretability
 
 Each different modelling technique has different strengths and weaknesses. Physics-based models are accurate, and generalise well, but can be computationally expensive. Machine learning models are often faster, and can easily respond to change, but do not generalise well. In an industrial setting, multi-fidelity modelling increases model performance and can make them suitable for real-time systems \cite{cao2021simulation}. However, creating multi-fidelity models is a complex process, spanning multiple different disciplines. This research question aims to explore the different ways that models can be developed in parallel, from the perspective of an industrial partner.
 
 
 \textbf{RQ3: Does a Centeralised, Distributed, Component-based, Layered, or Microservices architecture provide the best support for implementing these techniques in a live industrial environment?}
+% How feasible is this in a live industrial environment? 
+% How viable is this approach to improving descision making in industry?
+% 
 
 Recent research into advanced modelling and optimisation techniques is more likely to be used if there is a clear path to implementation. This research question will apply software engineering principles to the the findings of RQ1 and RQ2, to develop a platform that supports the implementation of these techniques in an industrial setting. Project Ahuora, a research group in the University of Waikato, is developing an energy-technology platform using process simulation and adaptive digital twin technology. It is being built to support many different types of chemical analysis, reducing redundancy by using the same data structures for each. This project will contribute to the development of the Ahuora platform, by extending it to support dynamic modelling, surrogate modelling, data-driven modelling, optimisation, and control tooling. These workflows will make it simpler for the industry to adopt recent research. The Ahuora platform will be used as a case study to investigate a suitable software architecture, taking into account the needs of relevant stakeholders.
 
