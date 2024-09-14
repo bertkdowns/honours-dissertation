@@ -8,19 +8,18 @@ A Heat Pump Dryer provides a good test case for live data processing. Heat Pumps
 
 Since the Heat Pump Dryer includes its own control system, it does not provide a test case for closed-loop control. This is out of scope and will be a future area of research.
 
-
-\section{Method}
-
-\begin{wrapfigure}{r}{0.4\textwidth}
+\begin{figure}
     \centering
     \includegraphics[width=0.4\textwidth]{dryer.png}
     \caption{Heat Pump Dryer}
     \label{fig:dryer}
-\end{wrapfigure}
+\end{figure}
+
+\section{Method}
+
 
 To gather data from the heat pump dryer, Bluetooth sensors were used to measure temperature and humidity at various points in the dryer. A power meter was used to measure the total power consumption of the heat pump dryer. A raspberry pi was used to collect the data from the sensors, and store it in a InfluxDB time-series database. InfluxDB was chosen because it is one of the platforms identified in the Literature Review as being used for aggregating sensor data; it is also open-source and easy to use. This can represent the data collection system that would be used in industry.
 
-\section{Results}
 
 \begin{figure}
     \centering
