@@ -38,11 +38,47 @@
 Traditional factory control systems are based on feedback loops that use sensor data to adjust the factory's state. However, these systems are limited in their ability to predict future states and optimise factory performance. Digital Twinning is a new approach that combines live factory data, historical state, mathematical modelling, and data-driven modelling to create a digital replica of the factory. 
 However, in existing literature, most examples of digital twinning focus on specific situations, rather than providing a general framework for creating digital twins. Many remain at the proof-of-concept stage, and have not yet been deployed in industrial settings.
 
+In order to implement digital twinning in industry, simulation platforms must be able to work with and process live data, but most simulation environments are designed for design and analysis, rather than real-time processing \cite{agi2024computational}. The objective of this research is to evaluate how effectively an existing simulation platform can be used or extended to process live data.
 
+One such simulation platform is the IDAES-PSE\footnote{IDAES: Institute for the Design of Advanced Energy Systems - Process Simulation Environment, \href{https://idaes-pse.readthedocs.io}{https://idaes-pse.readthedocs.io}} modelling framework, which is designed for the analysis of chemical processes \cite{lee2021idaes}. It supports a variety of modelling techniques, including steady-state chemical modelling, and dynamic modelling of time-dependent processes. 
+It has also been extended to support data-driven modelling techniques, using libraries such as PySMO\footnote{PySMO: Python-based Surrogate Modelling Objects, \href{https://idaes-pse.readthedocs.io/en/stable/explanations/modeling_extensions/surrogate/api/pysmo/index.html}{https://idaes-pse.readthedocs.io}} and OMLT\footnote{OMLT: Optimization and Machine Learning Toolkit, \href{https://omlt.readthedocs.io/en/latest/}{https://omlt.readthedocs.io/en/latest/}} \cite{cecconOMLTOptimizationMachine2022} 
 
+This research evaluates the extent to which the IDAES-PSE modelling framework can be used to implement emerging chemical modelling techniques for live data processing, to prove it's suitability as a platform on which to develop such tools.
+
+\section{Method}
 %Experimental procedure
 %Provide sufficient details to allow the work to be reproduced by an independent researcher. Methods that are already published should be summarized, and indicated by a reference. If quoting directly from a previously published method, use quotation marks and also cite the source. Any modifications to existing methods should also be described.
 %This section can contain Material and methods and Theory/calculation. A Theory section should extend, not repeat, the background to the article already dealt with in the Introduction and lay the foundation for further work. In contrast, a Calculation section represents a practical development from a theoretical basis.
+
+IDAES has many components, so an iterative validation process is used. The evaluation is broken down into parts, each focusing on a different piece of functionality. 
+
+The core functionality of the IDAES modelling framework is steady-state modelling, where a chemical system is in a stable equilibrium and variables do not change over time. In a live data processing context, steady-state simulations can be used to model the entire state of the factory, based on a sample of avaliable sensor data. Multiple steady-state simulations can be run at different time steps, but each represents a stable equilibrium. This is the simplest form of modelling to integrate with live data. 
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|p{10cm}|}
+        \hline
+        \textbf{Functionality} & \textbf{Description} \\
+        \hline
+        Steady State Modelling & Analysis of systems in a stable equilibrium where variables do not change over time. \\
+        \hline
+        Dynamics & Modelling of time-dependent processes to understand how systems evolve over time. \\
+        \hline
+        Optimisation/Control & Techniques to find the best operating conditions or control strategies for a system. \\
+        \hline
+        Hybrid Modelling & Combining different modelling approaches, such as data-driven and first-principles models, to improve accuracy and robustness. \\
+        \hline
+    \end{tabular}
+    \caption{Different pieces of functionality evaluated from the IDAES-PSE framework.}
+    \label{tab:functionality}
+\end{table}
+
+Dynamic Modelling adds a time dimension to the simulation, allowing changes in the system to propogate through over time. This is useful for predicting how a factory will respond to changes in input conditions, and can be a key decision-making tool for factory operators.
+
+Optimisation and Control techniques can be used to find the best operating conditions for a system, or to develop control strategies that keep the system in a desired state. This enables closed-loop control of a industrial process, where the system can automatically adjust itself to maintain optimal conditions.
+
+Hybrid Modelling implements Machine Learning techniques into the model. IDAES is built on Pyomo,\cite{CITATION_NEEDED}, an algebraic modelling language, but it is possible to combine machine learning techniques with data-driven modelling libraries such as PySMO. This is useful for situations where the system is too complex to model using a single approach, or where data is available but the underlying physics are not well understood for parts of the system. The aim of hybrid modelling is to increase generalisation and explainability compared to purely data-driven models, and increase accuracy and adaptability compared to purely first-principles models.
+
 
 \section{Results \& Discussion}
 %Results should be clear and concise.
