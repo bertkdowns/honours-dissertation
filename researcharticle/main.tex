@@ -113,6 +113,8 @@ The evaluation criteria do not focus on the accuracy of the IDAES platform in pe
 
 ``Suitability for Live Data Processing'' is chosen as the final criteria. It is the most high-level, and to some degree it builds on the other two. However, it also considers the application of the functionality in a real-world system, and whether or not the functionality is useful in an online environment.
 
+The source code of each prototype is avaliable on Github\footnote{\href{https://github.com/bertkdowns/model-predictive-control}{https://github.com/bertkdowns/model-predictive-control}}.
+
 % Max 1 page per functionality evaluated.
 \section{Steady State Modelling}
 
@@ -155,6 +157,10 @@ To evaluate dynamics, a model of a steam tank, with a valve controlling the inle
 This provides a simple example of a dynamic system. The inlet and outlet valve and the PID controller were not dynamic models: From a mathematical perspective, this means their properties were fully determined by the inlet and outlet conditions. The only dynamic model in this flowsheet is the Steam Tank. From a mathematical perspective, this means that the state of the steam tank is determined by the inlet and outlet conditions, but also the previous state of the tank, i.e how ``full" the tank is. In chemical engineering, this is often referred to as the ``holdup" of the tank.
 
 % todo: discuss how it actually does this: pyomo differentiation, sets, timescales, etc
+
+The dynamic functionality of IDAES is built on the library Pyomo.DAE \cite{nicholson2018pyomo}, which allows for the creation and solution of differential algebraic equations. It extends Pyomo to support a ContinuousSet, or bounded continuous domain, over which derivatives and integrals can be calculated. 
+
+Internally, Pyomo.DAE breaks the continuous domain into a series of finite time steps. Thus, constraints to the IDAES model are specified as a function of time, which is discretised and evaluated at each time step.
 
 \subsection{Evaluation}
 % explain why it is/isnt complete as a standalone tool
