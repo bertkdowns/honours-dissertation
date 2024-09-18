@@ -47,6 +47,8 @@ Surrogate Modelling is the process of creating a simplified model of a complex s
 
 IDAES includes a framework for data-driven modelling called PySMO. This provides utilities for training polynomial, Radial Basis Function, and Kriging models to approximate the behaviour.
 
+% TODO: Explain how we tested surrogate modelling in IDAES (perhaps just from the research article)
+
 \subsection{Key Findings}\label{sec:surrogatemodelling}
 
 Surrogate Modelling may be achieved using IDAES's built-in PySMO libraries, or other similar libraries such as OMLT. It is reasonably straightforward to train a surrogate model to represent a non-dynamic unit operation, but dynamic unit operations get significantly more complex - instead of modelling a single value, the surrogate model must be able to model the entire time system. There are some methods of doing this, such as using neural ODEs, Residual Networks, Operator Networks, or some other sort of convolutional network. There is little research into applying these methods in the field of chemical and process simulation, especially in the context of mathematical modelling such as the IDAES framework.
