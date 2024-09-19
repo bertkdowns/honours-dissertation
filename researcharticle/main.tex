@@ -11,6 +11,10 @@
 \usepackage{wrapfig}
 \usepackage{gensymb}
 \usepackage{amssymb}
+\usepackage{makecell}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 \title{Evaluating The Effectiveness of IDAES and the Ahuora Simulation Platform for Live Data Processing}
 
@@ -162,23 +166,35 @@ The dynamic functionality of IDAES is built on the library Pyomo.DAE \cite{nicho
 
 Internally, Pyomo.DAE breaks the continuous domain into a series of finite time steps. Thus, constraints to the IDAES model are specified as a function of time, which is discretised and evaluated at each time step.
 
+To test this, a dynamic model was created, and constraints were used to model a ramp in inlet pressure over time. This was done by specifying an equation for the inlet pressure,to be applied at each time step
+
 \subsection{Evaluation}
 % explain why it is/isnt complete as a standalone tool
-The IDAES framework is well-suited to dynamic modelling, as it provides tools for creating and solving differential equations. It can easily model the same system at different time scales.
+The IDAES framework is well-suited to dynamic modelling, as it provides tools for creating and solving differential equations. It can easily model the same system at different time scales. Dynamic models certainly are much more complex than steady-state models, but IDAES and Pyomo provide the tools to handle this complexity.
 
 % explain why it is/isnt easy to integrate with other systems
-
+Extracting data and setting properties for a dynamic model is much the same as for a steady-state model, as it uses similar Pyomo constructs. Because the dynamic model is broken down into algebraic equations, it can be solved in the same way as a steady state simulation. Simple idaes flowsheets can easily be extended to include dynamic models, and the same tools can be used to solve them. 
 
 % explain why it is/isnt suitable for live data processing
+Dynamic models can be used in two different ways for live data processing. First, the initial conditions of the model can be specified from live data, and then the dynamic model can be solved to predict future states. If the model and initial conditions are specified correctly, from a software development perspective this is no more complex than a steady state model (even though it is much more complex as a mathematical or chemical system), as the same data attributes need to be accessed. 
 
+Alternatively, constraint functions (such as in the test case) could be generated from the live data so that the model simulates the real-world changes in variables. Sensor data is not a continuous domain, so an interpolation or modelling strategy would need to be created to handle this. The tools of Pyomo.DAE are flexible enough to allow for this, so dynamic modelling in IDAES would be suitable in a live data processing context.
 
 \section{Optimisation/Control}
-
 
 \subsection{Test Case}
 
 % Explain what you did to analyse it - the test case
+To analyse optimisation, a hydrodealkylation (HDA) reaction model is evaluated. The source code for this model is avaliable in the IDAES examples documentation\footnote{\href{https://idaes.github.io/examples-pse/latest/Tutorials/Basics/HDA_flowsheet_solution_doc.html}{https://idaes.github.io/examples-pse/latest/Tutorials/Basics/HDA\_flowsheet\_solution\_doc.html}}.
 
+To optimise the flowsheet, firstly the model is solved as a square problem (with all values specified). This enables getting a good initial location to start optimising from.
+Then, variables are unfixed to create a space to optimise over, and an objective function is added to the model.
+
+Pyomo natively supports objective functions, that the optimization solver attempts to maximise or minimise. They are specified as an expression, in a similar way to constraints. In the HDA test case, the objective function is to minimise the operating cost, which is a function of the total heating and cooling costs of the system. 
+
+To analyse control, the IDAES Caprese \footnote{\href{https://idaes-pse.readthedocs.io/en/stable/explanations/modeling_extensions/caprese/nmpc.html}{https://idaes-pse.readthedocs.io/en/stable/explanations/modeling\_extensions/caprese/nmpc.html}} library was investigated. Caprese supports simulating model predictive control, where plant inputs are determined by solving an optimisation problem at each time step. However, it can only simulate control, and thus would not be an appropriate tool for use in a live data pipeline.
+
+Other than model predictive control, there is little support for optimising dynamic flowsheets in IDAES. The methods that do exist use surrogate models, to linearise the problem. Surrogate models will be discussed \cref{sec:hybrid}.
 
 % explain how it works internally
 
@@ -186,10 +202,12 @@ The IDAES framework is well-suited to dynamic modelling, as it provides tools fo
 \subsection{Evaluation}
 % explain why it is/isnt complete as a standalone tool
 
+Because optimisation has first-party support from Pyomo, and because creating optimisation functions is
+
 % explain why it is/isnt easy to integrate with other systems
 
 % explain why it is/isnt suitable for live data processing
-\section{Hybrid Modelling}
+\section{Hybrid Modelling} \label{sec:hybrid}
 \subsection{Test Case}
 
 % Explain what you did to analyse it - the test case
@@ -220,14 +238,14 @@ The weights of the trained model are then saved to disk.
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{|l|p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|}
+    \begin{tabular}{|l|p{0.2\textwidth}|p{0.2\textwidth}|p{0.21\textwidth}|}
         \hline
         \textbf{Functionality} & \textbf{Completeness as a Standalone Tool} & \textbf{Ease of Integration} & \textbf{Suitability for Live Data Processing} \\
         \hline
-        Steady State Modelling & \hfil \checkmark & \hfil \checkmark & \hfil \checkmark \\
-        Dynamics & \hfil \checkmark & \hfil - & \hfil \checkmark \\
-        Optimisation/Control & \hfil \checkmark & \hfil \checkmark & \hfil - \\
-        Hybrid Modelling & \hfil \checkmark & \hfil \checkmark & \hfil - \\
+        Steady State Modelling & \hfil \cmark & \hfil \cmark & \hfil \cmark \\ \hline
+        Dynamics & \hfil \cmark & \hfil \cmark  & \makecell{\cmark \\\footnotesize{(if specified correctly)} } \\\hline
+        Optimisation/Control & \makecell{\cmark \\\footnotesize{(via pyomo)} } & \hfil \cmark & \makecell{ \footnotesize{Needs platform} \\\footnotesize{for control}} \\\hline
+        Hybrid Modelling & \hfil \cmark & \makecell{ \footnotesize{Only focused on }\\\footnotesize{batch learning}} & \makecell{\cmark \\\footnotesize{(except dynamic models)} } \\
         \hline
     \end{tabular}
     \caption{Evaluation of IDAES-PSE functionality against the criteria.}
