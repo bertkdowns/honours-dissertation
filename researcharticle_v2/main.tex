@@ -40,6 +40,14 @@
 % State the objectives of the work and provide an adequate background, avoiding a detailed literature survey or a summary of the results.
 
 
+Traditional factory control systems are based on feedback loops that use sensor data to adjust the factory's state. However, these systems are limited in their ability to predict future states and optimise factory performance. Digital Twinning is a new approach that combines live factory data, historical state, mathematical modelling, and data-driven modelling to create a digital replica of the factory. 
+However, in existing literature, most examples of digital twinning focus on specific situations, rather than providing a general framework for creating digital twins. Many remain at the proof-of-concept stage, and have not yet been deployed in industrial settings.
+
+In order to implement digital twinning in industry, simulation platforms must be able to work with and process live data, but most simulation environments are designed for design and analysis, rather than real-time processing \cite{agi2024computational}. The objective of this research is to evaluate how effectively an existing simulation platform can be used or extended to process live data.
+
+One such simulation platform is the IDAES-PSE\footnote{IDAES: Institute for the Design of Advanced Energy Systems - Process Simulation Environment, \href{https://idaes-pse.readthedocs.io}{https://idaes-pse.readthedocs.io}} modelling framework, which is designed for the analysis of chemical processes \cite{lee2021idaes}. It supports a variety of modelling techniques, including steady-state chemical modelling, and dynamic modelling of time-dependent processes. 
+It has also been extended to support data-driven modelling techniques, using libraries such as PySMO\footnote{PySMO: Python-based Surrogate Modelling Objects, \href{https://idaes-pse.readthedocs.io/en/stable/explanations/modeling_extensions/surrogate/api/pysmo/index.html}{https://idaes-pse.readthedocs.io}} and OMLT\footnote{OMLT: Optimization and Machine Learning Toolkit, \href{https://omlt.readthedocs.io/en/latest/}{https://omlt.readthedocs.io/en/latest/}} \cite{cecconOMLTOptimizationMachine2022} 
+
 
 This research evaluates the extent to which the IDAES-PSE modelling framework can be used to implement emerging chemical modelling techniques for live data processing, to prove it's suitability as a platform on which to develop such tools.
 
@@ -79,6 +87,10 @@ Hybrid Modelling implements Machine Learning techniques into the model. IDAES is
 This is useful for situations where the system is too complex to model using a single approach, or where data is available but the underlying physics are not well understood for parts of the system. 
 The aim of hybrid modelling is to increase generalisation and explainability compared to purely data-driven models, and increase accuracy and adaptability compared to purely first-principles models.
 
+
+For each of piece of functionality listed in \cref{tab:functionality}, a simple prototype flowsheet is developed to evaluate the functionality of IDAES-PSE in a live data processing context. This flowsheet consists of a Heater, that is heating steam from an inlet temperature of approximately 600 K at atmospheric pressure. This approach allows to focus on the functionality of the IDAES-PSE framework, rather than the complexity of the flowsheet, as the techniques used generalise to larger and more complex systems.
+
+
 \subsection{Evaluation Criteria}
 
 Each functionality is tested using by developing and evaluating a simple prototype in the IDAES-PSE framework. 
@@ -104,7 +116,11 @@ The prototypes are used to evaluate the functionality of IDAES-PSE against three
 
 Evaluating the functionality of IDAES-PSE as a standalone tool gives an indication of the core functionality. This acts as a control, to compare what value is added when connected with live data systems. It acts as an indication of what IDAES functionality is useful for conventional process modelling.
 
-Analysing how the functionality can be used with process data and control systems gives an indication of the potential value of simulation software in a factory environment. 
+Analysing how the functionality can be used with process data and control systems gives an indication of the potential value of simulation software in a factory environment. This is used to systematically explore a range of potential use cases for simulation software.
+
+The evaluation criteria do not focus on the accuracy of the IDAES platform in performing chemical simulations, or user-friendliness of the interfaces, or the performance of the solving process itself. Those characteristics are considered out of scope of this study, and are evaluated elsewhere \cite{hart2011pyomo} \cite{myhre2022investigation}. Instead, the evaluation criteria focus on the ability of the IDAES platform to be used for live data processing, and the ease of integration with other systems.
+
+
 
 %Process Data
 %Maintenance Data
@@ -123,6 +139,36 @@ Analysing how the functionality can be used with process data and control system
 
 % TODO: Add a table for each piece of functionality evaluated, showing the results of the evaluation against the criteria.
 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|p{2.4cm}|p{4cm}|p{4cm}|p{4.5cm}|}
+        \hline
+        \textbf{Functionality} & \textbf{As Standalone Tools} & \textbf{With Process Data} & \textbf{For Control Systems} \\
+        \hline
+        \makecell{Steady State \\ Modelling} & 
+        Basic analysis of systems in equilibrium & 
+        Model live conditions & 
+        Estimate target conditions for control strategies \\
+        \hline
+        \makecell{Dynamics} & 
+        Simulate how changes propogate across a system & 
+        Predict effect of changing input conditions & 
+        Develop dynamic control strategies \\
+        \hline
+        \makecell{Optimisation} & 
+        Find optimal operating conditions & 
+        Use real-time data to refine optimisation & 
+        Implementing Model Predictive control \\
+        \hline
+        \makecell{Hybrid \\ Modelling} & 
+        Combine modelling approaches for better accuracy & 
+        Online learning so digital twin matches physical state & 
+        Self-Adaptive control systems based on past performance \\
+        \hline
+    \end{tabular}
+    \caption{Morphological matrix showing overlaps and use cases of IDAES-PSE functionality.}
+    \label{tab:morphological_matrix}
+\end{table}
 
 
 
