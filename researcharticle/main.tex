@@ -164,7 +164,7 @@ This provides a simple example of a dynamic system. The inlet and outlet valve a
 
 The dynamic functionality of IDAES is built on the library Pyomo.DAE \cite{nicholson2018pyomo}, which allows for the creation and solution of differential algebraic equations. It extends Pyomo to support a ContinuousSet, or bounded continuous domain, over which derivatives and integrals can be calculated. 
 
-Internally, Pyomo.DAE breaks the continuous domain into a series of finite time steps. Thus, constraints to the IDAES model are specified as a function of time, which is discretised and evaluated at each time step.
+Internally, Pyomo.DAE breaks the continuous domain into a series of finite time steps. Thus, it constraints to the IDAES model are specified as a function of time, which is discretised and evaluated at each time step.
 
 To test this, a dynamic model was created, and constraints were used to model a ramp in inlet pressure over time. This was done by specifying an equation for the inlet pressure,to be applied at each time step
 

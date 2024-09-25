@@ -13,8 +13,38 @@
 \usepackage{amssymb}
 \usepackage{makecell}
 \usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage{listings}
+\usepackage{xcolor}
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
 
 \title{Evaluating The Effectiveness of IDAES and the Ahuora Simulation Platform for Live Data Processing}
 
@@ -50,6 +80,28 @@ It has also been extended to support data-driven modelling techniques, using lib
 
 
 This research evaluates the extent to which the IDAES-PSE modelling framework can be used to implement emerging chemical modelling techniques for live data processing, to prove it's suitability as a platform on which to develop such tools.
+The results of this research are used to propose a general framework for implementing digital twinning in industry.
+
+
+\section{Theoretical Framework}
+
+Conventional simulation platforms do not have built-in support for live data processing. Likewise, conventional factory SCADA\footnote{SCADA systems: Supervisory Data Aquisition and Control systems.} systems do not have built-in support for complex simulation. To integrate a simulation platform with live data, a software system must be created that can merge the two systems. This can be considered as an intermediate layer between the simulation platform and the factory SCADA system.
+
+
+% Todo: Should this be generalised further, removing references to specific model types for a simulation platform an a factory floor environment? (I.e don't list steady state modelling etc, data collection etc)
+% Then, in the discussion section, the specific implementation of these can be added.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{research_journal_framework.pdf}
+    \caption{Theoretical framework for evaluating IDAES-PSE in a live data processing context.}
+    \label{fig:theoretical_framework}
+\end{figure}
+
+The concept of a “Digital Twin” refers to a simulation of something in the physical world, which is kept up to date with a physical system using real-time data \cite{yu2022energy}.
+In \cref{fig:theoretical_framework}, this intermediate layer is what converts the simulation platform, and the data from the factory, into a digital twin. It is broken into two parts: a ``Digital Twin Adapter'' which is responsible for converting the data from the factory into a format that the simulation platform can understand, and to provide results from simulations back the factory. Also specified is a ``Digital Twin State'', which represents an estimate of the current state of the factory, based on the simulation results and the live data. This represents the ability of a Digital Twin to "learn" how the physical system behaves, and adjust the inputs to the simulation accordingly.
+
+The results of evaluating the IDAES-PSE platform will be considered in the context of this theoretical framework, to determine what the high-level requirements are for a Digital Twin that is built on top of existing simulation and live data processing platforms.
+
 
 \section{Method}
 %Experimental procedure
@@ -116,7 +168,8 @@ The prototypes are used to evaluate the functionality of IDAES-PSE against three
 
 Evaluating the functionality of IDAES-PSE as a standalone tool gives an indication of the core functionality. This acts as a control, to compare what value is added when connected with live data systems. It acts as an indication of what IDAES functionality is useful for conventional process modelling.
 
-Analysing how the functionality can be used with process data and control systems gives an indication of the potential value of simulation software in a factory environment. This is used to systematically explore a range of potential use cases for simulation software.
+Analysing how the functionality can be used with process data and control systems gives an indication of the potential value of simulation software in a factory environment. This is used to systematically explore a range of potential use cases for simulation software. 
+To do this, some sample data is generated, and then different techniques are used to process the sample data, emulating how live data would be used in a factory environment.
 
 The evaluation criteria do not focus on the accuracy of the IDAES platform in performing chemical simulations, or user-friendliness of the interfaces, or the performance of the solving process itself. Those characteristics are considered out of scope of this study, and are evaluated elsewhere \cite{hart2011pyomo} \cite{myhre2022investigation}. Instead, the evaluation criteria focus on the ability of the IDAES platform to be used for live data processing, and the ease of integration with other systems.
 
@@ -133,6 +186,112 @@ The evaluation criteria do not focus on the accuracy of the IDAES platform in pe
 
 
 \section{Steady State Modelling}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+        \textbf{Property} & \textbf{Value} \\
+        \hline
+        Inlet Flow (mol/s) & 100 , \\
+        \hline
+        Inlet Temperature (K) & 380 , \\
+        \hline
+        Inlet Vapor Fraction & 1 ,  \\
+        \hline
+        Inlet Pressure (Pa) & 101325 ,  \\
+        \hline
+        Heat Duty (J) & 100,000 , \\
+        \hline
+    \end{tabular}
+    \caption{Specified properties of the heater.}
+    \label{tab:heater_properties}
+\end{table}
+
+A simple heater model is developed in IDAES, with the properties specified in \cref{tab:heater_properties}. The model is then solved to find the outlet temperature.
+
+\begin{lstlisting}[language=Python,caption=Defining a simple heater model in IDAES,label=lst:heater_model]
+m.fs.heater = Heater(property_package=m.fs.properties)
+
+m.fs.heater.inlet.flow_mol[0].fix(100)
+m.fs.heater.inlet.temperature[0].fix(380)
+m.fs.heater.inlet.vapor_frac[0].fix(1)
+m.fs.heater.inlet.pressure[0].fix(101325)
+m.fs.heater.heat_duty[0].fix(100_000)
+
+solver = pyo.SolverFactory("ipopt")
+solver.solve(m)
+
+\end{lstlisting}
+
+As shown in Listing \ref{lst:heater_model}, IDAES-PSE enables a declarative approach to defining models. IDAES is built on top of Pyomo, an algebraic modelling language, which allows for the use of Pyomo's solver interfaces to solve the model. IDAES provides the equations for the thermodynamic and chemical properties of materials and unit operations. IDAES provides a time set for simulation, and the user can specify at what time steps the model will be solved. However, without enabling dynamic modelling, these time steps are independent. In Listing \ref{lst:heater_model}, the model is solved at only a single steady state.
+
+This model can be easily extended to solve multiple steady-state systems, however, they would be all solved as a single batch by IPOPT. In a live data processing context, this would not be useful, because the model needs to be solved for each new set of sensor data when the data is received. 
+
+Because IDAES is built in Python, a model can easily be incorporated into a script that reads new data from a stream, and then solves the model with the new data. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{live_data_processing.png}
+    \caption{Solving a steady-state model with mock sensor data.}
+    \label{fig:live_mss}
+\end{figure}
+
+To prove this, a simple script is developed that generates mock sensor data for the heater model. The mock data includes inlet temperatures, which is varied randomly between 599 and 601 K, and inlet pressures, which is set to be approximately 101325 Pa, with a random noise of 5 Pa. A ramp in power from 0W to 20,000W is applied over 20 seconds. The model is then solved with this data, and the outlet temperature is plotted over time. This is shown in \cref{fig:live_mss}. At each time step, the model is solved with the most recent sensor data, to provide an estimate of the conditions.
+
+
+\subsection{Evaluation}
+
+
+Steady-state modelling is the core functionality of IDAES. Developing this type of model is well-documented and supported, and solving is robust as long as the model is built with physically feasible conditions.
+It would be possible to use a steady-state idaes model in a live data processing context, if it was integrated into a process toolchain. Because IDAES has a standardised way of presenting unit models, a data processing framework for multi-steady state can be built in Python that is seperate to the IDAES model itself, but can be linked with any IDAES model.
+
+This would enable modelling live conditions in a factory that are not directly measurable, such as the state of a chemical reaction, or the state of a material in a process. Control systems could use this data to estimate how close the system is to the ideal state, and adjust the system to maintain optimal conditions.
+
+
+
+
+
+
+\section{Dynamics}
+
+\subsection{Evaluation}
+% explain why it is/isnt complete as a standalone tool
+The IDAES framework is well-suited to dynamic modelling, as it provides tools for creating and solving differential equations. It can easily model the same system at different time scales. Dynamic models certainly are much more complex than steady-state models, but IDAES and Pyomo provide the tools to handle this complexity.
+
+% explain why it is/isnt easy to integrate with other systems
+Extracting data and setting properties for a dynamic model is much the same as for a steady-state model, as it uses similar Pyomo constructs. Because the dynamic model is broken down into algebraic equations, it can be solved in the same way as a steady state simulation. Simple idaes flowsheets can easily be extended to include dynamic models, and the same tools can be used to solve them. 
+
+% explain why it is/isnt suitable for live data processing
+Dynamic models can be used in two different ways for live data processing. First, the initial conditions of the model can be specified from live data, and then the dynamic model can be solved to predict future states. If the model and initial conditions are specified correctly, from a software development perspective this is no more complex than a steady state model (even though it is much more complex as a mathematical or chemical system), as the same data attributes need to be accessed. 
+
+Alternatively, constraint functions (such as in the test case) could be generated from the live data so that the model simulates the real-world changes in variables. Sensor data is not a continuous domain, so an interpolation or modelling strategy would need to be created to handle this. The tools of Pyomo.DAE are flexible enough to allow for this, so dynamic modelling in IDAES would be suitable in a live data processing context.
+
+\section{Optimisation}
+
+\subsection{Evaluation}
+
+% explain why it is/isnt complete as a standalone tool
+
+Because optimisation has first-party support from Pyomo, and because creating optimisation functions is
+
+% for process data
+
+% for control systems
+
+\section{Hybrid Modelling}
+
+To test the workflow for hybrid modelling, a simple surrogate model is created using PySMO. First, a set of data points is generated by solving a heater model at different pressures, temperatures, and flow rates. Then, this data is used to train a surrogate model, which can predict the outlet pressure and enthalpy from the valve based on the inlet conditions. This generated data for a steady-state simulation, 
+
+The weights of the trained model are then saved to disk. 
+
+\subsection{Evaluation}
+
+% explain it as a standalone tool
+
+% for process data
+
+% for control systems
 
 \section{Results \& Discussion}
 %Results should be clear and concise.
