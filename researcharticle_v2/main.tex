@@ -46,7 +46,7 @@
 \lstset{style=mystyle}
 
 
-\title{Evaluating The Effectiveness of IDAES and the Ahuora Simulation Platform for Live Data Processing}
+\title{Building Digital Twins on Existing Infrastructure: Evaluating The Effectiveness of IDAES for Live Data Processing}
 
 \author{Bert Downs\\
 \textit{Ahuora Research Group}\\
@@ -83,7 +83,7 @@ This research evaluates the extent to which the IDAES-PSE modelling framework ca
 The results of this research are used to propose a general framework for implementing digital twinning in industry.
 
 
-\section{Theoretical Framework}
+\section{Theoretical Framework}\label{sec:theoretical_framework}
 
 Conventional simulation platforms do not have built-in support for live data processing. Likewise, conventional factory SCADA\footnote{SCADA systems: Supervisory Data Aquisition and Control systems.} systems do not have built-in support for complex simulation. To integrate a simulation platform with live data, a software system must be created that can merge the two systems. This can be considered as an intermediate layer between the simulation platform and the factory SCADA system.
 
@@ -102,6 +102,11 @@ In \cref{fig:theoretical_framework}, this intermediate layer is what converts th
 
 The results of evaluating the IDAES-PSE platform will be considered in the context of this theoretical framework, to determine what the high-level requirements are for a Digital Twin that is built on top of existing simulation and live data processing platforms.
 
+\subsection{Limitations of Live Data Processing} \label{sec:limitations_framework}
+
+% TODO: Citations needed
+
+The Digital Twin intermediate layer will be working with live data, which adds additional engineering constraints. There is no access to any future data, so the system must only use data that is available at the time of prediction. Live data can also be noisy, delayed, or missing, so the system must be robust enough to handle these situations. Additionaly, there is a time constraint on processing the data, as the system must be able to respond to changes in the factory in real-time. Practically, this means that there is only a window of recent data that can be used at any point in time, unless aggregation or smoothing techniques are used.
 
 \section{Method}
 %Experimental procedure
@@ -185,7 +190,7 @@ The evaluation criteria do not focus on the accuracy of the IDAES platform in pe
 
 
 
-\section{Steady State Modelling}
+\section{Steady State Modelling} \label{sec:steady_state}
 
 \begin{table}[h]
     \centering
@@ -250,34 +255,75 @@ This would enable modelling live conditions in a factory that are not directly m
 
 
 
-
-
-
 \section{Dynamics}
+
+To evaluate Dynamic modelling in IDAES-PSE, the heater model is extended to include holdup. Holdup is a property that represents how long it takes for changes to propogate through the system. The heater is modelled over 1 second, with the heat duty instentaneously changing from 0 to 10,000 W half a second through the simulation. As shown in \cref{fig:dynamic_test}, the outlet temperature change is not modelled as an instantaneous change, but instead propogates through the system over time.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{dynamic_test.png}
+    \caption{Solving a dynamic model with mock sensor data.}
+    \label{fig:dynamic_test}
+\end{figure}
+
+This technique could be used in a live system to predict how the system will respond to a change in input conditions. This is particularly valuable in a factory environment, where changes in input conditions can have a significant impact on the system, and may take a long time to propogate through the entire system. \cite{CITATION_NEEDED}
+
+% Why was this other model created?
+To show how a dynamic model could be used in a live data processing context, the same sample data used in \cref{sec:steady_state} is used in a dynamic model. In steady-state, there is no time dimension, so each timestep can be solved seperately. In Dynamic modelling, all timesteps must be solved together. The inlet conditions are specified exactly the same as in the steady state example, but are interpolated between time steps. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{dynamic_live.png}
+    \caption{Solving a dynamic model with mock sensor data.}
+    \label{fig:dynamic_live}
+\end{figure}
+
+In \cref{fig:dynamic_live}, a smoothing effect is observed in comparison to the steady-state model in \cref{fig:live_mss}. This is because it takes time for changes to propogate through. In chemical and process engineering, dynamic models provide a more accurate representation of how a system will respond to change. \cite{CITATION_NEEDED}
+
 
 \subsection{Evaluation}
 % explain why it is/isnt complete as a standalone tool
 The IDAES framework is well-suited to dynamic modelling, as it provides tools for creating and solving differential equations. It can easily model the same system at different time scales. Dynamic models certainly are much more complex than steady-state models, but IDAES and Pyomo provide the tools to handle this complexity.
 
-% explain why it is/isnt easy to integrate with other systems
-Extracting data and setting properties for a dynamic model is much the same as for a steady-state model, as it uses similar Pyomo constructs. Because the dynamic model is broken down into algebraic equations, it can be solved in the same way as a steady state simulation. Simple idaes flowsheets can easily be extended to include dynamic models, and the same tools can be used to solve them. 
+Mathematically, dynamic modelling is solving an ODE or PDE\footnote{ODE: Ordinary Differential Equation, PDE: Partial Differential Equation} system, breaking it into a set of finite elements, and then solving the resulting algebraic equations. This means that each time step cannot be calculated completely independently of the previous time step.
 
-% explain why it is/isnt suitable for live data processing
-Dynamic models can be used in two different ways for live data processing. First, the initial conditions of the model can be specified from live data, and then the dynamic model can be solved to predict future states. If the model and initial conditions are specified correctly, from a software development perspective this is no more complex than a steady state model (even though it is much more complex as a mathematical or chemical system), as the same data attributes need to be accessed. 
+In a live data processing context, this makes is more complex to run dynamic models. 
+However, the problem can still be formulated using only past data, so it is possible to use dynamic models in a live data processing context.
+The final conditions of one time step (variables, and their derivatives) must be used as initial conditions of the next time step. This will contribute to the ``State'' of the Digital Twin as outlined in \cref{sec:theoretical_framework}.
 
-Alternatively, constraint functions (such as in the test case) could be generated from the live data so that the model simulates the real-world changes in variables. Sensor data is not a continuous domain, so an interpolation or modelling strategy would need to be created to handle this. The tools of Pyomo.DAE are flexible enough to allow for this, so dynamic modelling in IDAES would be suitable in a live data processing context.
+Additionally, the model may need to be discretised between time steps to provide a more accurate continuous solution. This will involve interpolating betweeen data points from the factory, or estimating missing values.
+
+
+Dynamic models can also be used for predicting future states. However, new data will require that all subsequent time steps be recalculated. 
+If the model and initial conditions are specified correctly, from a software development perspective this is no more complex to implement than a steady state model, but it is much more computationally expensive to solve. 
+.
 
 \section{Optimisation}
+Optimising a system involves adding an objective the model using standard Pyomo utilities, and then solving the model to find the optimal conditions. In the heater model, a cost function is added as a test objective, to find the ideal balance between heat duty and outlet temperature. The model is then solved to find the optimal heat duty that minimises the cost function.
+
+\begin{lstlisting}[language=Python,caption=Optimising the heater model in IDAES,label=lst:optimisation]
+def cost_objective(h):
+return 3**(h.heat_duty[0]/5000) - (h.outlet.temperature[0]-350) * 33000
+m.fs.heater.cost_objective = pyo.Objective(rule=cost_objective, 
+                                           sense=pyo.minimize)
+\end{lstlisting}
+
+This is shown in Listing \ref{lst:optimisation}. The model must be solved with degrees of freedom, i.e variables that the solver can adjust to find the optimal solution. In this case, the heat duty is the degree of freedom, but there can be multiple degrees of freedom in a model. In \cref{fig:optimisation_dynamics}, a setpoint function for the outlet temperature is added, and optimisation is used to find the heat duty for each timestep that best follows the setpoint. This has one degree of freedom for each discrete time step that must be optimised: the heat duty at that time step. Because the setpoint change is instantaneous, it is unable to perfectly follow the setpoint, but is able to minimise the error on either side of the setpoint. This  can be used in a live data context for model predictive control
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{dynamics_optimisation.png}
+    \caption{Optimising a dynamic model to follow a setpoint.}
+    \label{fig:optimisation_dynamics}
+\end{figure}
+
 
 \subsection{Evaluation}
 
-% explain why it is/isnt complete as a standalone tool
 
-Because optimisation has first-party support from Pyomo, and because creating optimisation functions is
+Because optimisation has first-party support from Pyomo, it is well-supported as a standalone tool, and well integrated with IDAES.  It can be used for control to find the optimal setpoints to use. The optimising functionality is generic, so it can also be used for other types of optimisation, such as predicting the most likely conditions from uncertainty (though Pyomo has additional tools to support this that are not considered as part of this study.)
 
-% for process data
-
-% for control systems
+% TODO: What else is required to talk about this?
 
 \section{Hybrid Modelling}
 
@@ -285,9 +331,17 @@ To test the workflow for hybrid modelling, a simple surrogate model is created u
 
 The weights of the trained model are then saved to disk. 
 
+% TODO: To use them in a model ..
+
 \subsection{Evaluation}
 
 % explain it as a standalone tool
+
+% Todo: Proofread this
+
+Surrogate Modelling may be achieved using IDAES's built-in PySMO libraries, or other similar libraries such as OMLT. It is reasonably straightforward to train a surrogate model to represent a non-dynamic unit operation, but dynamic unit operations get significantly more complex - instead of modelling a single value, the surrogate model must be able to model the entire time system. There are some methods of doing this, such as using neural ODEs, Residual Networks, Operator Networks, or some other sort of convolutional network. There is little research into applying these methods in the field of chemical and process simulation, especially in the context of mathematical modelling such as the IDAES framework.
+
+The exact same process for surrogate modelling can also be used to model unit operations from historical data. This is useful when there is no mathematical model of the unit operation, but there is historical data available. This would be very useful when applying the Ahuora Digital Twin Platform to existing factories, where the exact mathematical properties of the unit operations are unknown but there is a wealth of historical data available. Online Learning techniques could be used to update the surrogate model in real-time, as new data becomes available. This is a key step in turning a ``simulation" into a ``digital twin", as it allows the model actively adapt to real-world conditions.
 
 % for process data
 
