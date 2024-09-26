@@ -67,20 +67,42 @@
 \section*{Abstract}
 % A concise and factual abstract is required. The abstract should state briefly the purpose of the research, the principal results and major conclusions. An abstract is often presented separately from the article, so it must be able to stand alone. For this reason, References should be avoided, but if essential, then cite the author(s) and year(s). Also, non-standard or uncommon abbreviations should be avoided, but if essential they must be defined at their first mention in the abstract itself.
 
+
+Digital Twin technology promises improvements in factory performance by optimising based on a digital model that updates to follow physical conditions. This research evaluates the IDAES Process Simulation Environment for use in developing Digital Twins, to show that it can provide for many of the core requirements of a Digital Twin. A theoretical framework is presented to generalise the concept of a Digital Twin. The framework shows that a Digital Twin can be viewed as a software system built on top of an existing simulation platform and live data processing system. 
+
 % Keywords. Immediately after the abstract, provide a maximum of 6 keywords avoiding general and plural terms and multiple concepts (avoid, for example, "and", "of"). Be sparing with abbreviations: only abbreviations firmly established in the field may be eligible. These keywords will be used for indexing purposes.
 
+
+\begin{center}
+\textbf{Keywords:} Digital Twin; IDAES-PSE; Process Simulation; Hybrid Modelling
+\end{center}
+
+\subsection*{List of Abbreviations}
+\begin{tabular}{lL{13cm}}
+    IDAES-PSE & Institute for the Design of Advanced Energy Systems - Process Simulation Environment \\
+    SCADA & Supervisory Data Aquisition and Control \\
+    ODE & Ordinary Differential Equation \\
+    PDE & Partial Differential Equation \\
+    RBF & Radial Basis Function \\
+    PYSMO & Python-based Surrogate Modelling Objects \\
+    OMLT & Optimization and Machine Learning Toolkit \\
+\end{tabular}
 
 \section{Introduction}
 % State the objectives of the work and provide an adequate background, avoiding a detailed literature survey or a summary of the results.
 
 
-Traditional factory control systems are based on feedback loops that use sensor data to adjust the factory's state. However, these systems are limited in their ability to predict future states and optimise factory performance. Digital Twinning is a new approach that combines live factory data, historical state, mathematical modelling, and data-driven modelling to create a digital replica of the factory. 
-However, in existing literature, most examples of digital twinning focus on specific situations, rather than providing a general framework for creating digital twins. Many remain at the proof-of-concept stage, and have not yet been deployed in industrial settings.
+Traditional factory control systems are based on feedback loops that use sensor data to adjust the factory's state. 
+However, these systems are limited in their ability to predict future states and optimise factory performance. 
+Digital Twinning is a new approach that combines live factory data, historical state, mathematical modelling, and data-driven modelling to create a digital replica of the factory. 
+Yet in existing literature, most examples of digital twinning focus on specific situations rather than providing a general framework for creating digital twins.
+Many remain at the proof-of-concept stage, and have not yet been deployed in industrial settings.
 
 In order to implement digital twinning in industry, simulation platforms must be able to work with and process live data, but most simulation environments are designed for design and analysis, rather than real-time processing \cite{agi2024computational}. The objective of this research is to evaluate how effectively an existing simulation platform can be used or extended to process live data.
 
-One such simulation platform is the IDAES-PSE\footnote{IDAES: Institute for the Design of Advanced Energy Systems - Process Simulation Environment, \href{https://idaes-pse.readthedocs.io}{https://idaes-pse.readthedocs.io}} modelling framework, which is designed for the analysis of chemical processes \cite{lee2021idaes}. It supports a variety of modelling techniques, including steady-state chemical modelling, and dynamic modelling of time-dependent processes. 
-It has also been extended to support data-driven modelling techniques, using libraries such as PySMO\footnote{PySMO: Python-based Surrogate Modelling Objects, \href{https://idaes-pse.readthedocs.io/en/stable/explanations/modeling_extensions/surrogate/api/pysmo/index.html}{https://idaes-pse.readthedocs.io}} and OMLT\footnote{OMLT: Optimization and Machine Learning Toolkit, \href{https://omlt.readthedocs.io/en/latest/}{https://omlt.readthedocs.io/en/latest/}} \cite{cecconOMLTOptimizationMachine2022} 
+One such simulation platform is the IDAES-PSE modelling framework, which is designed for the analysis of chemical processes \cite{lee2021idaes}. 
+It supports a variety of modelling techniques, including steady-state chemical modelling, and dynamic modelling of time-dependent processes. 
+It has also been extended to support data-driven modelling techniques, using libraries such as PySMO and OMLT \cite{cecconOMLTOptimizationMachine2022} 
 
 
 This research evaluates the extent to which the IDAES-PSE modelling framework can be used to implement emerging chemical modelling techniques for live data processing, to prove it's suitability as a platform on which to develop such tools.
@@ -289,7 +311,7 @@ In \cref{fig:dynamic_live}, a smoothing effect is observed in comparison to the 
 % explain why it is/isnt complete as a standalone tool
 The IDAES framework is well-suited to dynamic modelling, as it provides tools for creating and solving differential equations. It can easily model the same system at different time scales. Dynamic models certainly are much more complex than steady-state models, but IDAES and Pyomo provide the tools to handle this complexity.
 
-Mathematically, dynamic modelling is solving an ODE or PDE\footnote{ODE: Ordinary Differential Equation, PDE: Partial Differential Equation} system, breaking it into a set of finite elements, and then solving the resulting algebraic equations. This means that each time step cannot be calculated completely independently of the previous time step.
+Mathematically, dynamic modelling is solving an ODE or PDE system, breaking it into a set of finite elements, and then solving the resulting algebraic equations. This means that each time step cannot be calculated completely independently of the previous time step.
 
 In a live data processing context, this makes is more complex to run dynamic models. 
 However, the problem can still be formulated using only past data, so it is possible to use dynamic models in a live data processing context.
@@ -380,6 +402,7 @@ Online Learning techniques could be used to update the surrogate model in real-t
 
 \section{Results \& Discussion}
 %Results should be clear and concise.
+\subsection{Results}
 
 The morphological matrix in \cref{tab:morphological_matrix} shows the discussed ways of where the IDAES-PSE functionality could be used in a factory environment. While IDAES-PSE provides the core simulation backend to support these use cases, the research into each functionality has proven that a custom software solution will be required to integrate it with live data systems.
 
@@ -416,72 +439,82 @@ The morphological matrix in \cref{tab:morphological_matrix} shows the discussed 
 % Add another table showing the gaps of what needs to be implemented to make IDAES-PSE a complete Digital Twin platform.
 
 %\subsection{Gaps in IDAES-PSE Functionality}
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|L{3cm}|L{3.8cm}|p{8.5cm}|}
-        \hline
-        \textbf{Functionality} & \textbf{Gap} & \textbf{Explanation} \\
-        \hline
-        Steady State Modelling & 
-        System to solve with live data &
-        Aggregating live data measurements and passing them to the simulation\\
-        \hline
-        Dynamic Modelling & 
-        Data Interpolation & 
-        Estimating data in between sensor readings for a continuous simulation.\\
-        \hline
-        Dynamic Modelling &
-        Dynamic State &
-        Storing the final state of the dynamic system so it can be used as the initial state for the next timestep  \\
-        \hline
-        Optimisation & 
-        Model Predictive Control &
-        Implementing a model-predictive control system that can connect to a simulation platform such as IDAES-PSE, and give control signals to the factory. \\
-        \hline
-        Hybrid Modelling & 
-        Online learning & 
-        Creating a system to update models based on recently aquired sensor data. \\
-        \hline
-    \end{tabular}
-    \caption{Gaps in IDAES-PSE functionality for factory systems.}
-    \label{tab:gaps_functionality}
-\end{table}
+% \begin{table}[h]
+%     \centering
+%     \begin{tabular}{|L{3cm}|L{3.8cm}|p{8.5cm}|}
+%         \hline
+%         \textbf{Functionality} & \textbf{Gap} & \textbf{Explanation} \\
+%         \hline
+%         Steady State Modelling & 
+%         System to solve with live data &
+%         Aggregating live data measurements and passing them to the simulation\\
+%         \hline
+%         Dynamic Modelling & 
+%         Data Interpolation & 
+%         Estimating data in between sensor readings for a continuous simulation.\\
+%         \hline
+%         Dynamic Modelling &
+%         Dynamic State &
+%         Storing the final state of the dynamic system so it can be used as the initial state for the next timestep  \\
+%         \hline
+%         Optimisation & 
+%         Model Predictive Control &
+%         Implementing a model-predictive control system that can connect to a simulation platform such as IDAES-PSE, and give control signals to the factory. \\
+%         \hline
+%         Hybrid Modelling & 
+%         Online learning & 
+%         Creating a system to update models based on recently aquired sensor data. \\
+%         \hline
+%     \end{tabular}
+%     \caption{Gaps in IDAES-PSE functionality for factory systems.}
+%     \label{tab:gaps_functionality}
+% \end{table}
 
-\Cref{tab:gaps_functionality} summarises what additional functionality would be required to communicate with a factory system. These can be viewed as the ``Digital Twin Adapter'' and ``Digital Twin State'' as outlined in \cref{sec:theoretical_framework}.
-
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{research_journal_framework_full.pdf}
-    \caption{Theoretical framework for }
+    \includegraphics[width=0.95\textwidth]{research_journal_framework_full.pdf}
+    \caption{Key Components of a Digital Twin system built on top of IDAES-PSE.}
+    \label{fig:theoretical_framework_full}
 \end{figure}
 
+\Cref{fig:theoretical_framework_full} summarises what additional functionality would be required to communicate with a factory system. These can be viewed as the ``Digital Twin Adapter'' and ``Digital Twin State'' as outlined in \cref{sec:theoretical_framework}.
 
 % Discussion
 % This should explore the significance of the results of the work, not repeat them. A combined Results and Discussion section is often appropriate. Avoid extensive citations and discussion of published literature.
 %Note: results and Discussion can also be combined in a single section.
 
+\subsection{Discussion}
+
+This analysis is unique among the field of Digital Twinning, as it looks at the problem from a software engineering perspective, and does not focus on a custom-built solution.
+
+These results prove the effectiveness of IDAES-PSE as a platform for developing Digital Twins. It outlines how a general solution can be implemented on top of a simulation platform to turn it into a digital twin. The theoretical framework outlined can be used to evaluate other simulation platforms, and factory SCADA systems, to compare them to IDAES-PSE for a broader understanding of the problem space.
+
+In a software context, this provides a set of requirements for such a software system to be developed on top of IDAES-PSE.
+Development of such a general-purpose digital twin platform for process engineering would be a significant contribution to the field, as it would enable factories of all sizes to take advantage of the benefits of digital twinning.
+
 
 \section{Conclusions}
 % The main conclusions of the study may be presented in a short Conclusions section, which may stand alone or form a subsection of a Discussion or Results and Discussion section.
 
+By seperating the simulation platform from the live data processing system, it is possible to create a general-purpose Digital Twin platform that can be used in a variety of factory environments.
+The IDAES-PSE modelling framework is well-suited to developing Digital Twins for chemical processes. 
+This is because it is supported by an algebraic modelling language, which easily lends it to extensibility and integration with other systems. Additionally, it's simulation techniques are relevant to live data processing.
+With appropriately designed software, techniques from IDAES-PSE such as steady-state modelling, dynamic modelling, optimisation, and hybrid modelling can be used to analyse live data from a factory process. 
+A software system that is built on top of this functionality would enable a much wider audience to take advantage of the benefits of digital twinning. 
 
 \section*{Acknowledgements}
 % Collate acknowledgements in a separate section at the end of the article before the references and do not, therefore, include them on the title page, as a footnote to the title or otherwise. List here those individuals who provided help during the research (e.g., providing language help, writing assistance or proof reading the article, etc.).
 
-
+This research has been conducted as part of the development of the Ahuora Digital Twin Platform, a key project of the Ahuora Research Group. A sincere thanks to all those who have provided feedback and support during the writing of this paper, particularly many members of the Ahuora Research Group: Tim Walmsley, Mark Apperley, Stephen Burroughs, Ben Lincoln, and many others.
 
 % References
 % Please ensure that every reference cited in the text is also present in the reference list (and vice versa). Unpublished results and personal communications are not recommended in the reference list, but may be mentioned in the text. If these references are included in the reference list they should follow the standard reference style.
 \bibliographystyle{apalike}
 \bibliography{refs} % Entries are in the refs.bib file
 
-
-
 % If there is more than one appendix, they should be identified as A, B, etc. Formulae and equations in appendices should be given separate numbering: Eq. (A.1), Eq. (A.2), etc.; in a subsequent appendix, Eq. (B.1) and so on. Similarly for tables and figures: Table A.1; Fig. A.1, etc.
-\begin{appendices}
-
-
-\end{appendices}
+% \begin{appendices}
+% \end{appendices}
 
 
 \end{document}
