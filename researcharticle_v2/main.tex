@@ -114,8 +114,6 @@ The results of this research are used to propose a general framework for impleme
 Conventional simulation platforms do not have built-in support for live data processing. Likewise, conventional factory SCADA\footnote{SCADA systems: Supervisory Data Aquisition and Control systems.} systems do not have built-in support for complex simulation. To integrate a simulation platform with live data, a software system must be created that can merge the two systems. This can be considered as an intermediate layer between the simulation platform and the factory SCADA system.
 
 
-% Todo: Should this be generalised further, removing references to specific model types for a simulation platform an a factory floor environment? (I.e don't list steady state modelling etc, data collection etc)
-% Then, in the discussion section, the specific implementation of these can be added.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{research_journal_framework_simple.pdf}
@@ -130,9 +128,11 @@ The results of evaluating the IDAES-PSE platform will be considered in the conte
 
 \subsection{Limitations of Live Data Processing} \label{sec:limitations_framework}
 
-% TODO: Citations needed
-
-The Digital Twin intermediate layer will be working with live data, which adds additional engineering constraints. There is no access to any future data, so the system must only use data that is available at the time of prediction. Live data can also be noisy, delayed, or missing, so the system must be robust enough to handle these situations. Additionaly, there is a time constraint on processing the data, as the system must be able to respond to changes in the factory in real-time. Practically, this means that there is only a window of recent data that can be used at any point in time, unless aggregation or smoothing techniques are used.
+The Digital Twin intermediate layer will be working with live data, which adds additional engineering constraints \cite{hoi2021online}. 
+There is no access to any future data, so the system must only use data that is available at the time of prediction. 
+Live data can also be noisy, delayed, or missing, so the system must be robust enough to handle these situations. 
+Additionally, there is a time constraint on processing the data, as the system must be able to respond to changes in the factory in real-time. 
+Practically, this means that there is only a window of recent data that can be used at any point in time, unless aggregation or smoothing techniques are used.
 
 \section{Method}
 %Experimental procedure
