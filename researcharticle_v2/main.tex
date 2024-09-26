@@ -15,8 +15,12 @@
 \usepackage{pifont}% http://ctan.org/pkg/pifont
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{array}
+\usepackage{ragged2e}
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
+\newcolumntype{L}[1]{>{\RaggedRight\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{\RaggedLeft\hspace{0pt}}p{#1}}
 
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -376,8 +380,8 @@ Online Learning techniques could be used to update the surrogate model in real-t
 
 \section{Results \& Discussion}
 %Results should be clear and concise.
-\subsection{Results}
-% TODO: Add a table for each piece of functionality evaluated, showing the results of the evaluation against the criteria.
+
+The morphological matrix in \cref{tab:morphological_matrix} shows the discussed ways of where the IDAES-PSE functionality could be used in a factory environment. While IDAES-PSE provides the core simulation backend to support these use cases, the research into each functionality has proven that a custom software solution will be required to integrate it with live data systems.
 
 \begin{table}[h]
     \centering
@@ -409,37 +413,49 @@ Online Learning techniques could be used to update the surrogate model in real-t
     \caption{Morphological matrix showing overlaps and use cases of IDAES-PSE functionality.}
     \label{tab:morphological_matrix}
 \end{table}
-
-\Cref{tab:morphological_matrix} shows the results of the evaluation of IDAES-PSE functionality. The cells of the morphological matrix display the areas where integrating functionality from factory systems with simulation systems can provide benifits.
-
 % Add another table showing the gaps of what needs to be implemented to make IDAES-PSE a complete Digital Twin platform.
 
 %\subsection{Gaps in IDAES-PSE Functionality}
 \begin{table}[h]
     \centering
-    \begin{tabular}{|p{3cm}|p{3.5cm}|p{8cm}|}
+    \begin{tabular}{|L{3cm}|L{3.8cm}|p{8.5cm}|}
         \hline
         \textbf{Functionality} & \textbf{Gap} & \textbf{Explanation} \\
         \hline
-        Integration with factory systems & 
-        Limited integration with existing factory systems & 
-        IDAES-PSE needs to be improved to seamlessly integrate with various factory systems, such as data acquisition systems, control systems, and process monitoring systems. \\
+        Steady State Modelling & 
+        System to solve with live data &
+        Aggregating live data measurements and passing them to the simulation\\
         \hline
-        Real-time data processing & 
-        Lack of support for real-time data processing & 
-        IDAES-PSE should be enhanced to handle real-time data processing and enable real-time monitoring and control of factory processes. \\
+        Dynamic Modelling & 
+        Data Interpolation & 
+        Estimating data in between sensor readings for a continuous simulation.\\
         \hline
-        Online learning and self-adaptation & 
-        Insufficient support for online learning and self-adaptive control systems & 
-        IDAES-PSE needs to incorporate advanced machine learning techniques to enable online learning and self-adaptive control systems, allowing the digital twin to continuously improve and adapt to changing operating conditions. \\
+        Dynamic Modelling &
+        Dynamic State &
+        Storing the final state of the dynamic system so it can be used as the initial state for the next timestep  \\
+        \hline
+        Optimisation & 
+        Model Predictive Control &
+        Implementing a model-predictive control system that can connect to a simulation platform such as IDAES-PSE, and give control signals to the factory. \\
+        \hline
+        Hybrid Modelling & 
+        Online learning & 
+        Creating a system to update models based on recently aquired sensor data. \\
         \hline
     \end{tabular}
     \caption{Gaps in IDAES-PSE functionality for factory systems.}
     \label{tab:gaps_functionality}
 \end{table}
 
+\Cref{tab:gaps_functionality} summarises what additional functionality would be required to communicate with a factory system. These can be viewed as the ``Digital Twin Adapter'' and ``Digital Twin State'' as outlined in \cref{sec:theoretical_framework}.
 
-\subsection{Discussion}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{research_journal_framework_full.pdf}
+    \caption{Theoretical framework for }
+\end{figure}
+
+
 % Discussion
 % This should explore the significance of the results of the work, not repeat them. A combined Results and Discussion section is often appropriate. Avoid extensive citations and discussion of published literature.
 %Note: results and Discussion can also be combined in a single section.
