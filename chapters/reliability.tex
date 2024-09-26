@@ -3,9 +3,23 @@
 
 % Talk about why initialisation could be a failing point, how to fix that (e.g remove the recycle, or save initialisation states)
 
-% picture of the data (look it's not so sparodic anymore)
+There are a couple of reasons why the solving of the flowsheet was not always successful in the previous section. 
 
-% The heat exchangers are the most complex unit operation, and they often failed to initialise, we can swap them for heaters and coolers to see if that helps. we weren't using them properly anyway.
+The first reason is that the heat exchangers could be failing to initialise. They are the most complex unit operation, and require appropriate fluid volumes, heat deltas, flow transfer areas, and heat transfer coefficients to be set. If these are not set correctly, the heat exchanger may not initialise. 
+
+As in this model we did not have flow rates for the air inlets, approximate values were being used. Thus including heat exchangers in the model did not provide any more accuracy, and only added complexity. The model was updated with heaters and coolers instead of heat exchangers, which can be solved much more reliably.
+
+The second reason why the model may not have been solving is that the recycle loop was not being initialised correctly. The recycle stream was being set to the same value as the outlet stream, but this creates a continuous loop that the solver may not be able to solve at a steady state. For the next test, the recycle was removed, and the tear guess values were used as the initial conditions. 
+
+% TODO: picture of the data (look it's not so sparodic anymore)
+
+When both of these changes were made, the model was able to solve reliably. The results of the simulation were much more consistent, and better reflected the expected behaviour of the heat pump dryer.
+
+
+While implementing this, another issue was discovered. Because stream properties were being used to store additional live data that was not part of the simulation, sometimes the live data was invalid as a stream condition. This was done so the part of the platform that recorded solve history could be used to display all live data results, not just the simulation results. However, this was not a good solution, as it made the simulation less reliable. This means that either the solve history feature should be updated to handle storing additional metadata, or the live data should be stored in a different way.
+
+
+
 
 % Maybe mention scaling?
 
