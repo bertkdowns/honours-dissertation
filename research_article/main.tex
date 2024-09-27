@@ -105,7 +105,7 @@ It supports a variety of modelling techniques, including steady-state chemical m
 It has also been extended to support data-driven modelling techniques, using libraries such as PySMO and OMLT \cite{cecconOMLTOptimizationMachine2022} 
 
 
-This research evaluates the extent to which the IDAES-PSE modelling framework can be used to implement emerging chemical modelling techniques for live data processing, to prove it's suitability as a platform on which to develop such tools.
+This research evaluates the extent to which the IDAES-PSE modelling framework can be used to implement emerging chemical modelling techniques for live data processing, to assess its suitability as a platform on which to develop such tools.
 The results of this research are used to propose a general framework for implementing digital twinning in industry.
 
 
@@ -122,7 +122,7 @@ Conventional simulation platforms do not have built-in support for live data pro
 \end{figure}
 
 The concept of a “Digital Twin” refers to a simulation of something in the physical world, which is kept up to date with a physical system using real-time data \cite{yu2022energy}.
-In \cref{fig:theoretical_framework}, this intermediate layer is what converts the simulation platform, and the data from the factory, into a digital twin. It is broken into two parts: a ``Digital Twin Adapter'' which is responsible for converting the data from the factory into a format that the simulation platform can understand, and to provide results from simulations back the factory. Also specified is a ``Digital Twin State'', which represents an estimate of the current state of the factory, based on the simulation results and the live data. This represents the ability of a Digital Twin to "learn" how the physical system behaves, and adjust the inputs to the simulation accordingly.
+In \Cref{fig:theoretical_framework}, this intermediate layer is what converts the simulation platform, and the data from the factory, into a digital twin. It is broken into two parts: a ``Digital Twin Adapter'' which is responsible for converting the data from the factory into a format that the simulation platform can understand, and to provide results from simulations back the factory. Also specified is a ``Digital Twin State'', which represents an estimate of the current state of the factory, based on the simulation results and the live data. This represents the ability of a Digital Twin to "learn" how the physical system behaves, and adjust the inputs to the simulation accordingly.
 
 The results of evaluating the IDAES-PSE platform will be considered in the context of this theoretical framework, to determine what the high-level requirements are for a Digital Twin that is built on top of existing simulation and live data processing platforms.
 
@@ -160,7 +160,7 @@ IDAES has many components, so an iterative validation process is used. The evalu
     \label{tab:functionality}
 \end{table}
 
-For each of piece of functionality listed in \cref{tab:functionality}, a simple prototype flowsheet is developed to evaluate the functionality of IDAES-PSE in a live data processing context. This flowsheet consists of a Heater, that is heating steam from an inlet temperature of approximately 600 K at atmospheric pressure. This approach allows to focus on the functionality of the IDAES-PSE framework, rather than the complexity of the flowsheet, as the techniques used generalise to larger and more complex systems.
+For each of piece of functionality listed in \Cref{tab:functionality}, a simple prototype flowsheet is developed to evaluate the functionality of IDAES-PSE in a live data processing context. This flowsheet consists of a Heater, that is heating steam from an inlet temperature of approximately 600 K at atmospheric pressure. This approach allows to focus on the functionality of the IDAES-PSE framework, rather than the complexity of the flowsheet, as the techniques used generalise to larger and more complex systems.
 
 
 \subsection{Evaluation Criteria}
@@ -191,8 +191,9 @@ Evaluating the functionality of IDAES-PSE as a standalone tool gives an indicati
 Analysing how the functionality can be used with process data and control systems gives an indication of the potential value of simulation software in a factory environment. This is used to systematically explore a range of potential use cases for simulation software. 
 To do this, some sample data is generated, and then different techniques are used to process the sample data, emulating how live data would be used in a factory environment.
 
-The evaluation criteria do not focus on the accuracy of the IDAES platform in performing chemical simulations, or user-friendliness of the interfaces, or the performance of the solving process itself. Those characteristics are considered out of scope of this study, and are evaluated elsewhere \cite{hart2011pyomo} \cite{myhre2022investigation}. Instead, the evaluation criteria focus on the ability of the IDAES platform to be used for live data processing, and the ease of integration with other systems.
-
+The evaluation criteria focus on the ability of the IDAES platform to be used for live data processing, and the ease of integration with other systems.
+They intentionally do not focus on the accuracy of the IDAES platform in performing chemical simulations, which depends on the exact chemical equations used to model a specific system. 
+Likewise, they do not focus on the user-friendliness of the interfaces, or the performance of the solving process itself. Those characteristics are considered out of scope of this study, and are evaluated elsewhere \cite{hart2011pyomo} \cite{myhre2022investigation}.
 
 
 %Process Data
@@ -228,7 +229,7 @@ The evaluation criteria do not focus on the accuracy of the IDAES platform in pe
     \label{tab:heater_properties}
 \end{table}
 
-A simple heater model is developed in IDAES, with the properties specified in \cref{tab:heater_properties}. The model is then solved to find the outlet temperature.
+A simple heater model is developed in IDAES, with the properties specified in \Cref{tab:heater_properties}. The model is then solved to find the outlet temperature.
 
 \begin{lstlisting}[language=Python,caption=Defining a simple heater model in IDAES,label=lst:heater_model]
 m.fs.heater = Heater(property_package=m.fs.properties)
@@ -257,7 +258,11 @@ Because IDAES is built in Python, a model can easily be incorporated into a scri
     \label{fig:live_mss}
 \end{figure}
 
-To prove this, a simple script is developed that generates mock sensor data for the heater model. The mock data includes inlet temperatures, which is varied randomly between 599 and 601 K, and inlet pressures, which is set to be approximately 101325 Pa, with a random noise of 5 Pa. A ramp in power from 0W to 20,000W is applied over 20 seconds. The model is then solved with this data, and the outlet temperature is plotted over time. This is shown in \cref{fig:live_mss}. At each time step, the model is solved with the most recent sensor data, to provide an estimate of the conditions.
+To assess this, a simple script is developed that generates mock sensor data for the heater model. 
+The mock data includes inlet temperatures, which is varied randomly between 599 and 601 K, and inlet pressures, which is set to be approximately 101325 Pa, with a random noise of 5 Pa. 
+A ramp in power from 0W to 20,000W is applied over 20 seconds. 
+The model is then solved with this data, and the outlet temperature is plotted over time. 
+This is shown in \Cref{fig:live_mss}. At each time step, the model is solved with the most recent sensor data, to provide an estimate of the conditions.
 
 
 \subsection{Evaluation}
@@ -272,7 +277,7 @@ This would enable modelling live conditions in a factory that are not directly m
 
 \section{Dynamics}
 
-To evaluate Dynamic modelling in IDAES-PSE, the heater model is extended to include holdup. Holdup is a property that represents how long it takes for changes to propogate through the system. The heater is modelled over 1 second, with the heat duty instentaneously changing from 0 to 10,000 W half a second through the simulation. As shown in \cref{fig:dynamic_test}, the outlet temperature change is not modelled as an instantaneous change, but instead propogates through the system over time.
+To evaluate Dynamic modelling in IDAES-PSE, the heater model is extended to include holdup. Holdup is a property that represents how long it takes for changes to propogate through the system. The heater is modelled over 1 second, with the heat duty instentaneously changing from 0 to 10,000 W half a second through the simulation. As shown in \Cref{fig:dynamic_test}, the outlet temperature change is not modelled as an instantaneous change, but instead propogates through the system over time.
 
 \begin{figure}[h]
     \centering
@@ -284,7 +289,10 @@ To evaluate Dynamic modelling in IDAES-PSE, the heater model is extended to incl
 This technique could be used in a live system to predict how the system will respond to a change in input conditions. This is particularly valuable in a factory environment, where changes in input conditions can have a significant impact on the system, and may take a long time to propogate through the entire system. 
 
 % Why was this other model created?
-To show how a dynamic model could be used in a live data processing context, the same sample data used in \cref{sec:steady_state} is used in a dynamic model. In steady-state, there is no time dimension, so each timestep can be solved seperately. In Dynamic modelling, all timesteps must be solved together. The inlet conditions are specified exactly the same as in the steady state example, but are interpolated between time steps. 
+To show how a dynamic model could be used in a live data processing context, the same sample data used in the steady state simulation (\Cref{sec:steady_state}) is used in a dynamic model. 
+In steady-state, there is no time dimension, so each timestep can be solved seperately. 
+In dynamic modelling, all timesteps must be solved together. 
+The inlet conditions are specified exactly the same as in the steady state example, but are interpolated between time steps. 
 
 \begin{figure}[h]
     \centering
@@ -293,7 +301,7 @@ To show how a dynamic model could be used in a live data processing context, the
     \label{fig:dynamic_live}
 \end{figure}
 
-In \cref{fig:dynamic_live}, a smoothing effect is observed in comparison to the steady-state model in \cref{fig:live_mss}. This is because it takes time for changes to propogate through, providing a more accurate representation of how a system will respond to change.
+In \Cref{fig:dynamic_live}, a smoothing effect is observed in comparison to the steady-state model in \Cref{fig:live_mss}. This is because it takes time for changes to propogate through, providing a more accurate representation of how a system will respond to change.
 
 \subsection{Evaluation}
 % explain why it is/isnt complete as a standalone tool
@@ -303,7 +311,7 @@ Mathematically, dynamic modelling is solving an ODE or PDE system, breaking it i
 
 In a live data processing context, this makes is more complex to run dynamic models. 
 However, the problem can still be formulated using only past data, dynamic models can still be used.
-The final conditions of one time step (variables, and their derivatives) must be used as initial conditions of the next time step. This will contribute to the ``State'' of the Digital Twin as outlined in \cref{sec:theoretical_framework}.
+The final conditions of one time step (variables, and their derivatives) must be used as initial conditions of the next time step. This will contribute to the ``State'' of the Digital Twin as outlined in \Cref{sec:theoretical_framework}.
 
 Additionally, the model may need to be discretised between time steps to provide a more accurate continuous solution. This will involve interpolating betweeen data points from the factory, or estimating missing values.
 
@@ -323,7 +331,7 @@ m.fs.heater.cost_objective = pyo.Objective(rule=cost_objective,
 \end{lstlisting}
 
 This is shown in Listing \ref{lst:optimisation}. The model must be solved with degrees of freedom, i.e variables that the solver can adjust to find the optimal solution. In this case, the heat duty is the degree of freedom, but there can be multiple degrees of freedom in a model. 
-In \cref{fig:optimisation_dynamics}, a setpoint function for the outlet temperature is added, and optimisation is used to find the heat duty for each timestep that best follows the setpoint. This has one degree of freedom for each discrete time step that must be optimised: the heat duty at that time step. 
+In \Cref{fig:optimisation_dynamics}, a setpoint function for the outlet temperature is added, and optimisation is used to find the heat duty for each timestep that best follows the setpoint. This has one degree of freedom for each discrete time step that must be optimised: the heat duty at that time step. 
 When this technique is used to control a system based on the optimal way to reach a setpoint, it is referred to as Model Predictive Control.
 Because the setpoint change is instantaneous, it is unable to perfectly follow the setpoint, but is able to minimise the error on either side of the setpoint. 
 
@@ -362,7 +370,7 @@ To use the surrogate model in a flowsheet, the weights of the model are loaded a
     \label{fig:surrogate_model}
 \end{figure}
 
-In \cref{fig:surrogate_model}, the output of the surrogate model is compared to the output of the IDAES model. The surrogate model is able to closely follow the IDAES mathematical model, but it does not match exactly. For the purposes of this demonstration, the accuracy is not important; with careful tuning of the surrogate model, it is possible to get a very close match to the IDAES model. However, in a live data processing context, the surrogate model could be retrained using recent process conditions, deviating from the mathematical solution to better reflect real-world nuances in the system. 
+In \Cref{fig:surrogate_model}, the output of the surrogate model is compared to the output of the IDAES model. The surrogate model is able to closely follow the IDAES mathematical model, but it does not match exactly. For the purposes of this demonstration, the accuracy is not important; with careful tuning of the surrogate model, it is possible to get a very close match to the IDAES model. However, in a live data processing context, the surrogate model could be retrained using recent process conditions, deviating from the mathematical solution to better reflect real-world nuances in the system. 
 
 This demonstration uses a simple RBF network, but other machine learning techniques can also be used, as long as there is support for creating algebraic constraints to represent them in Pyomo. In theory, it is possible to model a dynamic system in the same way that this steady-state system is modelled, but there is less evidence of this being done in IDAES.
 
@@ -372,7 +380,7 @@ This demonstration uses a simple RBF network, but other machine learning techniq
 
 % Todo: Proofread this
 
-Surrogate Modelling may be achieved using IDAES's built-in PySMO libraries, or other similar libraries such as OMLT. 
+Surrogate modelling may be achieved using IDAES's built-in PySMO libraries, or other similar libraries such as OMLT. 
 It is reasonably straightforward to train a surrogate model to represent a non-dynamic unit operation, but dynamic unit operations get significantly more complex - instead of modelling a single value, the surrogate model must be able to model the entire time system. There are some methods of doing this, such as using neural ODEs, Residual Networks, Operator Networks, or some other sort of convolutional network. 
 There is little research into applying these methods in the field of chemical and process simulation, especially in the context of mathematical modelling such as the IDAES framework.
 
@@ -390,7 +398,7 @@ Online Learning techniques could be used to update the surrogate model in real-t
 %Results should be clear and concise.
 \subsection{Results}
 
-The morphological matrix in \cref{tab:morphological_matrix} shows the discussed ways of where the IDAES-PSE functionality could be used in a factory environment. While IDAES-PSE provides the core simulation backend to support these use cases, the research into each functionality has proven that a custom software solution will be required to integrate it with live data systems.
+The morphological matrix in \Cref{tab:morphological_matrix} shows the discussed ways of where the IDAES-PSE functionality could be used in a factory environment. While IDAES-PSE provides the core simulation backend to support these use cases, the research into each functionality leads to the conclusion that a custom software solution will be required to integrate it with live data systems.
 
 \begin{table}[h]
     \centering
@@ -463,7 +471,7 @@ The morphological matrix in \cref{tab:morphological_matrix} shows the discussed 
     \label{fig:theoretical_framework_full}
 \end{figure}
 
-\Cref{fig:theoretical_framework_full} summarises what additional functionality would be required to communicate with a factory system. These can be viewed as the ``Digital Twin Adapter'' and ``Digital Twin State'' as outlined in \cref{sec:theoretical_framework}.
+\Cref{fig:theoretical_framework_full} summarises what additional functionality would be required to communicate with a factory system. These can be viewed as the ``Digital Twin Adapter'' and ``Digital Twin State'' as outlined in \Cref{sec:theoretical_framework}.
 
 % Discussion
 % This should explore the significance of the results of the work, not repeat them. A combined Results and Discussion section is often appropriate. Avoid extensive citations and discussion of published literature.
@@ -473,7 +481,9 @@ The morphological matrix in \cref{tab:morphological_matrix} shows the discussed 
 
 This analysis is unique among the field of Digital Twinning, as it looks at the problem from a software engineering perspective, and does not focus on a custom-built solution.
 
-These results prove the effectiveness of IDAES-PSE as a platform for developing Digital Twins. It outlines how a general solution can be implemented on top of a simulation platform to turn it into a digital twin. The theoretical framework outlined can be used to evaluate other simulation platforms, and factory SCADA systems, to compare them to IDAES-PSE for a broader understanding of the problem space.
+These results assess the effectiveness of IDAES-PSE as a platform for developing Digital Twins. 
+It outlines how a general solution can be implemented on top of a simulation platform to turn it into a digital twin. 
+The theoretical framework outlined can be used to evaluate other simulation platforms, and factory SCADA systems, to compare them to IDAES-PSE for a broader understanding of the problem space.
 
 In a software context, this provides a set of requirements for such a software system to be developed on top of IDAES-PSE.
 Development of such a general-purpose digital twin platform for process engineering would be a significant contribution to the field, as it would enable factories of all sizes to take advantage of the benefits of digital twinning.
