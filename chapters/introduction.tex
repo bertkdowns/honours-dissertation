@@ -8,6 +8,8 @@
 
 The World Economic Forum ranked ``Failure to mitigate climate change" as the number one threat to the world in the next ten years~\cite{GlobalRisksReport}, due to the effects climate change has on extreme weather events, biodiversity, and climate-vulnerable economies. Decarbonisation is a crucial step in mitigating climate change. In New Zealand, process heat accounts for 8\% of total greenhouse emissions~\cite{DecarbonisingProcessHeat}.
 
+Digital Twin technology shows promise in assisting decarbonisation, through efficient energy management \cite{yu2022energy}. A Digital Twin is a virtual model of a physical object or system that is connected to the real-world object or system. It can be used to monitor, control, and optimise the real-world object or system. Digital Twins are used in a variety of industries, including manufacturing, healthcare, and transportation \cite{9359733}. However, most Digital Twins in literature are designed for very specific use cases, and there is a lack of standardisation in the field.
+
 Ahuora is a research group focused on developing smart energy systems to decarbonise factories. They have developed a Web-based simulation platform that allows users to create a digital twin of their factory.
 This platform is based on steady-state simulation, which simulates a factory at a single point in time. All factory conditions are manually specified by the user.
 This platform is useful for modelling changes to a factory before construction, or understanding the factory's performance under different conditions.
@@ -21,7 +23,6 @@ Including real-time data in the simulation is needed to improve the usefulness o
 The system needs to meet industry requirements for security, scalability, and reliability. As such, this project
 has been commissioned to develop a standardised framework to enable the integration of real-time sensor data into the Ahuora Digital Twin Platform.
 
-% Todo: Include a substantial section explaining the Ahuora Digital Twin Platform, and what it does. THis is a necessary background for the project. The marker won't understand otherwise.
 
 \section{Objectives}
 
@@ -45,17 +46,19 @@ and developing a prototype live data processing system for Ahuora that is extens
 
 \section{Literature Review}
 
+\textit{This section is a summary of the full literature review included in Appendix \ref{sec:litreview}}
+
 
 \subsection{Data Collection in Industrial Facilities}
 
-Real-time data is used extensively for monitoring and improving operational efficiency, particularly for schedule optimisation. It shows promise for more advanced diagnostics, fault classification, and control optimisation. Real-time data is a crucial element of the emerging field of Digital Twins because it enables the virtual model to be aware of changing conditions in the real world.
+Real-time data is used extensively for monitoring and improving operational efficiency, particularly for schedule optimisation. It shows promise for more advanced diagnostics, fault classification, and control optimisation \cite{udugamaRoleBigData2020}. Real-time data is a crucial element of the emerging field of Digital Twins because it enables the virtual model to be aware of changing conditions in the real world.
 
 The project will need to provide reliable software because it needs to be able to work continuously to enable crucial tasks such as diagnostics and optimisation to take place. The software must be scalable enough to work in large and small industrial settings and needs to provide interoperability with existing systems that perform some of these roles already.
 
 
 \subsection{Data Processing Pipeline}
 
-This question has been answered by outlining the data processing pipeline. Raw data is collected from SCADA systems, IoT networks, and system logs. 
+In a factory, raw data is collected from SCADA systems, IoT networks, and system logs. 
 This data is organised and labelled, tagging it with relevant context such as timestamps and source information. Sensor data from multiple sources can then be fused together to provide more meaningful, understandable interpretations. 
 This increases the accuracy and enhances fault tolerance. 
 These interpretations serve as a bridge between raw data and model simulation. Simulation is used to estimate other parameters of the system that may not be able to be measured directly by sensors, enabling a comprehensive view of the entire industrial process's state. 
@@ -76,7 +79,7 @@ Additionally, live modelling augments models with the ability to update themselv
 
 
 % TODO: Update this section to better reflect the state of the ahuora platform
-This provides a basis for developing the core features of the software development project. The project will need to incorporate existing or novel sensor fusion technologies to prepare data for modelling. 
+This provides a basis for developing the core features required in the Ahuora Platform. The platform will need to incorporate existing or novel sensor fusion technologies to prepare data for modelling. 
 A mathematical modelling framework will need to be chosen that supports hybrid modelling, and technologies will need to be developed to enable live modelling in that environment. 
-Further research and review will be required in this area to find the optimal technologies and methods to use to develop these features. The optimal solution will depend highly on the external constraints and requirements of the stakeholders.
+Further research and review will be required in this area to find the optimal technologies and methods to use to develop these features. The optimal solution will be highly dependent on the external constraints and requirements of the stakeholders.
 

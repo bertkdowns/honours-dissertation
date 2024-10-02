@@ -10,9 +10,16 @@
 \usepackage{cleveref}
 \usepackage{wrapfig}
 \usepackage{gensymb}
-
 \usepackage{setspace}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{ragged2e}
+
 \onehalfspacing
+\newcolumntype{L}[1]{>{\RaggedRight\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{\RaggedLeft\hspace{0pt}}p{#1}}
+
+
 \title{Integrating streamed sensor data into a distributed model of a complex system \\
 \large{A report submitted in partial fulfilment of the requirements for the degree of \\
 \textbf{Bachelor of Engineering (Hons) in Software Engineering} \\
@@ -55,9 +62,23 @@ I would like to thank my supervisors, Tim Walmsley and Mark Apperley, for their 
 \tableofcontents
 \listoffigures
 \listoftables
+
+\section*{List of Abbreviations}
+
+\begin{tabular}{lL{13cm}}
+    IDAES-PSE & Institute for the Design of Advanced Energy Systems - Process Simulation Environment \\
+    SCADA & Supervisory Data Aquisition and Control \\
+    PYOMO & PYthon Optimisation MOdelling language \\
+    PDE & Partial Differential Equation \\
+    RBF & Radial Basis Function \\
+    PYSMO & Python-based Surrogate Modelling Objects \\
+    OMLT & Optimization and Machine Learning Toolkit \\
+\end{tabular}
+
 \newpage
 \pagenumbering{arabic}
 
+% TODO: Table of acronyms (copy from research article)
 
 %Include methodology/approach, R&D plan (design, survey, experiment), results and analysis (discussion), impacts and Vision Mātauranga
 
