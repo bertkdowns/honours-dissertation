@@ -1,7 +1,7 @@
 
 \chapter{Architecture Research} \label{sec:architectureresearch}
 
-The literature review identified a variety of modelling techniques, including Steady-state modelling, Dynamic Modelling, Surrogate Modelling, and Optimisation. 
+The literature review also identified a variety of modelling techniques, including Steady-state modelling, Dynamic Modelling, Surrogate Modelling, and Optimisation. 
 
 The Ahuora Digital Twin Platform is currently built to support only steady state modelling. However, to explore the potential for integrating more advanced live data processing techniques, the IDAES Process Systems Engineering Framework was employed as a testbed.
 
@@ -71,7 +71,7 @@ Implementing Model Predictive Control in IDAES is relatively straightforward, as
 
 IDAES's Caprese library can simulate model predictive control, but in order for it to truly be useful IDAES needs to be paired with a real-time data processing system. The real-time data processing system will need to be able to make the controlling actions suggested by the MPC in real-time, and then inform the MPC of the system's response. This requires integration with the industry-specific SCADA systems that are used to control factories.
 
-This project will focus on the data-gathering and processing aspects of this problem, rather than the control aspects. As time permits, suggestions will be made on how the control aspects could be implemented.
+This project will focus on the data-gathering and processing aspects of this problem, rather than the control aspects. However, suggestions on how to implement control will be provided.
 
 
 
@@ -89,7 +89,6 @@ The current Ahuora Simulation Platform is split into three main parts:
 
 Over time, the Ahuora Simulation platform will be expanded to support dynamic modelling, surrogate modelling, and optimisation.
 
-% TODO: Explain industrial data collection tools, how our stuff fits in.
 Additionally, there are also a number of other tools that are used in industry for collecting and processing sensor data. There may be an integrated solution or a number of different tools that are used together, but they can be grouped by their functionality:
 \begin{itemize}
     \item Data Collection: These tools are responsible for collecting data from sensors and storing it in a database. They may also provide tools for cleaning and preprocessing the data. This includes IoT networks and SCADA systems.
@@ -129,7 +128,9 @@ Because of the different use cases, while the Ahuora Simulation platform needs t
 
 
 
-Deploying the a model in production would likely only be done by a trained engineer who manages the plants' SCADA systems.The deployment would have to be custom for each plant, depending on the SCADA system in use, the sensors available, and the model being used. Making a User Interface for this process would be very challenging, and would limit support to only a certain number of protocols. Thus, it can be considered that the interface, pipeline, or service between the Ahuora Simulation Platform and the SCADA system is a custom software component. It may be appropriate to create some sort of framework, API, or service to serve as a bridge between the two systems: a starting point for a custom solution. To understand how this interaction could look, a prototype was created. 
+Deploying the a model in production would likely only be done by a trained engineer who manages the plants' SCADA systems.
+The deployment would have to be custom for each plant, depending on the SCADA system in use, the sensors available, and the model being used. 
+Making a User Interface for this process would be very challenging, and would limit support to only a certain number of protocols. 
+Thus, it can be considered that the interface, pipeline, or service between the Ahuora Simulation Platform and the SCADA system is a custom software component. 
+In the Proposed Architecture (\Cref{sec:proposed_architecture}), this is referred to as the Digital Twin Adapter. It represents a framework, API, or service that serves as a bridge between the simulation platform and the SCADA system. 
 
-% Impact, or conclusions, or something
-%\section{Impact}

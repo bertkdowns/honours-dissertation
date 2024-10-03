@@ -1,5 +1,7 @@
 \chapter{Recording History} \label{sec:history}
 
+% TODO: Review this section
+
 \section{Purpose}
 
 To better understand the tradeoffs of a more integrated platform, it was decided to implement a solve history system. This would allow the user to view the results of previous simulations, and compare them. It is a useful feature for the Ahuora Simulation platform as a standalone tool, but it can also be used to record the results of the real-time data processing system. A simple dashboard can be created to view past solving results, which can show how the system has changed over time. If significant advantages are found in this approach, it may be worth considering a more integrated system. If not, it can provide some insight into how to break the system apart while retaining similar functionality.
@@ -105,7 +107,7 @@ Secondly, the methods of specifying unit operations can vary, and the Ahuora Sim
 For example, you can calculate temperature by how much a pipe expands, or the pressure of a valve outlet from its temperature, assuming it's in the two-phase region (transitioning between liquid and gas) and is a pure fluid. The Ahuora Simulation Platform has ``Specification Blocks'' on it's roadmap of future development, which allow specifying arbitrary relationships between variables. This may help with these sorts of scenarios - or it can be treated as a preprocessing step before feeding the calculated values into the Ahuora Simulation Platform.
 
 There was a lot of data that couldn't be used in the Ahuora Simulation Platform. This could have been used if the Ahuora Simulation Platform allowed more flexible model specification: the inlet and outlet air temperatures could have been used to calculate the heat capacity of the air streams, or efficiency of the heat exchangers.
-Alternatively, overspecified data could be used for sensor fusion as explained in the Literature Review (\Cref{sec:litreview}), using Bayesian statistics to calculate what the most probable true values are and the uncertainty associated with them. 
+Alternatively, overspecified data could be used for sensor fusion as explained in the Literature Review (Appendix \ref{sec:litreview}), using Bayesian statistics to calculate what the most probable true values are and the uncertainty associated with them. 
 However, this would significantly increase the complexity of the model; an alternative is just to compare the simulation output to the live data, and flag any significant variations as a potential problem. 
 Sensor fusion would likely require bayesian methods to be implemented into the Ahuora Simulation Platforms, comparing variances could be done as a postprocessing step in a seperate software.
 
@@ -136,6 +138,8 @@ This all provides cause for reflection on the use cases identified in \cref{sec:
 \Cref{tab:morerequirements} summarises the requirements of each of these new use cases. The data engineer is most concerned about integration with existing systems. This would be best serviced by ensuring the data processing platform in Ahuora has simple, clear APIs to ingest data and extract data after solve. The Process Engineer wants easy access to all the sensor data in the factory, and sufficient tooling to be able to convert the sensor data into model parameters. This could be achieved by adding additional model properties to the Ahuora Simulation Platform, but more complex cases may require additional pre/postprocessing outside of the IDAES solver. Exactly what this could entail is highly implementation-specific.
 
 \section{Conclusions}
+
+% TODO: Consider how this relates to the previous chapter and how it sets things up to the next chapter, adjust them so they're consistent.
 
 In the previous chapter, \cref{sec:prototypeinsights} discussed the tradeoffs between doing everything in the Ahuora Platform, and doing as much as possible in an external system. The insights gained in this chapter suggest that the Ahuora Simulation platform alone is insufficient, and that linking with external systems would be required to store results in line with other company data. This also enables more advanced processing techniques to be implemented through custom logic outside of the Ahuora Platform. However, specific techniques that involve extending the mathematical model of the system would be best done in the Ahuora Simulation Platform. A seperate suite of tools to handle a data processing pipeline would best support this, though a full implementation would be a significant undertaking that is beyond the scope of this project. 
 

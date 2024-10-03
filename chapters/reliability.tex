@@ -19,7 +19,7 @@ When both of these changes were made, the model was able to solve reliably. The 
 While implementing this, another issue was discovered. Because stream properties were being used to store additional live data that was not part of the simulation, sometimes the live data was invalid as a stream condition. This was done so the part of the platform that recorded solve history could be used to display all live data results, not just the simulation results. However, this was not a good solution, as it made the simulation less reliable. This means that either the solve history feature should be updated to handle storing additional metadata, or the live data should be stored in a different way.
 
 
-
+% Todo: figure out a bit more of a structure for this
 
 % Maybe mention scaling?
 

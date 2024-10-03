@@ -20,11 +20,13 @@
 \newcolumntype{R}[1]{>{\RaggedLeft\hspace{0pt}}p{#1}}
 
 
-\title{Integrating streamed sensor data into a distributed model of a complex system \\
+
+\title{ \includegraphics[width=0.2\textwidth]{uow_logo.png} \\
+Integrating streamed sensor data into a distributed model of a complex system \\
 \large{A report submitted in partial fulfilment of the requirements for the degree of \\
 \textbf{Bachelor of Engineering (Hons) in Software Engineering} \\
 at \\
-\textbf{the University of Waikato}
+\textbf{the University of Waikato}\\
 }}
 
 \author{Bert Downs  \\ 
@@ -45,6 +47,7 @@ Supervised by Tim Walmsley, Mark Apperley }
 % Ahuora needs to be integrated with existing systems for control and monitoring. However, we don't know what features ahuora needs to do this effectively. This report outlines the development work required to integrate ahuora with existing systems, using a case study to evaluate the effectiveness of the current progress.
 % Factories currently process live data in traditional feedback loops: a Digital Twin Approach can improve this. We have developed a modular way of creating a digital twin that can process live data through Ahuora to make predictions, and evaluated it in a case study - this should be used in industry.
 % Factories currently process live data in feedback loops: a digital twin approach can make this smarter. We have extended the Ahuora Simulation platform so it can be used as a Digital Twin platform for tracking a factory's state and mapking predictions, and evaluated it in a case study - this should be used in industry.
+
 \maketitle
 
 
@@ -52,7 +55,7 @@ Supervised by Tim Walmsley, Mark Apperley }
 
 Modern factories are equipped with a variety of sensors that monitor the state of the factory and products. To fully utilise this sensor data, the field of Digital Twinning is emerging, which combines live factory data, historical state, and a model of the factory to predict future states. The process of creating a digital twin lacks standardization. This project presents a standardised framework for creating digital twins of chemical plants, using the Ahuora Digital Twin Platform and industry standard data processing tools. The framework is evaluated in a case study of a heat pump dryer, demonstrating the potential of digital twins to improve factory performance.
 
-% TODO: Something about results and evaluation stuff.
+% TODO: Something about results and evaluation stuff in the abstract
 % this report argues that
 
 \chapter*{Acknowledgements}
@@ -78,7 +81,6 @@ I would like to thank my supervisors, Tim Walmsley and Mark Apperley, for their 
 \newpage
 \pagenumbering{arabic}
 
-% TODO: Table of acronyms (copy from research article)
 
 %Include methodology/approach, R&D plan (design, survey, experiment), results and analysis (discussion), impacts and Vision Mātauranga
 
@@ -126,6 +128,5 @@ I would like to thank my supervisors, Tim Walmsley and Mark Apperley, for their 
 
 
 % TODO Next:
-% - Add a section at the start, explaining the proposed system architecture. (I.e, what I think is the best way to implement the Ahuora Digital Twin Platform)
 % - Rework the other sections to be inline with this arch
 
