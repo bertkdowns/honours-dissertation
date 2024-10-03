@@ -14,11 +14,37 @@
 \usepackage{amssymb}
 \usepackage{array}
 \usepackage{ragged2e}
+\usepackage{listings}
+
 
 \onehalfspacing
 \newcolumntype{L}[1]{>{\RaggedRight\hspace{0pt}}p{#1}}
 \newcolumntype{R}[1]{>{\RaggedLeft\hspace{0pt}}p{#1}}
 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
 
 
 \title{ \includegraphics[width=0.2\textwidth]{uow_logo.png} \\
@@ -53,10 +79,8 @@ Supervised by Tim Walmsley, Mark Apperley }
 
 \chapter*{Abstract}
 
-Modern factories are equipped with a variety of sensors that monitor the state of the factory and products. To fully utilise this sensor data, the field of Digital Twinning is emerging, which combines live factory data, historical state, and a model of the factory to predict future states. The process of creating a digital twin lacks standardization. This project presents a standardised framework for creating digital twins of chemical plants, using the Ahuora Digital Twin Platform and industry standard data processing tools. The framework is evaluated in a case study of a heat pump dryer, demonstrating the potential of digital twins to improve factory performance.
+Digital twins combine live factory data, historical state, and a model of the factory to predict future states. This project shows how the process of creating a digital twin lacks standardization. A abstract framework for creating digital twins of chemical plants is presented, that builds on top of existing chemical simulation and data processing tools. The framework is implemented for steady-state process models in the Ahuora Digital Twin Platform. The framework is evaluated in a case study of a heat pump dryer, demonstrating the feasibility of such an approach.
 
-% TODO: Something about results and evaluation stuff in the abstract
-% this report argues that
 
 \chapter*{Acknowledgements}
 
@@ -126,7 +150,4 @@ I would like to thank my supervisors, Tim Walmsley and Mark Apperley, for their 
 \end{appendices}
 \end{document}
 
-
-% TODO Next:
-% - Rework the other sections to be inline with this arch
 

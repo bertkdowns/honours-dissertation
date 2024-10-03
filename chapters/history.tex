@@ -1,7 +1,5 @@
 \chapter{Recording History} \label{sec:history}
 
-% TODO: Review this section
-
 \section{Purpose}
 
 To better understand the tradeoffs of a more integrated platform, it was decided to implement a solve history system. This would allow the user to view the results of previous simulations, and compare them. It is a useful feature for the Ahuora Simulation platform as a standalone tool, but it can also be used to record the results of the real-time data processing system. A simple dashboard can be created to view past solving results, which can show how the system has changed over time. If significant advantages are found in this approach, it may be worth considering a more integrated system. If not, it can provide some insight into how to break the system apart while retaining similar functionality.
@@ -111,6 +109,7 @@ Alternatively, overspecified data could be used for sensor fusion as explained i
 However, this would significantly increase the complexity of the model; an alternative is just to compare the simulation output to the live data, and flag any significant variations as a potential problem. 
 Sensor fusion would likely require bayesian methods to be implemented into the Ahuora Simulation Platforms, comparing variances could be done as a postprocessing step in a seperate software.
 
+%TODO: Link all the use cases together in the proposed system architecture section.
 This all provides cause for reflection on the use cases identified in \cref{sec:researchconclusions}, \cref{tab:requirements}. While both the engineer's use case and the operator's use cases are still valid, there was an assumption that the person setting up the digital twin would be able to easily port an engineer's model (e.g, from the design of a plant) into a digital twin that processes live data; that it would be just a matter of linking the model up with a live data source. From this test, it is clear that finding the correct parameters to define a model, and finding a way to link sensor readings up with simulation parameters, is a non-trivial task: it is not as straightforward as a one-to-one mapping. Thus, two other use cases should be considered. A ``Data Engineer'' may be a Software Engineer responsible for aggregating data from different sensors (and simulation results) into a single SCADA system or Industrial IoT system. A ``Process Engineer'', for want of a better term, may be a Chemical Engineer who is responsible for linking existing simulation models with the IoT data, using their domain specific knowledge to convert the IoT readings from sensor outputs into valid parameters for a simulation model, using sensor fusion or other techniques. These need to be considered alongside the requirements of a chemical engineer only focused on design, and a operator only focused on control.
 
 \begin{table}[ht]

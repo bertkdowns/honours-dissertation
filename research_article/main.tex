@@ -122,7 +122,7 @@ Conventional simulation platforms do not have built-in support for live data pro
 \end{figure}
 
 The concept of a “Digital Twin” refers to a simulation of something in the physical world, which is kept up to date with a physical system using real-time data \cite{yu2022energy}.
-In \Cref{fig:theoretical_framework}, this intermediate layer is what converts the simulation platform, and the data from the factory, into a digital twin. It is broken into two parts: a ``Digital Twin Adapter'' which is responsible for converting the data from the factory into a format that the simulation platform can understand, and to provide results from simulations back the factory. Also specified is a ``Digital Twin State'', which represents an estimate of the current state of the factory, based on the simulation results and the live data. This represents the ability of a Digital Twin to "learn" how the physical system behaves, and adjust the inputs to the simulation accordingly.
+In \Cref{fig:theoretical_framework}, this intermediate layer is what converts the simulation platform, and the data from the factory, into a digital twin. It is broken into two parts: a ``Digital Twin Adapter'' which is responsible for converting the data from the factory into a format that the simulation platform can understand, and to provide results from simulations back the factory. Also specified is a ``Digital Twin State'', which represents an estimate of the current state of the factory, based on the simulation results and the live data. This represents the ability of a Digital Twin to ``learn" how the physical system behaves, and adjust the inputs to the simulation accordingly.
 
 The results of evaluating the IDAES-PSE platform will be considered in the context of this theoretical framework, to determine what the high-level requirements are for a Digital Twin that is built on top of existing simulation and live data processing platforms.
 
@@ -378,21 +378,13 @@ This demonstration uses a simple RBF network, but other machine learning techniq
 
 % explain it as a standalone tool
 
-% Todo: Proofread this
-
 Surrogate modelling may be achieved using IDAES's built-in PySMO libraries, or other similar libraries such as OMLT. 
-It is reasonably straightforward to train a surrogate model to represent a non-dynamic unit operation, but dynamic unit operations get significantly more complex - instead of modelling a single value, the surrogate model must be able to model the entire time system. There are some methods of doing this, such as using neural ODEs, Residual Networks, Operator Networks, or some other sort of convolutional network. 
+It is reasonably straightforward to train a surrogate model to represent a non-dynamic unit operation, but dynamic unit operations get significantly more complex - instead of modelling a single value, the surrogate model must be able to model the entire time system. There are some methods of doing this, such as using neural ODEs, Residual Networks, Operator Networks, or convolutional neural networks. 
 There is little research into applying these methods in the field of chemical and process simulation, especially in the context of mathematical modelling such as the IDAES framework.
 
 The exact same process for surrogate modelling can also be used to model unit operations from historical data. 
 This is useful when there is no mathematical model of the unit operation, but there is historical data available. 
-Online Learning techniques could be used to update the surrogate model in real-time, as new data becomes available. This is a key step in turning a ``simulation" into a ``Digital Twin", as it allows the model to self-adapt to real-world conditions. The current machine learning libraries in IDAES do not support this, so this functionality would need to be added.
-
-
-
-% for process data
-
-% for control systems
+Online Learning techniques could be used to update the surrogate model in real-time, as new data becomes available. This is a key step in turning a simulation into a Digital Twin, as it allows the model to self-adapt to real-world conditions. The current machine learning libraries in IDAES do not support this, so this functionality would need to be added.
 
 \section{Results \& Discussion}
 %Results should be clear and concise.
@@ -430,39 +422,7 @@ The morphological matrix in \Cref{tab:morphological_matrix} shows the discussed 
     \caption{Morphological matrix showing overlaps and use cases of IDAES-PSE functionality.}
     \label{tab:morphological_matrix}
 \end{table}
-% Add another table showing the gaps of what needs to be implemented to make IDAES-PSE a complete Digital Twin platform.
 
-%\subsection{Gaps in IDAES-PSE Functionality}
-% \begin{table}[h]
-%     \centering
-%     \begin{tabular}{|L{3cm}|L{3.8cm}|p{8.5cm}|}
-%         \hline
-%         \textbf{Functionality} & \textbf{Gap} & \textbf{Explanation} \\
-%         \hline
-%         Steady State Modelling & 
-%         System to solve with live data &
-%         Aggregating live data measurements and passing them to the simulation\\
-%         \hline
-%         Dynamic Modelling & 
-%         Data Interpolation & 
-%         Estimating data in between sensor readings for a continuous simulation.\\
-%         \hline
-%         Dynamic Modelling &
-%         Dynamic State &
-%         Storing the final state of the dynamic system so it can be used as the initial state for the next timestep  \\
-%         \hline
-%         Optimisation & 
-%         Model Predictive Control &
-%         Implementing a model-predictive control system that can connect to a simulation platform such as IDAES-PSE, and give control signals to the factory. \\
-%         \hline
-%         Hybrid Modelling & 
-%         Online learning & 
-%         Creating a system to update models based on recently aquired sensor data. \\
-%         \hline
-%     \end{tabular}
-%     \caption{Gaps in IDAES-PSE functionality for factory systems.}
-%     \label{tab:gaps_functionality}
-% \end{table}
 
 \begin{figure}[h]
     \centering
