@@ -1,7 +1,7 @@
 \chapter*{\textit{Interlude: Transitioning to Development}} \label{sec:interlude}
 \addcontentsline{toc}{chapter}{Interlude: Transitioning to Development}
 
-% TODO: Review this section
+% TODO: Convert this into introductions for the other parts
 
 Up until this point, the project has been focused on experimentation, research, and prototyping. Chapters \ref{sec:heatpumpcollection} through \ref{sec:simulationprototype} have identified key use cases, requirements, and architectures for processing live data. 
 \Cref{sec:heatpumpcollection} identified that while data collection is straightforward, there are limitations to the data that can be collected. Often, custom logic for inference or sensor fusion will be required. \Cref{sec:architectureresearch} tested the conclusions from the literature review, concluding that IDAES is capable of supporting dynamic modelling, surrogate modelling, optimisation, and control, but that these features mean different things in the context of live data processing compared to offline simulation. \Cref{sec:simulationprototype} demonstrated that the Ahuora Simulation Platform could be integrated with a real-time data processing system for steady-state modelling with relatively little effort, as long as there was a standardised API, and provided techniques to do so. However, much more complexity arises when combining all these concepts together, and when balancing the needs of the engineer's workflow with the operator's workflow.
@@ -13,7 +13,7 @@ Phase 1 provides the core functionality: ingesting data, solving the simulation,
 
 Phase 2 and 3 will not be developed in this project, but the long-term roadmap is a key research outcome in itself. This proves that development has been done in an engineering context, with a clear understanding of future requirements and an anticipation of further work.
 
-
+% Todo: Put this in the proposed architecture section.
 \begin{landscape}
     \begin{figure}
         \centering
