@@ -5,7 +5,7 @@
 % It's required because process engineers get raw sensor data and need to aggregate it etc for the model.
 % However, they also need to work from historical data to test the model, and to understand the system.
 
-As concluded in \cref{sec:history}, it is required that a comprehensive Digital Twin Platform support the workflows of process engineers, who are responsible to link the raw sensor data to the model. This workflow is seperate from the workflow to design a model, and thus requires a seperate set of tools. 
+As concluded in \Cref{sec:history}, it is required that a comprehensive Digital Twin Platform support the workflows of process engineers, who are responsible to link the raw sensor data to the model. This workflow is seperate from the workflow to design a model, and thus requires a seperate set of tools. 
 In this chapter, a simple data preprocessing pipeline is added to the Ahuora Platform to support this workflow. 
 
 When developing a way to link a simulation to real-time data, raw historical data is generally used to test the data processing pipeline, because it allows to test against a standardised set of conditions. Then, the same pipeline is used to process the real-time data when the solution is deployed.
@@ -17,7 +17,7 @@ Thus, the tools to process historical data should be the same as the tools to pr
 The simplest implementation that fits these requirements is a way to set properties to many different values, from some external data source (e.g a CSV file, or a live data stream). Thus the simulation could be run with many different conditions. Each successive simulation would be added to the history, so all simulations could be compared.
 This requires a way to load in data, and a way to specify which properties should be updated. It needs to be done in a way that can be easily extended from the simple ``CSV file'' case to a live data stream.
 
-As with the history feature added in \cref{sec:history}, this feature also is a core requirement of the Ahuora Simulation platform. It is required to support multi-steady-state simulation, a common type of analysis for chemical engineers. Thus it is an appropriate place to start development. 
+As with the history feature added in \Cref{sec:history}, this feature also is a core requirement of the Ahuora Simulation platform. It is required to support multi-steady-state simulation, a common type of analysis for chemical engineers. Thus it is an appropriate place to start development. 
 
 % This is also part of multi-steady-state and pretty helpful anyway for chemical engineers too.
 \section{Design}

@@ -33,7 +33,7 @@ I used the IDAES framework to develop a dynamic model of a steam tank, with a va
 This provided a simple example of a dynamic system. The inlet and outlet valve and the PID controller were not dynamic models: From a mathematical perspective, this means their properties were fully determined by the inlet and outlet conditions. The only dynamic model was the Steam Tank. From a mathematical perspective, this means that the state of the steam tank was determined by the inlet and outlet conditions, but also the previous state of the tank, i.e how ``full" the tank is.
 
 
-\section{Key Findings}\label{sec:dynamicmodelling}
+\section{Analysis}\label{sec:dynamicmodelling}
 
 \begin{itemize}
     \item The IDAES framework is well-suited to dynamic modelling, as it provides tools for creating and solving differential equations. It can easily model the same system at different time scales.
@@ -65,7 +65,7 @@ To use the surrogate model in a flowsheet, the weights of the model are loaded a
 
 As shown in Listing \ref{lst:heater_surrogate}, each input and output is linked to a parameter in the unit operation. This works for steady-state models, but dynamic models have a set of parameters, so the surrogate model would need to be able to predict the next time step from the previous time step. This is a much more complex problem, as it would have to be time scale invariant.
 
-\subsection{Key Findings}\label{sec:surrogatemodelling}
+\subsection{Analysis}\label{sec:surrogatemodelling}
 
 Surrogate Modelling may be achieved using IDAES's built-in PySMO libraries, or other similar libraries such as OMLT. It is reasonably straightforward to train a surrogate model to represent a non-dynamic unit operation, but dynamic unit operations get significantly more complex - instead of modelling a single value, the surrogate model must be able to model the entire time system. There are some methods of doing this, such as using neural ODEs, Residual Networks, Operator Networks, or some other sort of convolutional network. There is little research into applying these methods in the field of chemical and process simulation, especially in the context of mathematical modelling such as the IDAES framework.
 
@@ -102,14 +102,14 @@ Because the setpoint change is instantaneous, it is unable to perfectly follow t
 The optimisation technique used here could be used iteratively for model predictive control, where the model is solved at each time step to find the optimal control action. 
 
 
-\subsection{Key Findings} \label{sec:optimisationcontrol}
+\subsection{Analysis} \label{sec:optimisationcontrol}
 
 Implementing Model Predictive Control in IDAES is relatively straightforward, as long as there is a dynamic model of the system, a cost function, and the optimisation problem is well-posed. The Ahuora Digital Twin Platform does not support optimisation yet, but this will be supported in the future.
 
 In order for model predictive control to be useful, IDAES needs to be paired with a real-time data processing system. The real-time data processing system will need to be able to make the controlling actions suggested by the MPC in real-time, and then inform the MPC of the system's response. This requires integration with the industry-specific SCADA systems that are used to control factories.
 
 
-\section{Research Conclusions} \label{sec:researchconclusions}
+\section{Discussion} \label{sec:researchconclusions}
 % TODO: maybe the research conclusions should be seperated out, or put into the proposed architecture section.
 % It makes more sense for the conclusions of this chapter to be about how each of the modelling techniques fit in to the proposed architecture, to argue that my architecture is correct.
 

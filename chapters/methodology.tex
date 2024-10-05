@@ -1,22 +1,47 @@
 \chapter{Methodology}
 % helicopter view, structure of the report
+%TODO: Make this a bit more detailed, going over each of the sections
 
-This project was conducted as part of a real-world, collaborative effort to build the Ahuora Digital Twin platform, so the methodology followed engineering principles. The focus of the project moved between improving the Simulation Platform to support more modelling techniques, and developing a live data processing system that could be integrated into the platform.
+Software Engineering principles are notoriously hard to follow in academia \cite{connolly2023software}, partially because of of competing criteria for success. 
+In academia, the criteria is publication of results, but in Software Engineering, creating and publishing a quality piece of software is quintessential to success. 
+Additionally, since this project is conducted as part of a wider effort to improve the Ahuora Platform, research and development often had to account for a changing environment. 
+Thus Agile principles were followed for both research and development, focusing on implementing one feature at a time. 
 
-Agile methods were followed, with a focus on iterative development and continuous feedback. Each chapter of the report represents a full ``sprint'': identifying a problem to solve, developing a solution, and evaluating the solution. Each chapter has a distinct objective, which varies based on the state of the project. Some are exploratory, focusing on research, understanding needs, and long-term plans. Other objectives are more concrete, focusing on developing and using the system. 
+This project largely follows the ``Action Research'' methodology reviewed by Wohlin et al. in their paper~\cite{wohlin2021guiding}. The Action Research methodology is an iterative process, which includes five phases:
+
+\begin{enumerate}
+    \item Diagnosing - Identifying a problem to be addressed. The larger problem has already been identified in the Introduction and Literature Review. Each chapter also starts by identifying specific research questions, or the purpose of implementing a feature.
+    \item Action Planning - Deciding what approach will best solve the problem. This is done by deciding on a prototype to build or a feature to implement, which is done at least once in each chapter.
+    \item Action Taking - This involves setting the planned actions into practice - by building a prototype for research purposes, or implementing a feature in the Ahuora Platform.
+    \item Evaluating - Studying and discussing the consequences of an action. The effectiveness of a prototype or feature, along with any other insights from the development process, is discussed at the conclusion of each chapter.
+    \item Specifying/learning - Identifying general findings related to the problem under study. This is done explicitly in some chapters, such as by identifying the requirements of different types of users. The report is concluded with a chapter specifically devoted to generalising the findings of each previous chapter into a theoretical framework that can be used for implementing Digital Twins, and an implementation plan for the Ahuora Platform. 
+\end{enumerate}
 
 
-% IDK if any of this is relevant or not
+\section{Overview of Chapters}
 
-\section{Research}
+\begin{table}[ht]
+    \centering
+    \caption{Overview of chapters}
+    \label{tab:research_chapters}
+    \begin{tabular}{|L{4.5cm}|p{11.5cm}|}
+    \hline
+    \textbf{Chapter} & \textbf{Purpose} \\
+    \hline
+    Data Collection \mbox{(\Cref{sec:heatpumpcollection})}& Understand the process of collecting data from a thermodynamic system, using a Heat Pump Dryer as a test case. \\ \hline
+    Simulation Technologies \mbox{(\Cref{sec:architectureresearch})}& Identify potential analysis techniques for a Digital Twin system, and what is required to make use of them. \\\hline
+    Prototyping \mbox{(\Cref{sec:simulationprototype})}& Experiment with linking live data to a simple simulation in the Ahuora Platform. \\\hline
+    Recording History \mbox{(\Cref{sec:history})}& Adding the ability to store past solves in the Ahuora Digital Twin Platform. \\\hline
+    Data Preprocessing \mbox{(\Cref{sec:datapreprocessing})}& Functionality for parameterising solves, to make it easier to develop Digital Twins. \\
+    \hline
+    \end{tabular}
+\end{table}
 
-The research stage involved small-scale experiments in the IDAES framework to test the feasibility of integrating live data processing techniques into the Ahuora Digital Twin Platform. This followed directly from the Literature Review, which identified a variety of modelling techniques that could be used in a Digital Twin Platform. The research stage was used to identify the requirements for the Ahuora Digital Twin Platform, and to develop a high-level architecture for the platform that would support these requirements. This focused on the long-term requirements of the platform, rather than the current capabilities of the Ahuora Simulation Platform.
+Each chapter has a distinct objective, yet each piece of work contributes to the same high-level objectives. \Cref{tab:research_chapters} summarises the specific focus of each chapter. 
+Chapters \ref{sec:heatpumpcollection} \& \ref{sec:architectureresearch} focus on understanding the core tools and platforms that a Digital Twin is related to, to gain a holistic long-term view of the problem. Chapter \ref{sec:simulationprototype} asses the conclusions from the previous chapters in a prototype live data collection system. These chapters are more research focused.
 
-\section{Development}
+Chapters \ref{sec:history} \& \ref{sec:datapreprocessing} develop some features in the Ahuora Simulation Platform that implement some of the characteristics discussed in the earlier chapters. These chapters are highly development focused, and the features discussed are now integrated into the Ahuora Platform codebase.
 
-The development stage involved developing a pilot implementation of the framework. This was done in conjunction with the Ahuora Simulation Platform, following the architecture developed in the research stage. However, it did not include all the features discussed in the research section, due to the limitations of the current platform. Only the features supported by the current version of the Ahuora Simulation Platform were implemented.
+A case study of a heat pump dryer was used throughout the report to evaluate the prototypes built and features developed.  This was done by developing a model of a heat pump dryer in the Ahuora Simulation Platform, and integrating real-time sensor data into the model. The case study was used to evaluate the feasibility of the framework, and to identify areas for future work.
 
-\section{Evaluation}
-
-Evaluation was conducted throughout the research and development process, by testing the prototypes and implementation in an example scenario, forming a simple case study. This was done by developing a model of a heat pump dryer in the Ahuora Simulation Platform, and integrating real-time sensor data into the model. The case study was used to evaluate the feasibility of the framework, and to identify areas for future work.
-
+The final chapter in the report recommends an architecture to use to build a Digital Twin. A theoretical framework is presented that can be used generally to inform Digital Twin development efforts. A Work Breakdown Structure is also presented, recommending a process the Ahuora team can follow to implement Digital Twin features in the Ahuora Simulation Platform. These form the key results of the report, in addition to the features implemented in chapters \ref{sec:history} \& \ref{sec:datapreprocessing}.
