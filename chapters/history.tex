@@ -141,7 +141,7 @@ This all provides cause for reflection on the use cases identified in \Cref{sec:
 
 \Cref{tab:morerequirements} summarises the requirements of each of these new use cases. The data engineer is most concerned about integration with existing systems. This would be best serviced by ensuring the data processing platform in Ahuora has simple, clear APIs to ingest data and extract data after solve. The Process Engineer wants easy access to all the sensor data in the factory, and sufficient tooling to be able to convert the sensor data into model parameters. This could be achieved by adding additional model properties to the Ahuora Simulation Platform, but more complex cases may require additional pre/postprocessing outside of the IDAES solver. Exactly what this could entail is highly implementation-specific.
 
-\section{Conclusions}
+\section{Discussion}
 
 % TODO: Consider how this relates to the previous chapter and how it sets things up to the next chapter, adjust them so they're consistent.
 
@@ -149,4 +149,35 @@ In the previous chapter, \Cref{sec:prototypeinsights} discussed the tradeoffs be
 
 Additionally, a Process Engineer, who is not as skilled at software engineering or programming, would be best served by having some data preprocessing tools built into the platform. As an integrated solution, they could test their models on historical data, using platform tools for data processing. A Data Engineer could then be responsible for providing the required live data to the platform, and storing simulation results, without having to deal with the intracacies of the model itself.
 
-As the solving for the heat pump dryer was not always successful, the next step will be to improve the reliability of solving. This will help to identify relevant preprocessing steps, which can be implemented in the platform.
+
+
+
+\section{Improving Solving Reliability} \label{sec:solvingreliability}
+
+% Talk about why initialisation could be a failing point, how to fix that (e.g remove the recycle, or save initialisation states)
+As the solving for the heat pump dryer was not always successful, some additional time was spent to improve the reliability of solving.
+This helped to identify relevant preprocessing steps to implement in the platform.
+There are a couple of reasons why the solving of the flowsheet was not always successful in the previous section. 
+
+The first reason is that the heat exchangers could be failing to initialise. They are the most complex unit operation, and require appropriate fluid volumes, heat deltas, flow transfer areas, and heat transfer coefficients to be set. If these are not set correctly, the heat exchanger may not initialise. 
+
+As in this model we did not have flow rates for the air inlets, approximate values were being used. Thus including heat exchangers in the model did not provide any more accuracy, and only added complexity. The model was updated with heaters and coolers instead of heat exchangers, which can be solved much more reliably.
+
+The second reason why the model may not have been solving is that the recycle loop was not being initialised correctly. The recycle stream was being set to the same value as the outlet stream, but this creates a continuous loop that the solver may not be able to solve at a steady state. For the next test, the recycle was removed, and the tear guess values were used as the initial conditions. 
+
+% TODO: picture of the data (look it's not so sparodic anymore)
+
+When both of these changes were made, the model was able to solve reliably. The results of the simulation were much more consistent, and better reflected the expected behaviour of the heat pump dryer.
+
+
+While implementing this, another issue was discovered. Because stream properties were being used to store additional live data that was not part of the simulation, sometimes the live data was invalid as a stream condition. This was done so the part of the platform that recorded solve history could be used to display all live data results, not just the simulation results. However, this was not a good solution, as it made the simulation less reliable. This means that either the solve history feature should be updated to handle storing additional metadata, or the live data should be stored in a different way.
+
+
+% Todo: figure out a bit more of a structure for this
+
+% Maybe mention scaling?
+
+% is there any other preprocessing steps we could do? Should we add specification blocks?
+
+% what does this prove about the architecture?
+
