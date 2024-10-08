@@ -1,4 +1,4 @@
-\chapter{Recording History} \label{sec:history}
+\chapter{Updating the Ahuora Simulation Platform} \label{sec:history}
 
 Up until this point, the presented work has focused on experimentation, research, and prototyping. Chapters \ref{sec:heatpumpcollection} through \ref{sec:simulationprototype} identified key use cases, requirements, and architectures for processing live data. 
 \Cref{sec:heatpumpcollection} identified that while data collection is straightforward, there are limitations to the data that can be collected. Often, custom logic for inference or sensor fusion will be required. \Cref{sec:architectureresearch} concluded that IDAES is capable of supporting dynamic modelling, surrogate modelling, optimisation, and control, but that these features mean different things in the context of live data processing compared to offline simulation. 
@@ -6,12 +6,14 @@ Up until this point, the presented work has focused on experimentation, research
 
 This chapter focuses on iteratively developing the Ahuora Simulation Platform to support live data processing, and testing these developments on the Heat Pump Dryer Model. 
 
-\section{Purpose}
+\section{Recording History}
+
+\subsection{Purpose}
 
 To better understand the tradeoffs of a more integrated platform, it was decided to implement a solve history system. This would allow the user to view the results of previous simulations, and compare them. It is a useful feature for the Ahuora Simulation platform as a standalone tool, but it can also be used to record the results of the real-time data processing system. A simple dashboard is created to view past solving results, which can show how the system has changed over time. Significant advantages revealed by this approach demonstrate the potential for development of a more integrated system. Beyond such a development, this approach also provides insight into how to break the system apart while retaining similar functionality.
 
 
-\section{Development} \label{sec:recordinghistorydevelopment}
+\subsection{Development} \label{sec:recordinghistorydevelopment}
 
 The Ahuora Simulation platform stores all simulation results in a database after they are returned from IDAES. Initially, only one entry was maintained with data overwritten by each subsequent flowsheet solve. To enable storing history of previous solves, a table was created to store the results of each previous solve, and new entries were automatically added each time the simulation was run. Then, a user interface was created to view the results of the simulations.
 
@@ -27,7 +29,7 @@ The Ahuora Simulation platform stores all simulation results in a database after
 A seperate tab has been added to the Ahuora Simulation Platform to show the graphs of previous simulation results. This is illustrated by \Cref{fig:livedatadashboard}, which shows the user interface that was created as part of the development, with a number of manually created graphs for the heat pump dryer. 
 
 
-\section{Testing}
+\subsection{Testing}
 
 The data collection scripts from \Cref{sec:heatpumpcollection} were updated to store the results in the Ahuora Simulation Platform instead of InfluxDB, using methods previously outlined in \Cref{sec:simulationprototype}. A heat pump was modelled in the Ahuora Simulation Platform. At this stage, the Ahuora Simulation Platform was able to reliably solve heat pumps with pure chemical components, and as the heat pump dryer used propane as a refrigerant, it was a good test case. 
 
@@ -152,13 +154,7 @@ These need to be considered alongside the requirements of a chemical engineer on
 
 \Cref{tab:morerequirements} summarises the requirements of each of these new use cases. The data engineer is most concerned about integration with existing systems. This would be best serviced by ensuring the data processing platform in Ahuora has simple, clear APIs to ingest data and extract data after solve. The Process Engineer wants easy access to all the sensor data in the factory, and sufficient tooling to be able to convert the sensor data into model parameters. This could be achieved by adding additional model properties to the Ahuora Simulation Platform, but more complex cases may require additional pre/postprocessing outside of the IDAES solver. Exactly what this could entail is highly implementation-specific.
 
-\section{Discussion}
 
-% TODO: Consider how this relates to the previous chapter and how it sets things up to the next chapter, adjust them so they're consistent.
-
-In the previous chapter, \Cref{sec:prototypeinsights} discussed the tradeoffs between doing everything in the Ahuora Platform, and doing as much as possible in an external system. The insights gained in this chapter suggest that the Ahuora Simulation platform alone is insufficient, and that linking with external systems would be required to store results in line with other company data. This also enables more advanced processing techniques to be implemented through custom logic outside of the Ahuora Platform. However, specific techniques that involve extending the mathematical model of the system would be best done in the Ahuora Simulation Platform. A seperate suite of tools to handle a data processing pipeline would best support this, though a full implementation would be a significant undertaking that is beyond the scope of this project. 
-
-Additionally, a Process Engineer, who is not as skilled at software engineering or programming, would be best served by having some data preprocessing tools built into the platform. As an integrated solution, they could test their models on historical data, using platform tools for data processing. A Data Engineer could then be responsible for providing the required live data to the platform, and storing simulation results, without having to deal with the intracacies of the model itself.
 
 
 
@@ -193,4 +189,73 @@ While implementing this, another issue was discovered. Because stream properties
 % is there any other preprocessing steps we could do? Should we add specification blocks?
 
 % what does this prove about the architecture?
+
+
+\section{Data Preprocessing} \label{sec:datapreprocessing}
+
+% TODO: Review this subsection
+
+% It's required because process engineers get raw sensor data and need to aggregate it etc for the model.
+% However, they also need to work from historical data to test the model, and to understand the system.
+
+As concluded in \Cref{sec:history}, it is required that a comprehensive Digital Twin Platform support the workflows of process engineers, who are responsible to link the raw sensor data to the model. This workflow is seperate from the workflow to design a model, and thus requires a seperate set of tools. 
+In this chapter, a simple data preprocessing pipeline is added to the Ahuora Platform to support this workflow. 
+
+When developing a way to link a simulation to real-time data, raw historical data is generally used to test the data processing pipeline, because it allows for testing against a standardised set of conditions. Then, the same pipeline is used to process the real-time data when the solution is deployed.
+Thus, the tools to process historical data should be the same as the tools to process live data. 
+Building these tools in the Ahuora Digital Twin platform will provide a foundation to evaluate how to implement more advanced data processing techniques.
+
+\subsection{Design}
+
+% todo: add an example schema/drawing of what it should look like
+The simplest implementation that fits these requirements is a way to set properties to many different values, from some external data source (e.g a CSV file, or a live data stream). Thus the simulation could be run with many different conditions. Each successive simulation would be added to the history, so all simulations could be compared.
+This requires a way to load in data, and a way to specify which properties should be updated. It needs to be done in a way that can be easily extended from the simple ``CSV file'' case to a live data stream.
+
+As with the history feature added in \Cref{sec:history}, this feature also is a core requirement of the Ahuora Simulation platform. It is required to support multi-steady-state simulation, a common type of analysis for chemical engineers. Thus it is an appropriate place to start development. 
+
+% This is also part of multi-steady-state and pretty helpful anyway for chemical engineers too.
+
+The tool that chemical engineers would be most familiar with for this task is a spreadsheet. 
+Thus, it was decided to design the platform in a similar structure. The user would need to upload a csv file, and all the data could be viewed in a table. 
+As in a spreadsheet, additional "columns" could be added to the table, with calculated values based on the row.
+
+This paradigm makes sense from a chemical engineer's standpoint, and from a live data processing standpoint. Each "row" can represent one point in time, with all the data avaliable at that point in time. The "columns" can represent different properties, and can be linked to properties in the simulation. In a live data processing system, due to performance reasons you often are only able to access the current row, and perhaps aggregation functions or other simple calculations from previous rows. This can be easily replicated in this "spreadsheet" view, as we can limit the user to only being able to access the current row, and the previous row.
+
+% todo: add a picture of a spreadsheet wtih some data to explain this better
+\subsection{Implementation}
+
+The most complex part of this process is the implementation of formula processing. Formulas need to be able to reference only certain other properties, and need to be able to be parsed from strings. SymPy was chosen as the library to do this, as it is a well-known library for symbolic mathematics in Python, so it supports the Ahuora Backend, and has support for complex enough expressions for this use case. It also provides a layer of security over using Python's built-in eval function, as it only evaluates mathematical expressions.
+Sympy's parsing libraries support specifying a dictionary of variables that can be used in parsing. This can be used to pass the contents of previously calculated columns, and columns of raw data, to the parser. 
+
+To keep the implementation simple, the CSV file was stored in the browser's local storage, and a seperate request was made to the server to solve the flowsheet at each timestep. The solve request would include the values from the CSV, for that timestep. Though it may not be the most efficient method for batch processing, this most closely mirrors the way that a live data processing system works. 
+
+The frontend was modified to allow the user to upload a CSV file, and to view the data in a table. The user can add new columns to the table, and specify a formula for the column. A column could be linked to a property in the simulation via a new "link" button on the flowsheet page. 
+% TODO: Add images of the ui at thsoe different stages.
+
+Results of the simulation can be viewed through the flowsheet, and through the history page.The user interface workflow between these pages could be improved, but is not the focus of this project: the main concern is functionality and architecture.
+
+
+
+% explain the result, how it worked
+
+% How did it ifluence the architecture of the system?
+
+
+\section{Discussion}
+
+% TODO: Consider how this relates to the previous chapter and how it sets things up to the next chapter, adjust them so they're consistent.
+
+In the previous chapter, \Cref{sec:prototypeinsights} discussed the tradeoffs between doing everything in the Ahuora Platform, and doing as much as possible in an external system. The insights gained in this chapter suggest that the Ahuora Simulation platform alone is insufficient, and that linking with external systems would be required to store results in line with other company data. This also enables more advanced processing techniques to be implemented through custom logic outside of the Ahuora Platform. However, specific techniques that involve extending the mathematical model of the system would be best done in the Ahuora Simulation Platform. A seperate suite of tools to handle a data processing pipeline would best support this, though a full implementation would be a significant undertaking that is beyond the scope of this project. 
+
+Additionally, a Process Engineer, who is not as skilled at software engineering or programming, would be best served by having some data preprocessing tools built into the platform. As an integrated solution, they could test their models on historical data, using platform tools for data processing. A Data Engineer could then be responsible for providing the required live data to the platform, and storing simulation results, without having to deal with the intracacies of the model itself.
+
+%\subsection{Evaluation}
+
+The implementation of the data preprocessing pipeline provides valuable intuition into the next steps to link the Ahuora Simulation Platform with live data processing systems. The preprocessing functionality provides a method to parameterise the simulation, abstracting away the details of the internal setup of the simulation. The previous methods involved making multiple API calls to set each property, and was more heavily dependent on the exact implementation. This method allows Process Engineers to have more control over how live data is processed, without needing to rely on the way that a Data Engineer would link it up with the live data source, because it allows them to decide what they will expose to the live data processing system. It also enables different models to be constructed from the same data source, which could be helpful for debugging and testing, or modelling different operation modes.
+
+
+% IT was implemented using XYZ, because XYZ so that ABC
+% also, we decided that ... because ... so that ...
+
+
 
