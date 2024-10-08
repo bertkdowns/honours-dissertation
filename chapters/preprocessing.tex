@@ -8,8 +8,9 @@
 As concluded in \Cref{sec:history}, it is required that a comprehensive Digital Twin Platform support the workflows of process engineers, who are responsible to link the raw sensor data to the model. This workflow is seperate from the workflow to design a model, and thus requires a seperate set of tools. 
 In this chapter, a simple data preprocessing pipeline is added to the Ahuora Platform to support this workflow. 
 
-When developing a way to link a simulation to real-time data, raw historical data is generally used to test the data processing pipeline, because it allows to test against a standardised set of conditions. Then, the same pipeline is used to process the real-time data when the solution is deployed.
-Thus, the tools to process historical data should be the same as the tools to process live data. Building these tools in the Ahuora Digital Twin platform will provide a foundation to evaluate how to implement more advanced data processing techniques.
+When developing a way to link a simulation to real-time data, raw historical data is generally used to test the data processing pipeline, because it allows for testing against a standardised set of conditions. Then, the same pipeline is used to process the real-time data when the solution is deployed.
+Thus, the tools to process historical data should be the same as the tools to process live data. 
+Building these tools in the Ahuora Digital Twin platform will provide a foundation to evaluate how to implement more advanced data processing techniques.
 
 \section{Minimum Viable Pipeline}
 
@@ -21,14 +22,16 @@ As with the history feature added in \Cref{sec:history}, this feature also is a 
 
 % This is also part of multi-steady-state and pretty helpful anyway for chemical engineers too.
 \section{Design}
-The tool that chemical engineers would be most familiar with for this task is a spreadsheet. Thus, it was decided to design the platform in a similar structure. The user would need to upload a csv file, and all the data could be viewed in a table. As in a spreadsheet, additional "columns" could be added to the table, with calculated values based on the row.
+The tool that chemical engineers would be most familiar with for this task is a spreadsheet. 
+Thus, it was decided to design the platform in a similar structure. The user would need to upload a csv file, and all the data could be viewed in a table. 
+As in a spreadsheet, additional "columns" could be added to the table, with calculated values based on the row.
 
 This paradigm makes sense from a chemical engineer's standpoint, and from a live data processing standpoint. Each "row" can represent one point in time, with all the data avaliable at that point in time. The "columns" can represent different properties, and can be linked to properties in the simulation. In a live data processing system, due to performance reasons you often are only able to access the current row, and perhaps aggregation functions or other simple calculations from previous rows. This can be easily replicated in this "spreadsheet" view, as we can limit the user to only being able to access the current row, and the previous row.
 
 % todo: add a picture of a spreadsheet wtih some data to explain this better
 \section{Implementation}
 
-The most complex part of this process is to implement formula processing. Formulas need to be able to reference only certain other properties, and need to be able to be parsed from strings. SymPy was chosen as the library to do this, as it is a well-known library for symbolic mathematics in Python, so it supports the Ahuora Backend, and has support for complex enough expressions for this use case. It also provides a layer of security over using Python's built-in eval function, as it only evaluates mathematical expressions.
+The most complex part of this process is the implementation of formula processing. Formulas need to be able to reference only certain other properties, and need to be able to be parsed from strings. SymPy was chosen as the library to do this, as it is a well-known library for symbolic mathematics in Python, so it supports the Ahuora Backend, and has support for complex enough expressions for this use case. It also provides a layer of security over using Python's built-in eval function, as it only evaluates mathematical expressions.
 Sympy's parsing libraries support specifying a dictionary of variables that can be used in parsing. This can be used to pass the contents of previously calculated columns, and columns of raw data, to the parser. 
 
 To keep the implementation simple, the CSV file was stored in the browser's local storage, and a seperate request was made to the server to solve the flowsheet at each timestep. The solve request would include the values from the CSV, for that timestep. Though it may not be the most efficient method for batch processing, this most closely mirrors the way that a live data processing system works. 

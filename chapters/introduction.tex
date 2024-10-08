@@ -46,28 +46,41 @@ and developing a prototype live data processing system for Ahuora that is extens
 
 \section{Literature Review}
 
-\textit{This section is a summary of the full literature review included in Appendix \ref{sec:litreview}}
+\textit{This section is a summary of the full Literature Review included in Appendix \ref{sec:litreview}}
 
 
 \subsection{Data Collection in Industrial Facilities}
 
 Real-time data is used extensively for monitoring and improving operational efficiency, particularly for schedule optimisation. It shows promise for more advanced diagnostics, fault classification, and control optimisation \cite{udugamaRoleBigData2020}. Real-time data is a crucial element of the emerging field of Digital Twins because it enables the virtual model to be aware of changing conditions in the real world.
 
-The project will need to provide reliable software because it needs to be able to work continuously to enable crucial tasks such as diagnostics and optimisation to take place. The software must be scalable enough to work in large and small industrial settings and needs to provide interoperability with existing systems that perform some of these roles already.
+Crucial factory tasks such as diagnostics, control, and optimisation must be peformed in real time. Software produced in this project must be reliable.
+The software must be scalable enough to work in large and small industrial settings and needs to provide interoperability with existing systems that perform some of these roles already.
 
 
 \subsection{Data Processing Pipeline}
 
 In a factory, raw data is collected from SCADA systems, IoT networks, and system logs. 
-This data is organised and labelled, tagging it with relevant context such as timestamps and source information. Sensor data from multiple sources can then be fused together to provide more meaningful, understandable interpretations. 
-This increases the accuracy and enhances fault tolerance. 
+This data is organised and labelled, tagging it with relevant contextual information such as timestamps and source information. Sensor data from multiple sources can then be fused together to provide more meaningful, understandable interpretations, cotributing to an increase in accuracy and fault tolerance. 
 These interpretations serve as a bridge between raw data and model simulation. Simulation is used to estimate other parameters of the system that may not be able to be measured directly by sensors, enabling a comprehensive view of the entire industrial process's state. 
 Finally, manually defined or data-driven algorithms can be used to respond to the process's state, to optimise schedule, control, or maintenance tasks. 
+This pipeline is summarised in \Cref{fig:processing_pipeline}.
 
-This project's aim is to ingest real-time data from an industrial process and use a mathematical model to estimate other parameters in real-time. 
-Thus it focuses on the sensor fusion and model simulation areas of the data processing pipeline. Hence, the inputs and outputs of the project can be clearly defined.
-It will need to be able to interface with lower-level data collection software, as they will provide the input data of the project. 
-It will need to be able to output simulation results in real-time in a manner that enables higher-level algorithms for process optimisation to be developed on top of them.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{LR_summary.png}
+    \caption{Pipeline for processing Live Data in Digital Twin Systems, as identified in the Literature Review (Appendix \ref{sec:litreview})}
+    \label{fig:processing_pipeline}
+\end{figure}
+
+This project's aim is to ingest live data from an industrial process and use a mathematical model to estimate other parameters in real-time. 
+It focuses on the sensor fusion and model simulation areas of the data processing pipeline. Hence, the inputs and outputs of the project can be clearly defined.
+
+\begin{itemize}
+    \item Input: Historical \& live data from lower-level Data Collection Software, e.g SCADA systems or IoT Networks.
+    \item Output: Real-time simulation results, for higher-level optimisation, control and reporting tools.
+\end{itemize}
+
+The software will be responsible for transforming measurements from sensors into a comprehensive model of the factory.
 
 \subsection{Sensor Fusion and Hybrid Modelling}
 
@@ -78,8 +91,8 @@ Hybrid Modelling also enables the modelling of complex dynamics that are difficu
 Additionally, live modelling augments models with the ability to update themselves in real time, so that the model can reflect changes in the real-world environment.
 
 
-This provides a basis for developing the core features required in the Ahuora Platform. The platform will need to incorporate existing or novel sensor fusion technologies to prepare data for modelling. 
-Further research will be required to understand how IDAES supports hybrid modelling, and how to make hybrid modelling feasible in a real-time context.
-The optimal technologies and methods to use for hybrid modelling in real-time is uncertain, so further research will be required to investigate this. 
-This research needs to be conducted in context with the needs and requirements of the Ahuora Platform, to ensure that the approach also supports the broader goals of the Ahuora project.
+This provides a basis for developing the core features required in the Ahuora Platform. The platform needs to incorporate existing or novel sensor fusion technologies to prepare data for modelling. 
+The Ahuora Platform is built on the IDAES process simulation engine. Further research is required to understand how IDAES supports hybrid modelling, and how to make hybrid modelling feasible in a real-time context.
+The optimal technologies and methods to use for hybrid modelling in real-time is also uncertain, so further research is likewise required to investigate this. 
+This research needs to be conducted within the context of the needs and requirements of the Ahuora Platform, to ensure that the approach also supports the broader goals of the Ahuora project.
 
