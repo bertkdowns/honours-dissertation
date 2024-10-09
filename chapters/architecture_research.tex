@@ -138,7 +138,6 @@ It is built on top of Pyomo, an Algebraic Modelling Language, enabling for flexi
 This flexibility is key in enabling a Digital Twin platform to be built on top of IDAES. 
 Further flexibility is enabled through the Ahuora Platform, which can be modified to support whatever features are required.
 
-% Todo: Give Examples, link to sections that go through the different parts
 \subsection{Factory Floor Environment}
 
 In the factory, there are many sensors and control systems that monitor the state of the factory. These systems are often connected to a SCADA system, which is responsible for collecting and displaying this data.
@@ -147,7 +146,6 @@ Additionally, there are often data processing systems that are used to store and
 There are also automated and manual control systems, which are used to adjust the factory's operation based on the data collected by the SCADA system.
 These systems are already implemented in factories, and are critical to the operation of the factory.
 
-% Todo: Give Examples, link to other sections
 \subsection{Digital Twin Adapter}
 
 As such, rather than making a new data processing system, it is better that a Digital Twin Platform can be built such that it can be implemented on top of established data processing systems. Likewise, rather than making a new simulation platform, it is better if the framework of an existing simulation platform can be reused or adapted to the digital twin use case.
@@ -155,7 +153,6 @@ As such, rather than making a new data processing system, it is better that a Di
 The concept of a ``Digital Twin Adapter'' is used to define this functionality. It is responsible for converting the data from the factory into a format that the simulation platform can understand, and to provide results from simulations back the factory.
 
 
-% Todo: give examples, link to other sections
 \subsection{Digital Twin State}
 
 Key to the sucessful operation of the the Digital Twin Adapter is the fact that is also has access to the ``Digital Twin State". The Digital Twin State represents an estimate of the current state of the factory, based on the simulation results and the live data. 
@@ -168,9 +165,6 @@ This represents the ability of a Digital Twin to "learn" how the physical system
 The architecture presented generalises the concept of a Digital Twin, enabling software to be built that can be used in a wider variety of factories. However, the exact implementation of the Digital Twin Adapter may need to change depending on the factory's existing systems. Different SCADA systems and data processing systems will have different ways of communicating, and different data will be avaliable depending of the factory. Likewise, different methods of simulation may or may not be avaliable depending on the system. 
 
 The Digital Twin Adapter will need to be built in a way that it can be customised or set up differently depending on the factory. 
-% TODO: maybe the research conclusions should be seperated out, or put into the proposed architecture section.
-% It makes more sense for the conclusions of this chapter to be about how each of the modelling techniques fit in to the proposed architecture, to argue that my architecture is correct.
-
 
 The current Ahuora Simulation Platform is split into three main parts:
 
@@ -246,7 +240,6 @@ Thus, it can be considered that the interface, pipeline, or service between the 
 % How do I recommend that the above be implemented?
 
 
-% Todo: Give examples, link to other sections.
 
 
 
