@@ -2,7 +2,7 @@
 
 
 %This chapter has been included based on feedback from the mid-progress report that the marker did not understand the context of the project.
-\textit{ Unlike many other projects, the work presented in this report is part of a larger, multi-disciplinary project. Consequently, some of the presented work goes beyond the limited scope of this immediate research, but is still required to achieve outcomes relating to the integration of live data analysis into the broader software platform. As such, this content is still relevant within the context of this specific project. Additionally, some work involves research for future implementations that cannot be completed with the platform's current capabilities. This chapter provides an overview of the Ahuora Digital Twin Platform, to provide context for the rest of the report.}
+\textit{ The work presented in this report is part of a larger, multi-disciplinary project. Consequently, some of the presented work goes beyond the limited scope of this immediate research, but is still required to achieve outcomes relating to the integration of live data analysis into the broader software platform. As such, this content is still relevant within the context of this specific project. Additionally, some work involves research for future implementations that cannot be completed with the platform's current capabilities. This chapter provides an overview of the Ahuora Digital Twin Platform, to provide context for the rest of the report.}
 
 \section{Background}
 
@@ -51,40 +51,49 @@ In future, this will also enable the platform to be used for real-time collabora
 
 The home page of the platform, shown in \Cref{fig:homepage}, provides a list of saved simulations, and allows the user to create a new simulation. This is not publicly acessible, as the platform is still in development, and user account functionality is not yet complete.
 
-\section{The Ahuora Digital Twin Platform}
+\section{Platform Architecture}
 
-There are a number of objectives that Ahuora is working towards including in the platform. These include:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{dt_arch.png}
+    \caption{Architecture of the Ahuora Digital Twin Platform}
+    \label{sec:platform_architecture}
+\end{figure}
 
-\begin{itemize}
-    \item Steady-state Process Simulation: This is the current state of the platform. However, it can be improved by adding support for:
-          \begin{itemize}
-              \item More unit operations, defined from first principles equations.
-              \item Custom unit operations.
-              \item Unit operations defined from data (Machine Learning \& Hybrid Modelling).
-              \item More property packages (enabling accurate simulation of a wider range of chemical processes).
-              \item Support for more advanced mathematical constraints.
-          \end{itemize}
-    \item Advanced analysis techniques: This includes:
-          \begin{itemize}
-              \item P-Graph Analysis, generating and comparing alternative process structures.
-              \item Pinch Analysis, to identify the theorical minimum energy consumption of a process.
-              \item Heat Exchanger Network analysis, to identify opportunities for heat recovery in individual processes.
-              \item Utility System Analysis, to identify opportunities for energy savings on a plant-wide scale.
-          \end{itemize}
-    \item Process Variable Optimisation: Calculating the optimal operating conditions (temperatures, pressures, flow rates, power utilisation) for a given process.
-    \item Dynamic simulation, to model the factory over time, so that the effect of changes on can be predicted.
-    \item Process Scheduling, to optimise the factory's resources across tasks.
-    \item Live Data Processing, to:
-          \begin{itemize}
-              \item simulate plant conditions in real-time, for performance monitoring and diagnostics.
-              \item update the simulation based on real-world changes, e.g fouling or equipment degradation.
-          \end{itemize}
-    \item Process Control - adjusting the physical process plant based on the simulation to maintain desired operating conditions.
-    \item Reporting functionality, such as Process \& Instrumentation diagrams.
-\end{itemize}
+The platform is hosted in a Kubernetes cluster, located on-site. The Kubernetes cluster handles all web traffic, deployments from the private Github Repository, and scaling of services. 
 
-For clarity in this report, the term ``Ahuora Digital Twin Platform" will refer to the complete solution, keeping in mind all these future objectives. The term ``Ahuora Simulation Platform" will refer to the current state of the platform, which is based on steady-state simulation, and does not yet support the features required for a Digital Twin.
+Within the platform there are various containers running through the Docker platform, that can be replicated as required to scale based on service demand. The Database stores all flowsheets and model data. The solving interface uses the IDAES Process Simulation software~\cite{lee2021idaes}, built on the Pyomo equation-oriented modelling language~\cite{bynum2021pyomo}, to simulate a factory in real time. The User Interface is written in React Typescript, and uses the ShadCN UI Library and Redux Toolkit for state management and communication with the Django Backend. The Django API links all the services together, and handles the business logic for functionality such as Pinch Analysis and Live Data processing.
 
-\section{The Role of This Project}
+\section{Ongoing Projects}
 
-This project contributes to a number of these objectives, utilising the Ahuora Simulation Platform as a base, updating it to work with real-time data, and developing a standardised framework for integrating real-time sensor data into the platform. This provides the groundwork to support the advanced analysis techniques, process variable optimisation, dynamic simulation, and live data processing that are required for a Digital Twin.
+Multiple other projects are being completed in parallel by other team members. Each project has a distinct topic, and is largely independent, but collaboration is required to ensure that each other's work is compatible.The projects cover a variety of topics, from analyis and data processing, to usability and deployment.
+
+\subsection{Live Data Processing}
+
+\textbf{Team Member Responsible:} Bert Downs
+
+The Ahuora Platform currently supports building and simulating a factory, but it has no functionality to link live data from a factory into the Ahuora Platform. By integrating real-time sensor data into the simulation, the platform can monitor the factories' performance, and suggest tunings that will optimise resource efficiency. The data can also be used to predict and avoid failures and downtime, a key problem where many resources are wasted. Additionally, models created in the Ahuora Simulation Platform during the design phase could also be used during operation, minimising overhead costs.
+
+\subsection{Pinch Analysis}
+
+\textbf{Team member responsible:} Ethan MacLeod
+
+One of the key optimisation tools the Ahuora Platform provides is the Pinch Analysis module. Pinch analysis is the process of identifying heat recovery pockets in a given system, and indicating where heat can be exchanged. The end goal of pinch analysis is reducing the overall heat consumption of a process, which in turn results in lower operational costs for a plant, and less greenhouse gas emissions produced. From the processes that are modelled on the Ahuora Digital Twin Platform, there is a distinct need for integration with process optimization tools like Pinch Analysis to inform the decision-making process for operators and engineers.
+
+\subsection{User Interface Usability}
+
+\textbf{Team member responsible:} Shean Danes Aton
+
+This project aims to deliver an intuitive user interface and quality user experience in the Ahuora Digital Twin Platform through improving its UI through employing user centred methodologies including A/B testing, interviews, card sorting, the thinkAloud method, and surveys. Additionally, modern diagramming tools were reviewed and end users' knowledge were leveraged to the development of the ADTP UI. This project utilises software technologies and existing design components,ShadCn, for design implementations. Enhancing ADTP's UI increases user satisfaction, increases productivity, and minimises operational error.  
+
+\subsection{Distributed Platform Deployment}
+
+\textbf{Team member responsible:} Caleb Archer
+
+Each of the software components making up the platform need to be deployed together within a distributed environment that allows for efficient allocation and use of computational resources. This is achieved within the context of a Kubernetes cluster, on which several replicas of each platform component may run at any given time based on system load. The ability to scale workloads in response to demand increases the capacity of the platform to perform process modelling and simulation, and handle a greater number of users.
+
+\section{Other Long-term Platform Objectives}
+
+The projects listed pave the way for future work on the Ahuora Digital Twin Platform. This includes expanding the number and type of unit operations supported, and supporting a wider range of chemical processes. It is intended that the Ahuora Platform also support Hybrid modelling, where Machine Learning Models are used to represent complex unit operations that do not have an exact mathematical representation. Analysis functionality to be added includes Dynamic Simulation, to model the factory over time and predict the effect of changes in the system, Process Variable Optimisation, to calculate optimal operating conditions, common diagramming and reporting functionality, and scheduling tools.
+
+Because of the long-term context of the Ahuora project, work in this dissertation is constrained by the future requirements of the system. Care has been taken to ensure that the methods outlined can be extended to support the future objectives of the Ahuora Platform.
