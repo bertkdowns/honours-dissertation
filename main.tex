@@ -129,6 +129,26 @@ I would like to thank my supervisors, Tim Walmsley and Mark Apperley, for their 
 
 \begin{appendices}
 
+\chapter{Roadmap of Future Development} \label{app:roadmap}
+
+\Cref{fig:development_flowchart} breaks future development down into phases. Each phase is broken down into subtasks, identifiying the key challenges to overcome.
+
+Phase 1 provides the core functionality: ingesting data, solving the simulation, and displaying the results. This is the minimum viable product, and is completed as part of this dissertation.
+
+Phase 2 adds support for physics based modelling, optimisation, and control. The key challenges anticipated, including specifying input of the the time domain, holdup, and visualisation, come from the research conducted in \Cref{sec:dynamicmodelling}. Likewise, the key challenges from optimisation and control originate from the research in \Cref{sec:optimisationcontrol}. Based on research from the literature review and \Cref{sec:surrogatemodelling} surrogate modelling moves beyond IDAES alone, and may also include online learning methods, specified in the figure as ``Live Surrogate Modelling''. This was seperated out as Phase 3, because it is a wider goal, and less defined at this stage. 
+
+Phase 2 and 3 are not developed in this project, but this long-term roadmap is a key research outcome. It proves that development has been done in an engineering context, with a clear understanding of future requirements and an anticipation of further work.
+
+\begin{landscape}
+    \begin{figure}
+        \centering
+        \includegraphics[width=1.5\textwidth]{roadmap.pdf}
+        \caption{Roadmap of future development, broken down into tasks. This extends beyond the scope of this project, into the broader vision of the Ahuora Digital Twin Platform. Each task is a key milestone in creating an industry-ready live data processing platform.}
+        \label{fig:development_flowchart}
+    \end{figure}
+\end{landscape}
+
+
 \chapter{Heat Pump Dryer Model} \label{app:heatpumpmodel}
 
 
