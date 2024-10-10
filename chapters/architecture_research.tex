@@ -190,7 +190,18 @@ Additionally, there are also a number of other tools that are used in industry f
     \label{fig:architecture}
 \end{figure}
 
- Thus, a future requirement of the Ahuora Simulation platform is the connection to these tools to access the sensor data. However, there is a discrepancy in the use cases of the Ahuora Simulation Platform and the standard industrial stack. The Ahuora Simulation Platform is designed with experimentation and analysis in mind, which are usually offline\footnote{Many use cases of the Ahuora Simulation platform include designing new factories or modifications to a factory. These tasks mostly use historical data, and are a distinctly seperate problem from live prediction and control.} tasks performed by expert engineers. The standard industrial stack is designed for real-time prediction and control, which are online tasks performed by operators. Both the engineer and operator workflows will require all the modelling and simulation techniques identified, but the operator's workflow uses a fixed set of models.
+Thus, a future requirement of the Ahuora Simulation platform is the connection to these tools to access the sensor data. 
+
+Deploying the a model in production would likely only be done by a trained engineer who manages the plants' SCADA systems.
+The deployment would have to be custom for each plant, depending on the SCADA system in use, the sensors available, and the model being used. 
+Making a User Interface for this process would be very challenging, and would limit support to only a certain number of protocols. 
+Thus, it can be considered that the interface, pipeline, or service between the Ahuora Simulation Platform and the SCADA system is a custom software component. 
+
+
+There is a discrepancy in the use cases of the Ahuora Simulation Platform and the standard industrial stack used in live data processing. The Ahuora Simulation Platform is designed with experimentation and analysis in mind, which are usually offline\footnote{Many use cases of the Ahuora Simulation platform include designing new factories or modifications to a factory. These tasks mostly use historical data, and are a distinctly seperate problem from live prediction and control.} tasks performed by expert engineers. 
+The standard industrial stack is designed for real-time prediction and control, which are online tasks performed by operators. Both the engineer and operator workflows will require all the modelling and simulation techniques identified, but the operator's workflow uses a fixed set of models.
+
+These two types of users, Engineers and Operators, can be considered archetypes of user behaviours and needs.
 
 \begin{table}[ht]
     \centering
@@ -211,14 +222,10 @@ Additionally, there are also a number of other tools that are used in industry f
     \label{tab:requirements}
 \end{table}
 
-Because of the different use cases, while the Ahuora Simulation platform needs to be designed so that it is easy to design and build a model, this functionality is not required in operation. The model could be considered ``frozen'' at this point, where only certain parameters can be changed based on the real-time data. It does not make sense to expose functionality to edit the model to an operator. 
+Because of the different needs between these two archetypes, some requirements in the platform appear to conflict. While the Ahuora Simulation platform needs to be designed so that it is easy to design and build a model, this functionality is not required in operation. The model could be considered ``frozen'' at this point, where only certain parameters can be changed based on the real-time data. It does not make sense to expose functionality to edit the model to an operator. Further testing is required to understand the different deployment procedures that could be used.
 
 
 
-Deploying the a model in production would likely only be done by a trained engineer who manages the plants' SCADA systems.
-The deployment would have to be custom for each plant, depending on the SCADA system in use, the sensors available, and the model being used. 
-Making a User Interface for this process would be very challenging, and would limit support to only a certain number of protocols. 
-Thus, it can be considered that the interface, pipeline, or service between the Ahuora Simulation Platform and the SCADA system is a custom software component. 
 
 
 

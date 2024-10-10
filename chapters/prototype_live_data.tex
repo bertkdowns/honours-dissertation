@@ -48,8 +48,6 @@ This prototype also used a very simple model: a pump with an inlet stream and an
 The power used by the pump was calculated based on the  ``live'' data, and the inlet streams were already specified. 
 The simulation was used to calculate the outlet pressure and temperature of the pump. This is a simple model, but it is sufficient to demonstrate the feasibility of the architecture.
 
-% TODO: Add image: Running the simulation on the CSV file.
-
 When the script file was run, for each new data point, the script updated the properties in the Ahuora Simulation Platform, and then called the API to solve the simulation. The results of the simulation were then printed to the console. 
 
 This worked suprisingly well, and was able to be done in only around 300 lines of code. 
@@ -70,9 +68,7 @@ This approach, which closely follows the architecture described in \Cref{fig:arc
 This makes it easier to build a ``headless" version of the Ahuora Simulation platform that can be deployed as a single frozen model, into a factory's existing systems. 
 This is beneficial for stability and reliability reasons, limiting the complexity of the system. This is the unix ``do one thing and do it well" philosophy applied to software architecture.
 
-% TODO: THis needs to be reworked
-
 However, there are disadvantages to this approach. 
 One of the key value propositions of the Ahuora Digital Twin Platform is that it provides one place to define a factory's architecture, and then multiple types of analysis can be used on it. The same structures could be helpful for automatically creating visualisations of the real-time state of the factory, fault diagnostics, control, and surrogate modelling. 
 As the platform currently stands, it cannot be considered a ``Digital Twin'', as true digital twins include multiple fidelities of simulation, and dynamic ``state'' that adapts to real-world conditions via a feedback loop. 
-The next steps in development will need to balance these two approaches, to find an architecture that includes the advantages of each.
+The next steps in development balance these two approaches, to find an architecture that includes the advantages of each.
