@@ -11,7 +11,7 @@
 \usepackage{wrapfig}
 \usepackage{gensymb}
 
-\title{Adaptive Surrogate Modelling in a Live Simulation Environment}
+\title{A Software Engineering Approach to the Design and Application of Digital Twins in Industrial Chemical Processes}
 
 \author{Bert Downs }
 
@@ -21,7 +21,7 @@
 
 \maketitle
 
-Digital Twin technology is seen as transformative in many industries, as they enable new methods of control, optimisation, scheduling, and design~\cite{walmsley2024adaptive}. The increase in efficiency they promise is particularly attractive in the energy sector, where it can reduce both emissions and costs.
+Digital Twin technology is seen as transformative in many industries, as they enable new methods of control, optimisation, scheduling, and design~\cite{walmsley2024adaptive}. The increase in efficiency they promise is particularly attractive in the energy sector, where it can reduce both emissions and cost.
 
 Some key technologies underpining digital twins include:
 
@@ -33,9 +33,10 @@ Some key technologies underpining digital twins include:
 
 There is a growing body of research into new machine learning techniques that can be used to accurately model complex systems. New fields of machine learning, such as Operator Networks, are particularly promising as they offer the ability to predict the solution to Ordinary Differential Equations (ODEs) and Partial Differential Equations (PDEs)\cite{lu2019deeponet}, which are commonly used in physics-based models.
 
-From a Software Engineering perspective, these techniques exist as research concepts, but there is a gap in the literature on how to implement them in a live industrial environment. This project aims to bridge that gap by developing a framework for implementing these techniques, with industrial chemical processes providing a case study.
+These techniques exist as research concepts, but Software Engineering principles have not been applied to implement them in a live industrial environment. This project aims to develop a framework for implementing Digital Twins, with industrial chemical processes providing a case study.
 
-\section{Research Questions and their significance}
+\section*{Research Questions}
+% how do you build better software faster?
 
 % These questions need to be more specific, more focused on the software engineering aspects of the project, and more like a hypothesis.
 % What do you want to do
@@ -44,30 +45,23 @@ From a Software Engineering perspective, these techniques exist as research conc
 
 This project aims to answer the following research questions:
 
-\textbf{RQ1: How effective are Operator Networks at surrogate modelling dynamic chemical processes for model predictive control?} % for model predictive control?
-%% Hypothesis: Operator Networks are a suitable technique for surrogate modelling dynamic systems in a live environment, because they can be updated in real-time, and can handle concept drift.
+\textbf{What level of abstraction minimises the effort required to design and implement a Digital Twin for an industrial chemical process?}
 
-Online learning has unique challenges not present in offline learning, because the model must be updated in real-time, meaning that there are strict processing time constraints. Additionally, concept drift can occur, where the underlying system changes over time and the model must adapt to this. This is common in industrial processes, where equipment can degrade over time, or process conditions can change. There is little research into how new machine learning techniques, such as Operator Networks, can be adapted to these constraints.
+ A Digital Twin platform must implement functionality from many different types of models, in a way that is suitable for real-time systems \cite{cao2021simulation}. Thus each Digital Twin is unique and application-specific. A high level of abstraction is a barrier to customising Digital Twins, but a low level of abstraction reduces reusability. This research question will apply software engineering principles to determine where abstraction is benificial in the design and implementation of a Digital Twin.
 
-\textbf{RQ2: How does a unified system for different fidelity models (including physics-based models, machine learning models, and hybrid models) affect their application?} 
 %  How can we network multiple machine learning/physics based models together? Can we make these independent but still as accurate as a single model of the entire system? - Model Observability/Interpretability
 
-Each different modelling technique has different strengths and weaknesses. Physics-based models are accurate, and generalise well, but can be computationally expensive. Machine learning models are often faster, and can easily respond to change, but do not generalise well. In an industrial setting, multi-fidelity modelling increases model performance and can make them suitable for real-time systems \cite{cao2021simulation}. However, creating multi-fidelity models is a complex process, spanning multiple different disciplines. This research question aims to explore the different ways that models can be developed in parallel, from the perspective of an industrial partner.
+\textbf{How effective are Operator Networks at surrogate modelling dynamic chemical processes in an online setting?} % for model predictive control?
+%% Hypothesis: Operator Networks are a suitable technique for surrogate modelling dynamic systems in a live environment, because they can be updated in real-time, and can handle concept drift.
 
+Operator networks are a new machine learning technology that have the potential to model dynamic systems more accurately than traditional machine learning techniques. This research question aims to adapt existing operator networks to support online learning, and to test their effectiveness in a live industrial environment. 
 
-\textbf{RQ3: Does a Centeralised, Distributed, Component-based, Layered, or Microservices architecture provide the best support for implementing these techniques in a live industrial environment?}
-% How feasible is this in a live industrial environment? 
-% How viable is this approach to improving descision making in industry?
-% 
-
-Recent research into advanced modelling and optimisation techniques is more likely to be used if there is a clear path to implementation. This research question will apply software engineering principles to the the findings of RQ1 and RQ2, to develop a platform that supports the implementation of these techniques in an industrial setting. Project Ahuora, a research group in the University of Waikato, is developing an energy-technology platform using process simulation and adaptive digital twin technology. It is being built to support many different types of chemical analysis, reducing redundancy by using the same data structures for each. This project will contribute to the development of the Ahuora platform, by extending it to support dynamic modelling, surrogate modelling, data-driven modelling, optimisation, and control tooling. These workflows will make it simpler for the industry to adopt recent research. The Ahuora platform will be used as a case study to investigate a suitable software architecture, taking into account the needs of relevant stakeholders.
-
-\textbf{RQ4: When Digital Twin techniques are implemented concretely, what real-world performance benifit do they provide to New Zealand Industries?}
+\textbf{When Digital Twin techniques are implemented concretely, what real-world performance benifit do they provide to New Zealand Industries?}
 
 Recent work has outlined a conceptual framework for implementing Digital Twin Technologies \cite{ors2020conceptual}, but there is little research into how they perform in a real-world setting. This research question aims to deploy the Ahuora platform in a live industrial environment, and to measure the performance benefits that these techniques provide. This will provide evidence to industrial partners that these techniques are effective. 
 
 
-\section{Proposed Methodology}
+\section*{Proposed Methodology}
 
 % Add dynamic modelling to the Ahuora platform
 % Add surrogate modelling to the Ahuora platform
@@ -76,17 +70,16 @@ Recent work has outlined a conceptual framework for implementing Digital Twin Te
 % Add the required features for control
 % 
 
-This project includes a mix of software engineering, data science, and chemical engineering. Much of the novelty in this project comes from combining research from these different fields, to create something that works better in the real world. Thus, a significant amount of time will be spent reviewing relevant literature in these fields, to understand the most recent and most robust techniques available. This research will then be considered in the context of other disciplines, to understand where it can be applied.
+This project includes a mix of software engineering, data science, and chemical engineering. Much of the novelty in this project comes from combining research from these different fields, to create something that works better in the real world. Literature from each of these fields will be reviewed, and the most promising techniques will be implemented in conjunction with one another.
 
-Much of the research will be conducted using software engineering principles of development, testing, deployment, and feedback. By iteratively improving the Ahuroa platform, different modelling techniques can be tested and compared. Small-scale experiments, case studies, and prototypes will be used to test the effectiveness of different modelling techniques, and their suitability for a live industrial environment.
+Ahuora is developing a platform to enable industrial partners to build Digital Twins. This research will extend the Ahuora Platform to support dynamic modelling, surrogate modelling, data-driven modelling, optimisation, and control tooling. These workflows will make it simpler for the industry to adopt recent research. The Ahuora platform will be used as a case study to investigate a suitable software architecture, taking into account the needs of relevant stakeholders.
 
-Through the initial research, and over time, a better understanding of what is required will be developed. However, an initial roadmap for development has been provided in appendix \ref{sec:roadmap}.
+Much of the research will be conducted using Software Engineering principles of iterative development, testing, and deployment. Small-scale experiments, case studies, and prototypes will be used to test the effectiveness of different modelling techniques, and their suitability for a live industrial environment. 
 
-\section{Expected Outcome}
+\section*{Expected Outcome}
 
-
-This research will enable Digital Twin technologies, Operator Networks, and multi-fidelity surrogate modelling to be used by a broader audience, in conjunction with one another, outside of their core research communities.
-By the end of this project, the Ahuora Digital Twin Platform will support dynamic modelling, surrogate modelling, data-driven modelling, optimisation, and control tooling. It will be deployed in New Zealand industries, providing real-world performance benifits. This will provide evidence to industrial partners that these techniques are viable, feasible, and desirable, enhancing their uptake by the Industrial Process sector.
+This research will enable Digital Twin technologies, Operator Networks, and multi-fidelity modelling to be used in conjunction with one another, outside of their core research communities.
+By the end of this project, the Ahuora Digital Twin Platform will support each of these techniques. It will be deployed in New Zealand industries, providing real-world performance benifits. This will provide evidence to industrial partners that these techniques are viable, feasible, and desirable, enhancing their uptake by the Industrial Process sector.
 
 
 % \section{Resources}
@@ -120,20 +113,5 @@ By the end of this project, the Ahuora Digital Twin Platform will support dynami
 %https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles
 \bibliographystyle{apalike}
 \bibliography{refs} % Entries are in the refs.bib file
-
-
-\begin{appendices}
-    
-    
-\begin{landscape}
-\section{Roadmap} \label{sec:roadmap}
-\begin{figure}[h]
-    \includegraphics[width=1.5\textwidth]{../roadmap.pdf}
-    \caption{Roadmap, showing the initial areas of development of the Ahuora Digital Twin Platform.}
-\end{figure}
-\end{landscape}
-
-\end{appendices}
-
 
 \end{document}
