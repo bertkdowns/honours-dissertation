@@ -33,7 +33,7 @@ Some key technologies underpining digital twins include:
 
 There is a growing body of research into new machine learning techniques that can be used to accurately model complex systems. New fields of machine learning, such as Operator Networks, are particularly promising as they offer the ability to predict the solution to Ordinary Differential Equations (ODEs) and Partial Differential Equations (PDEs)\cite{lu2019deeponet}, which are commonly used in physics-based models.
 
-These techniques exist as research concepts, but Software Engineering principles have not been applied to implement them in a live industrial environment. This project aims to develop a framework for implementing Digital Twins, with industrial chemical processes providing a case study.
+These techniques exist as research concepts, but Software Engineering principles have not been applied to implement them in a live industrial environment. This project aims to explore the development of a framework for implementing Digital Twins, with industrial chemical processes providing a case study.
 
 \section*{Research Questions}
 % how do you build better software faster?
@@ -45,9 +45,9 @@ These techniques exist as research concepts, but Software Engineering principles
 
 This project aims to answer the following research questions:
 
-\textbf{What level of abstraction minimises the effort required to design and implement a Digital Twin for an industrial chemical process?}
+\textbf{How does the level of abstraction impact the effort required to design and implement a Digital Twin for an industrial chemical process? To what extent does it enable wider applicability of Digital Twin tools and techniques?}
 
- A Digital Twin platform must implement functionality from many different types of models, in a way that is suitable for real-time systems \cite{cao2021simulation}. Thus each Digital Twin is unique and application-specific. A high level of abstraction is a barrier to customising Digital Twins, but a low level of abstraction reduces reusability. This research question will apply software engineering principles to determine where abstraction is benificial in the design and implementation of a Digital Twin.
+A Digital Twin platform must implement functionality from many different types of models, in a way that is suitable for real-time systems \cite{cao2021simulation}. Thus each Digital Twin is unique and application-specific. A high level of abstraction is a barrier to customising Digital Twins, but a low level of abstraction reduces reusability. This research question will apply Software Engineering principles to determine where abstraction is beneficial in the design and implementation of a Digital Twin.
 
 %  How can we network multiple machine learning/physics based models together? Can we make these independent but still as accurate as a single model of the entire system? - Model Observability/Interpretability
 
@@ -60,6 +60,10 @@ Operator networks are a new machine learning technology that have the potential 
 
 Recent work has outlined a conceptual framework for implementing Digital Twin Technologies \cite{ors2020conceptual}, but there is little research into how they perform in a real-world setting. This research question aims to deploy the Ahuora platform in a live industrial environment, and to measure the performance benefits that these techniques provide. This will provide evidence to industrial partners that these techniques are effective. 
 
+\textbf{What software engineering principles, practices, and frameworks help build more maintainable Digital Twin systems?}
+% "Build better software faster" basically means build maintainable software.
+
+The development of the Ahuora platform will provide a case study in building Digital Twin Systems, and the effectiveness of Software Engineering principles and practices. As a suitable architecture is developed, this can be generalised into a software model for building Digital Twins.  
 
 \section*{Proposed Methodology}
 
@@ -70,16 +74,17 @@ Recent work has outlined a conceptual framework for implementing Digital Twin Te
 % Add the required features for control
 % 
 
-This project includes a mix of software engineering, data science, and chemical engineering. Much of the novelty in this project comes from combining research from these different fields, to create something that works better in the real world. Literature from each of these fields will be reviewed, and the most promising techniques will be implemented in conjunction with one another.
-
-Ahuora is developing a platform to enable industrial partners to build Digital Twins. This research will extend the Ahuora Platform to support dynamic modelling, surrogate modelling, data-driven modelling, optimisation, and control tooling. These workflows will make it simpler for the industry to adopt recent research. The Ahuora platform will be used as a case study to investigate a suitable software architecture, taking into account the needs of relevant stakeholders.
-
-Much of the research will be conducted using Software Engineering principles of iterative development, testing, and deployment. Small-scale experiments, case studies, and prototypes will be used to test the effectiveness of different modelling techniques, and their suitability for a live industrial environment. 
+Literature and technology from the fields of Software Engineering, Data Science, and Chemical Engineering will be reviewed in context of the other fields.
+Development will be conducted using Software Engineering principles. Small-scale experiments, case studies, and prototypes will be used to test the effectiveness of different modelling techniques, and their suitability for a live industrial environment. 
+This research will extend the Ahuora Platform to support dynamic modelling, surrogate modelling, data-driven modelling, optimisation, and control tooling. 
 
 \section*{Expected Outcome}
 
 This research will enable Digital Twin technologies, Operator Networks, and multi-fidelity modelling to be used in conjunction with one another, outside of their core research communities.
-By the end of this project, the Ahuora Digital Twin Platform will support each of these techniques. It will be deployed in New Zealand industries, providing real-world performance benifits. This will provide evidence to industrial partners that these techniques are viable, feasible, and desirable, enhancing their uptake by the Industrial Process sector.
+
+By the end of this project, the Ahuora Digital Twin Platform will support each of these modelling techniques. The Ahuora will be deployed in New Zealand industries, providing real-world performance benefits. This will provide evidence to industrial partners that these techniques are viable, feasible, and desirable, enhancing their uptake by the Industrial Process sector. 
+
+Additionally, this research will provide a case study for how Software Engineering principles can be applied to the development of Digital Twins, and a framework for implementing Digital Twins in other industries.
 
 
 % \section{Resources}
