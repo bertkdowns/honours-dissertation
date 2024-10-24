@@ -37,4 +37,4 @@ Parameterising models, so that it's very easy to solve them.
 
 # Link
 
-[View in Powerpoint](https://waikatouniversitynz-my.sharepoint.com/:p:/r/personal/bd65_students_waikato_ac_nz/_layouts/15/Doc.aspx?sourcedoc=%7B3F041CE3-5AA0-4EA2-BD6C-250F44600EEE%7D&file=582_viva.pptx&action=edit&mobileredirect=true&wdNewAndOpenCt=1729742855423&ct=1729742855423&wdPreviousSession=534d0bdd-69be-4a54-8a18-fb6d1a10347b&wdOrigin=OFFICECOM-WEB.MAIN.UPLOAD)
+[View in Powerpoint](https://waikatouniversitynz-my.sharepoint.com/:p:/g/personal/bd65_students_waikato_ac_nz/EeMcBD-gWqJOvWwlD0RgDu4BHVZWfhHqB2XH8_w9kCMVDg?e=gFYelq)
